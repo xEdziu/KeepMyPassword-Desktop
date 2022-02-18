@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -18,6 +19,7 @@ public class MainApp extends Application {
             stage.initStyle(StageStyle.DECORATED);
             stage.setTitle("Keep My Password");
             stage.setResizable(false);
+            stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
             stage.setWidth(700);
             stage.setHeight(500);
             stage.setScene(scene);
