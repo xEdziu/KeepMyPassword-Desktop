@@ -5,7 +5,8 @@
 
 <AnchorPane maxHeight="500.0" maxWidth="700.0" minHeight="400.0" minWidth="600.0" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="titleLabel" layoutY="127.0" prefHeight="17.0" prefWidth="700.0" text="Keep My Password" />
-      <Label fx:id="authorLabel" layoutX="-1.0" layoutY="352.0" prefHeight="17.0" prefWidth="700.0" text="Adrian Goral" />
+      <Label fx:id="titleLabel" layoutX="-1.0" layoutY="92.0" prefHeight="17.0" prefWidth="700.0" text="Keep My Password" />
+      <Label fx:id="authorLabel" layoutY="469.0" prefHeight="17.0" prefWidth="350.0" text="Adrian Goral" />
+      <Label fx:id="dateLabel" layoutX="349.0" layoutY="469.0" prefHeight="17.0" prefWidth="350.0" text="2022" />
    </children>
 </AnchorPane>

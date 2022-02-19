@@ -8,3 +8,11 @@
     -fx-font-size: 20;
     -fx-alignment: center;
 }
+
+#authorLabel {
+    -fx-alignment: left !important;
+}
+
+#dateLabel {
+    -fx-alignment: right !important;
+}
