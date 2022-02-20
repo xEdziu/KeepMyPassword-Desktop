@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class handleConfFile {
+public class HandleConfFile {
 
     public static boolean checkIfConfigExists(){
         File tmp = new File("conf.txt");
@@ -22,6 +22,12 @@ public class handleConfFile {
                 String timeStamp = new SimpleDateFormat("dd.MM.yyyy HH.mm.ss").format(new Date());
                 fw.write(timeStamp);
                 fw.close();
+                File db = new File("database.db");
+                if (db.createNewFile()){
+                    System.out.println("Created database");
+                } else {
+                    System.out.println("Database already exists");
+                }
             } else {
                 System.out.println("File already exists");
             }

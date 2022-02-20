@@ -1,3 +1,9 @@
 .idea
 out
+target
 conf.txt
+database.db
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
