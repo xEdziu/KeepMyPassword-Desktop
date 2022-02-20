@@ -3,11 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.goral.keepmypassworddesktop.MainAppController">
+
    <children>
       <Label fx:id="authorLabel" layoutY="397.0" prefHeight="17.0" prefWidth="350.0" text="Adrian Goral" />
       <Label fx:id="titleLabel" layoutY="61.0" prefHeight="17.0" prefWidth="699.0" text="Keep My Password" />
       <Label fx:id="dateLabel" layoutX="349.0" layoutY="397.0" prefHeight="17.0" prefWidth="350.0" text="2022" />
-      <Button fx:id="btnLogin" layoutX="284.0" layoutY="207.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Login" />
+      <Button fx:id="btnLogin" layoutX="284.0" layoutY="207.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Login" onAction="#onLoginButtonClick"/>
    </children>
 </AnchorPane>

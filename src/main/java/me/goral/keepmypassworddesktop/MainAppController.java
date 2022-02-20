@@ -5,18 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class MainAppController {
-    @FXML
-    private Button loginButton;
+//    @FXML
+//    private Button loginButton;
 
     @FXML
     protected void onLoginButtonClick() {
-        
+        System.out.println("Test test test test");
     }
-//    @FXML
-//    private Label welcomeText;
-//
-//    @FXML
-//    protected void onHelloButtonClick() {
-//        welcomeText.setText("Welcome to JavaFX Application!");
-//    }
 }

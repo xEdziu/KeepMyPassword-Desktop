@@ -12,7 +12,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(MainApp.class.getResource("main-app-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("main-app-view.fxml"));
+            Parent root = loader.load();
             Scene scene = new Scene(root);
             String css = MainApp.class.getResource("main.css").toExternalForm();
             scene.getStylesheets().add(css);
