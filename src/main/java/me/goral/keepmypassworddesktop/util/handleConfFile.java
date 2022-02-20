@@ -29,4 +29,13 @@ public class handleConfFile {
             e.printStackTrace();
         }
     }
+
+    public static void deleteConfFile() {
+        //will be useful in future if user want to wipe their data
+        File f = new File("conf.txt");
+        if (f.delete()){
+            System.out.println("File deleted");
+            //do something here, like alert
+        } else System.out.println("Failed to delete conf file");
+    }
 }
