@@ -2,14 +2,22 @@ package me.goral.keepmypassworddesktop;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import me.goral.keepmypassworddesktop.util.handleConfFile;
 
 public class MainAppController {
-//    @FXML
-//    private Button loginButton;
+
+    @FXML
+    Button btnLogin;
 
     @FXML
     protected void onLoginButtonClick() {
         System.out.println("Test test test test");
+    }
+
+    public void changeBtnText() {
+        if (!handleConfFile.checkIfConfigExists()) {
+            btnLogin.setText("Rejestracja");
+            handleConfFile.createConfFile();
+        } else btnLogin.setText("Logowanie");
     }
 }

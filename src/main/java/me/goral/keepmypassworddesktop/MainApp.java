@@ -15,7 +15,8 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("main-app-view.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            String css = MainApp.class.getResource("main.css").toExternalForm();
+            String css = MainApp.class.getResource("styles/main.css").toExternalForm();
+            MainAppController controller = loader.getController();
             scene.getStylesheets().add(css);
             stage.initStyle(StageStyle.DECORATED);
             stage.setTitle("Keep My Password");
@@ -25,6 +26,7 @@ public class MainApp extends Application {
             stage.setHeight(500);
             stage.setScene(scene);
             stage.show();
+            controller.changeBtnText();
         } catch (Exception e){
             e.printStackTrace();
         }

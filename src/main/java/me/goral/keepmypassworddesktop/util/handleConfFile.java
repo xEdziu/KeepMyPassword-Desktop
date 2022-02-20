@@ -1,0 +1,32 @@
+package me.goral.keepmypassworddesktop.util;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class handleConfFile {
+
+    public static boolean checkIfConfigExists(){
+        File tmp = new File("conf.txt");
+        return tmp.exists();
+    }
+
+    public static void createConfFile() {
+        try {
+            File f = new File("conf.txt");
+            if(f.createNewFile()){
+                System.out.println("File created");
+                FileWriter fw = new FileWriter("conf.txt");
+                String timeStamp = new SimpleDateFormat("dd.MM.yyyy HH.mm.ss").format(new Date());
+                fw.write(timeStamp);
+                fw.close();
+            } else {
+                System.out.println("File already exists");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

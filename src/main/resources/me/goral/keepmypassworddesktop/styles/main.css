@@ -24,7 +24,7 @@
     -fx-background-color: transparent;
     -fx-cursor: hand;
     -fx-text-fill: #AAA;
-    -fx-font-size: 20;
+    -fx-font-size: 15;
 }
 
 #btnLogin:hover {
