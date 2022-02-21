@@ -1,5 +1,7 @@
 package me.goral.keepmypassworddesktop.util;
 
+import me.goral.keepmypassworddesktop.database.DatabaseHandler;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,12 +24,7 @@ public class HandleConfFile {
                 String timeStamp = new SimpleDateFormat("dd.MM.yyyy HH.mm.ss").format(new Date());
                 fw.write(timeStamp);
                 fw.close();
-                File db = new File("database.db");
-                if (db.createNewFile()){
-                    System.out.println("Created database");
-                } else {
-                    System.out.println("Database already exists");
-                }
+                DatabaseHandler.createDatabase();
             } else {
                 System.out.println("File already exists");
             }
