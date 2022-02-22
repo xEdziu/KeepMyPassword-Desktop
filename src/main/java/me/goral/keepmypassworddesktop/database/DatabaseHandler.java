@@ -56,7 +56,8 @@ public class DatabaseHandler {
                   id integer PRIMARY KEY,
                   desc varchar(255) NOT NULL,
                   login varchar(255) NOT NULL,
-                  pwd varchar(1000) NOT NULL);
+                  pwd varchar(1000) NOT NULL,
+                  iv varchar(1000) NOT NULL);
                 """;
 
         try (Connection conn = connect();
