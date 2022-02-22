@@ -59,19 +59,17 @@ public class MainAppController {
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(username::requestFocus);
 
-        dialog.showAndWait();
-
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == registerButtonType){
-
                 return new Pair<>(username.getText(), password.getText());
             }
             return null;
         });
 
         Optional<Pair<String, String>> res = dialog.showAndWait();
-        res.ifPresent(krotka -> {
-            System.out.println("Username: " + krotka.getKey() + ", Password: " + krotka.getValue());
+        res.ifPresent(result -> {
+            System.out.println("Username: " + result.getKey() + ", Password: " + result.getValue());
+            System.out.println("test");
         });
     }
 
