@@ -1,0 +1,20 @@
+.myDialog {
+    -fx-background-color: #303033;
+    -fx-font-family: Ubuntu;
+    -fx-text-fill: white;
+}
+
+.btn {
+    -fx-padding: 10 25;
+    -fx-border-color: #AAA;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: #AAA;
+}
+
+.btn:hover {
+    -fx-background-color: #AAA;
+    -fx-text-fill: #303033;
+}
