@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
+import me.goral.keepmypassworddesktop.util.ArgonUtil;
 import me.goral.keepmypassworddesktop.util.HandleConfFile;
 
 import java.util.Optional;
@@ -69,7 +70,10 @@ public class MainAppController {
         Optional<Pair<String, String>> res = dialog.showAndWait();
         res.ifPresent(result -> {
             System.out.println("Username: " + result.getKey() + ", Password: " + result.getValue());
-            System.out.println("test");
+            System.out.println("\n");
+            String hash = ArgonUtil.encrypt(result.getValue());
+            System.out.println("Hashed password: " + hash);
+            System.out.println("Verify: " + (ArgonUtil.verify(hash, result.getValue()) ? "Correct" : "Incorrect"));
         });
     }
 

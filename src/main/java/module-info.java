@@ -10,6 +10,7 @@ module me.goral.keepmypassworddesktop {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires java.sql;
+    requires spring.security.crypto;
 
     opens me.goral.keepmypassworddesktop to javafx.fxml;
     exports me.goral.keepmypassworddesktop;

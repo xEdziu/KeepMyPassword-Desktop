@@ -2,10 +2,8 @@ package me.goral.keepmypassworddesktop.util;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.*;
 import java.util.Base64;
 
 public class AESUtil {
@@ -33,11 +31,12 @@ public class AESUtil {
         return new String(plainText);
     }
 
-    public static SecretKey generateKey(int n) throws NoSuchAlgorithmException {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(n);
-        return keyGenerator.generateKey();
+    public static SecretKeySpec generateKey(String argon){
+        byte[] argonBytes = argon.getBytes();
+        return new SecretKeySpec(argonBytes, "AES");
     }
+
+    SecretKey key = generateKey("to co z bazy");
 
     public static IvParameterSpec generateIv() {
         byte[] iv = new byte[16];
