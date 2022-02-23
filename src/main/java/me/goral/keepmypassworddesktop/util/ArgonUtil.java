@@ -4,6 +4,8 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
 public class ArgonUtil {
 
+    //TODO make it work
+
     private static final int saltLength = 128 / 8; // 128 bits
     private static final int hashLength = 256 / 8; // 256 bits
     private static final int parallelism = 1;

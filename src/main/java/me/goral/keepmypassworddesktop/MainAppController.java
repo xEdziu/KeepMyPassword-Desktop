@@ -38,6 +38,8 @@ public class MainAppController {
         canBtn.getStyleClass().add("btn");
         regBtn.setDisable(true);
 
+        //TODO add icon, finish styling
+
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -53,9 +55,7 @@ public class MainAppController {
         grid.add(new Label("Password"), 0, 1);
         grid.add(password, 1, 1);
 
-        username.textProperty().addListener(((observableValue, oldV, newV) -> {
-            regBtn.setDisable(newV.trim().isEmpty());
-        }));
+        username.textProperty().addListener(((observableValue, oldV, newV) -> regBtn.setDisable(newV.trim().isEmpty())));
 
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(username::requestFocus);
@@ -74,6 +74,8 @@ public class MainAppController {
             String hash = ArgonUtil.encrypt(result.getValue());
             System.out.println("Hashed password: " + hash);
             System.out.println("Verify: " + (ArgonUtil.verify(hash, result.getValue()) ? "Correct" : "Incorrect"));
+
+            //TODO change scene if verifying is complete
         });
     }
 
