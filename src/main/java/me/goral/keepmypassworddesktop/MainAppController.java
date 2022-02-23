@@ -75,7 +75,6 @@ public class MainAppController {
             System.out.println("Hashed password: " + hash);
             System.out.println("Verify: " + (ArgonUtil.verify(hash, result.getValue()) ? "Correct" : "Incorrect"));
 
-            //TODO change scene if verifying is complete
         });
     }
 

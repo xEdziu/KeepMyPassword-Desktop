@@ -16,9 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-crypto</artifactId>
-            <version>5.6.2</version>
+            <groupId>de.mkammerer</groupId>
+            <artifactId>argon2-jvm</artifactId>
+            <version>2.11</version>
         </dependency>
         <dependency>
             <groupId>org.xerial</groupId>

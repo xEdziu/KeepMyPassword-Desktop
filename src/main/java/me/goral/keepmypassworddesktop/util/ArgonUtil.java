@@ -1,24 +1,19 @@
 package me.goral.keepmypassworddesktop.util;
 
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 
 public class ArgonUtil {
 
-    //TODO make it work
+    static Argon2 argon2 = Argon2Factory.create();
 
-    private static final int saltLength = 128 / 8; // 128 bits
-    private static final int hashLength = 256 / 8; // 256 bits
-    private static final int parallelism = 1;
-    private static final int memoryInKb = 10 * 1024; // 10 MB
-    private static final int iterations = 10;
-    private static final Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(saltLength, hashLength, parallelism, memoryInKb, iterations);
-
-    public static String encrypt(String plain){
-        return passwordEncoder.encode(plain);
+    public static String encrypt(String password){
+        char[] pwd = password.toCharArray();
+        return argon2.hash(22, 65536, 1, pwd);
     }
 
-    public static boolean verify(String hash, String plain){
-        return passwordEncoder.matches(plain, hash);
+    public static boolean verify(String hash, String pwd){
+        return argon2.verify(hash, pwd.toCharArray());
     }
 
 }
