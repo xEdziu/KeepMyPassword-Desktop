@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import me.goral.keepmypassworddesktop.util.AuthUtil;
 
 public class MainApp extends Application {
     @Override
