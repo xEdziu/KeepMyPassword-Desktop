@@ -8,10 +8,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
+import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.ArgonUtil;
-import me.goral.keepmypassworddesktop.util.HandleConfFile;
+import me.goral.keepmypassworddesktop.util.AuthUtil;
+import me.goral.keepmypassworddesktop.util.ConfUtil;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import java.util.Optional;
+
+import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFile;
 
 public class MainAppController {
 
@@ -69,19 +75,52 @@ public class MainAppController {
 
         Optional<Pair<String, String>> res = dialog.showAndWait();
         res.ifPresent(result -> {
-            System.out.println("Username: " + result.getKey() + ", Password: " + result.getValue());
-            System.out.println("\n");
-            String hash = ArgonUtil.encrypt(result.getValue());
-            System.out.println("Hashed password: " + hash);
-            System.out.println("Verify: " + (ArgonUtil.verify(hash, result.getValue()) ? "Correct" : "Incorrect"));
 
+            String uname = result.getKey();
+            String plain = result.getValue();
+            String argon = ArgonUtil.encrypt(plain);
+            SecretKey key = AESUtil.generateKey(argon);
+
+            if (login){
+                //login
+                try {
+                    String config = ConfUtil.readConfigFile();
+                    System.out.println(config);
+                    String[] configArr = config.split(":");
+                    String unameFromString = configArr[0];
+                    String encryptedInitial = configArr[2];
+                    String ivString = configArr[3];
+
+                    if (uname.equals(unameFromString)){
+                        boolean authorized = AuthUtil.authorize(encryptedInitial, ivString, key);
+                        System.out.println("Authorized: " + authorized);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+            } else {
+                //register
+                try {
+
+                    IvParameterSpec iv = AESUtil.generateIv();
+                    String init = AuthUtil.encryptInitial(key, iv);
+
+                    String output = uname + ":" + init;
+                    createConfFile(output);
+                    System.out.println("Finished registration");
+
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+            }
         });
     }
 
     public void changeBtnText() {
-        if (!HandleConfFile.checkIfConfigExists()) {
+        if (!ConfUtil.checkIfConfigExists()) {
             btnLogin.setText("Rejestracja");
-            HandleConfFile.createConfFile();
         } else {
             btnLogin.setText("Logowanie");
             login = true;

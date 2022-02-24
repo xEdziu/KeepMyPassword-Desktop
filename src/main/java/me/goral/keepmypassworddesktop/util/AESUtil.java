@@ -36,8 +36,6 @@ public class AESUtil {
         return new SecretKeySpec(argonBytes, "AES");
     }
 
-    SecretKey key = generateKey("to co z bazy");
-
     public static IvParameterSpec generateIv() {
         byte[] iv = new byte[16];
         new SecureRandom().nextBytes(iv);

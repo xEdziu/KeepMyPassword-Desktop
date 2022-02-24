@@ -12,6 +12,7 @@ module me.goral.keepmypassworddesktop {
     requires java.sql;
     requires de.mkammerer.argon2;
     requires de.mkammerer.argon2.nolibs;
+    requires org.bouncycastle.provider;
 
     opens me.goral.keepmypassworddesktop to javafx.fxml;
     exports me.goral.keepmypassworddesktop;

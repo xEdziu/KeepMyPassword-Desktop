@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>1.69</version>
+        </dependency>
+        <dependency>
             <groupId>de.mkammerer</groupId>
             <artifactId>argon2-jvm</artifactId>
             <version>2.11</version>

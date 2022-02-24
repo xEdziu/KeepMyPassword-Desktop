@@ -3,7 +3,6 @@ import me.goral.keepmypassworddesktop.util.AESUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 public class DatabaseHandler {
@@ -54,14 +53,15 @@ public class DatabaseHandler {
         }
     }
 
-    public static void insertPassword(String desc, String login, String pwd){
+    public static void insertPassword(String desc, String login, String pwd, String iv){
         String sql = "INSERT INTO main (desc, login, pwd) VALUES (?,?,?,?);";
         try (Connection conn = connect();
             PreparedStatement preparedStatement = conn.prepareStatement(sql)){
             preparedStatement.setString(1, desc);
             preparedStatement.setString(2, login);
             preparedStatement.setString(3, pwd);
-            preparedStatement.setString(4, Base64.getEncoder().encodeToString(AESUtil.generateIv().getIV()));
+            preparedStatement.setString(4, iv);
+            // Base64.getEncoder().encodeToString(AESUtil.generateIv().getIV())
             preparedStatement.executeUpdate();
             System.out.println("Password inserted into database");
         } catch (SQLException e){

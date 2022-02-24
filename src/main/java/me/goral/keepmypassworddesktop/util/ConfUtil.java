@@ -2,35 +2,41 @@ package me.goral.keepmypassworddesktop.util;
 
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-public class HandleConfFile {
+public class ConfUtil {
 
     public static boolean checkIfConfigExists(){
         File tmp = new File("conf.txt");
         return tmp.exists();
     }
 
-    public static void createConfFile() {
+    public static void createConfFile(String init) {
         try {
             File f = new File("conf.txt");
             if(f.createNewFile()){
                 System.out.println("File created");
-                FileWriter fw = new FileWriter("conf.txt");
-                String timeStamp = new SimpleDateFormat("dd.MM.yyyy HH.mm.ss").format(new Date());
-                fw.write(timeStamp);
-                fw.close();
+                writeConfFile(init);
                 DatabaseHandler.createDatabase();
+                DatabaseHandler.createMainTable();
             } else {
                 System.out.println("File already exists");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void writeConfFile(String s) throws IOException {
+        FileWriter fw = new FileWriter("conf.txt");
+        fw.write(s);
+        fw.close();
+    }
+
+    public static String readConfigFile() throws IOException {
+        return Files.readString(Paths.get("conf.txt"));
     }
 
     public static void deleteConfFile() {
