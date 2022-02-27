@@ -9,13 +9,13 @@ import java.nio.file.Paths;
 public class ConfUtil {
 
     public static boolean checkIfConfigExists(){
-        File tmp = new File("conf.txt");
+        File tmp = new File("conf.conf");
         return tmp.exists();
     }
 
     public static void createConfFile(String init) {
         try {
-            File f = new File("conf.txt");
+            File f = new File("conf.conf");
             if(f.createNewFile()){
                 System.out.println("File created");
                 writeConfFile(init);
@@ -30,18 +30,18 @@ public class ConfUtil {
     }
 
     public static void writeConfFile(String s) throws IOException {
-        FileWriter fw = new FileWriter("conf.txt");
+        FileWriter fw = new FileWriter("conf.conf");
         fw.write(s);
         fw.close();
     }
 
     public static String readConfigFile() throws IOException {
-        return Files.readString(Paths.get("conf.txt"));
+        return Files.readString(Paths.get("conf.conf"));
     }
 
     public static void deleteConfFile() {
         //will be useful in future if user want to wipe their data
-        File f = new File("conf.txt");
+        File f = new File("conf.conf");
         if (f.delete()){
             System.out.println("File deleted");
             //do something here, like alert

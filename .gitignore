@@ -1,7 +1,7 @@
 .idea
 out
 target
-conf.txt
+conf.conf
 database.db
 com_crashlytics_export_strings.xml
 crashlytics.properties
