@@ -84,10 +84,7 @@ public class MainAppController {
             String uname = result.getKey();
             String plain = result.getValue();
             String argon = ArgonUtil.encrypt(plain);
-            Pair<SecretKey, String> keyPair = null;
-            SecretKey key = null;
-            String salt = null;
-
+            SecretKey key = AESUtil.generateKey(argon);
 
             if (login){
                 //login
@@ -98,8 +95,6 @@ public class MainAppController {
                     String unameFromString = configArr[0];
                     String encryptedInitial = configArr[2];
                     String ivString = configArr[3];
-                    String saltConf = configArr[4];
-                    key = AESUtil.generateKey(argon, saltConf);
 
                     if (uname.equals(unameFromString)){
                         boolean authorized = AuthUtil.authorize(encryptedInitial, ivString, key);
@@ -110,20 +105,13 @@ public class MainAppController {
                     e.printStackTrace();
                 }
             } else {
-                try {
-                    keyPair = AESUtil.generateKey(argon);
-                    key = keyPair.getKey();
-                    salt = keyPair.getValue();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
                 //register
                 try {
-
                     IvParameterSpec iv = AESUtil.generateIv();
                     String init = AuthUtil.encryptInitial(key, iv);
 
-                    String output = uname + ":" + init + ":" + salt;
+                    String output = uname + ":" + init;
                     createConfFile(output);
                     System.out.println("Finished registration");
 

@@ -4,11 +4,8 @@ import javafx.util.Pair;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.util.Base64;
 
 public class AESUtil {
@@ -37,42 +34,20 @@ public class AESUtil {
         return new String(plainText);
     }
 
-    private static byte[] generateSalt(){
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[64];
-        random.nextBytes(salt);
-        return salt;
-    }
-
-    private static String saltToBase(byte[] s){
-        return Base64.getEncoder().encodeToString(s);
-    }
-
-    private static byte[] baseToSalt(String b){
-        return Base64.getDecoder().decode(b);
-    }
-
-    public static Pair<SecretKey, String> generateKey(String argon) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
-        byte[] s = generateSalt();
-        KeySpec spec = new PBEKeySpec(argon.toCharArray(), s, 65536, 256);
-        SecretKey tmp = factory.generateSecret(spec);
-        SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-
-        return new Pair<>(secret, saltToBase(s));
-    }
-
-    public static SecretKey generateKey(String argon, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
-        byte[] s = baseToSalt(salt);
-        KeySpec spec = new PBEKeySpec(argon.toCharArray(), s, 65536, 256);
-        SecretKey tmp = factory.generateSecret(spec);
-        return new SecretKeySpec(tmp.getEncoded(), "AES");
+    public static SecretKeySpec generateKey(String argon) {
+        byte[] extracted = extractArgon(argon);
+        return new SecretKeySpec(extracted, "AES");
     }
 
     public static IvParameterSpec generateIv() {
         byte[] iv = new byte[16];
         new SecureRandom().nextBytes(iv);
         return new IvParameterSpec(iv);
+    }
+
+    private static byte[] extractArgon(String argonFull){
+        String[] arr = argonFull.split("\\$");
+        String toCode = arr[arr.length-1];
+        return Base64.getDecoder().decode(toCode);
     }
 }

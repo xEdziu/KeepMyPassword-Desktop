@@ -15,10 +15,6 @@ import static me.goral.keepmypassworddesktop.util.SHAUtil.hashSHA;
 public class AuthUtil {
     public static String initialValue = "initial";
 
-//    public static SecretKey generateSecretKey(String plain){
-//        return AESUtil.generateKey(plain);
-//    }
-
     public static String encryptInitial(SecretKey key, IvParameterSpec iv)
             throws InvalidAlgorithmParameterException, NoSuchPaddingException,
             IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException,
