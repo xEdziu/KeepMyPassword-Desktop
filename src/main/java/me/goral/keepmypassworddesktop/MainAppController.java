@@ -17,6 +17,7 @@ import me.goral.keepmypassworddesktop.util.ConfUtil;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFile;
@@ -83,7 +84,10 @@ public class MainAppController {
             String uname = result.getKey();
             String plain = result.getValue();
             String argon = ArgonUtil.encrypt(plain);
-            SecretKey key = AESUtil.generateKey(argon);
+            Pair<SecretKey, String> keyPair = null;
+            SecretKey key = null;
+            String salt = null;
+
 
             if (login){
                 //login
@@ -94,6 +98,8 @@ public class MainAppController {
                     String unameFromString = configArr[0];
                     String encryptedInitial = configArr[2];
                     String ivString = configArr[3];
+                    String saltConf = configArr[4];
+                    key = AESUtil.generateKey(argon, saltConf);
 
                     if (uname.equals(unameFromString)){
                         boolean authorized = AuthUtil.authorize(encryptedInitial, ivString, key);
@@ -104,13 +110,20 @@ public class MainAppController {
                     e.printStackTrace();
                 }
             } else {
+                try {
+                    keyPair = AESUtil.generateKey(argon);
+                    key = keyPair.getKey();
+                    salt = keyPair.getValue();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 //register
                 try {
 
                     IvParameterSpec iv = AESUtil.generateIv();
                     String init = AuthUtil.encryptInitial(key, iv);
 
-                    String output = uname + ":" + init;
+                    String output = uname + ":" + init + ":" + salt;
                     createConfFile(output);
                     System.out.println("Finished registration");
 

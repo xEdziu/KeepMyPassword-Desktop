@@ -8,6 +8,7 @@ import javax.crypto.spec.IvParameterSpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Base64;
 import static me.goral.keepmypassworddesktop.util.SHAUtil.hashSHA;
 
@@ -35,7 +36,9 @@ public class AuthUtil {
         IvParameterSpec iv = new IvParameterSpec(Base64.getDecoder().decode(ivString));
         String encTest = hashSHA(AESUtil.encrypt("AES/CBC/PKCS5Padding", initialValue, key, iv));
 
-        return encTest.equals(encryptedInitial);
+        int res = Arrays.compare(encTest.getBytes(), encryptedInitial.getBytes());
+        return res == 0;
+        //return encTest.equals(encryptedInitial);
 
     }
 }
