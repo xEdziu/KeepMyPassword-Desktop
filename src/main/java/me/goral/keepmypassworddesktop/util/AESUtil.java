@@ -1,7 +1,5 @@
 package me.goral.keepmypassworddesktop.util;
 
-import javafx.util.Pair;
-
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;

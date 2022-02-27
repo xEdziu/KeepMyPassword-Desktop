@@ -1,19 +1,25 @@
 package me.goral.keepmypassworddesktop.util;
 
-import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Advanced;
 import de.mkammerer.argon2.Argon2Factory;
+import java.nio.charset.Charset;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 public class ArgonUtil {
 
-    static Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+    static Argon2Advanced argon2 = Argon2Factory.createAdvanced(Argon2Factory.Argon2Types.ARGON2id);
 
-    public static String encrypt(String password){
+    public static String encrypt(String password, String salt){
         char[] pwd = password.toCharArray();
-        return argon2.hash(22, 65536, 1, pwd);
+        byte[] s = Base64.getDecoder().decode(salt);
+        return argon2.hash(22, 65536, 1, pwd, Charset.defaultCharset(), s);
     }
 
-    public static boolean verify(String hash, String pwd){
-        return argon2.verify(hash, pwd.toCharArray());
+    public static byte[] generateSalt(){
+        byte[] s = new byte[128];
+        new SecureRandom().nextBytes(s);
+        return s;
     }
 
 }

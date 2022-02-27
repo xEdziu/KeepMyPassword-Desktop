@@ -17,7 +17,7 @@ import me.goral.keepmypassworddesktop.util.ConfUtil;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
-import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Optional;
 
 import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFile;
@@ -83,18 +83,18 @@ public class MainAppController {
 
             String uname = result.getKey();
             String plain = result.getValue();
-            String argon = ArgonUtil.encrypt(plain);
-            SecretKey key = AESUtil.generateKey(argon);
 
             if (login){
                 //login
                 try {
                     String config = ConfUtil.readConfigFile();
-                    System.out.println(config);
                     String[] configArr = config.split(":");
                     String unameFromString = configArr[0];
                     String encryptedInitial = configArr[2];
                     String ivString = configArr[3];
+                    String salt = configArr[4];
+                    String argon = ArgonUtil.encrypt(plain, salt);
+                    SecretKey key = AESUtil.generateKey(argon);
 
                     if (uname.equals(unameFromString)){
                         boolean authorized = AuthUtil.authorize(encryptedInitial, ivString, key);
@@ -109,9 +109,12 @@ public class MainAppController {
                 //register
                 try {
                     IvParameterSpec iv = AESUtil.generateIv();
+                    String salt = Base64.getEncoder().encodeToString(ArgonUtil.generateSalt());
+                    String argon = ArgonUtil.encrypt(plain, salt);
+                    SecretKey key = AESUtil.generateKey(argon);
                     String init = AuthUtil.encryptInitial(key, iv);
 
-                    String output = uname + ":" + init;
+                    String output = uname + ":" + init + ":" + salt;
                     createConfFile(output);
                     System.out.println("Finished registration");
 
