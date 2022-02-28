@@ -7,14 +7,17 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import me.goral.keepmypassworddesktop.util.SceneController;
 
 public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("main-app-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            SceneController sceneController = new SceneController(scene);
+            sceneController.add("main", FXMLLoader.load(MainApp.class.getResource("layouts/main-app-view.fxml")) );
             String css = MainApp.class.getResource("styles/main.css").toExternalForm();
             MainAppController controller = loader.getController();
             scene.getStylesheets().add(css);

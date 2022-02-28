@@ -36,7 +36,6 @@ public class MainAppController {
         alert.setContentText(errString);
         alert.getButtonTypes().clear();
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
-        alert.getDialogPane().getStyleClass().add("myDialog");
 
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getDialogPane().getButtonTypes().add(okButtonType);
