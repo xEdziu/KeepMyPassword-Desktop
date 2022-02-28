@@ -29,6 +29,26 @@ public class MainAppController {
     @FXML
     Button btnLogin;
 
+    private void showAlertDialog(String errTitle, String errHeader, String errString){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(errTitle);
+        alert.setHeaderText(errHeader);
+        alert.setContentText(errString);
+        alert.getButtonTypes().clear();
+        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("myDialog");
+
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getDialogPane().getButtonTypes().add(okButtonType);
+        Node okBtn = alert.getDialogPane().lookupButton(okButtonType);
+        okBtn.getStyleClass().add("btn");
+
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/error-32.png")));
+
+        alert.showAndWait();
+    }
+
     @FXML
     protected void onLoginButtonClick() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
@@ -98,7 +118,17 @@ public class MainAppController {
 
                     if (uname.equals(unameFromString)){
                         boolean authorized = AuthUtil.authorize(encryptedInitial, ivString, key);
-                        System.out.println("Authorized: " + authorized);
+                        if (!authorized){
+                            showAlertDialog("Error", "Invalid username or password",
+                                    "Please provide correct credentials.");
+                            onLoginButtonClick();
+                        } else {
+                            System.out.println("Change scene");
+                        }
+                    } else {
+                        showAlertDialog("Error", "Invalid username or password",
+                                "Please provide correct credentials.");
+                        onLoginButtonClick();
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
