@@ -16,4 +16,6 @@ module me.goral.keepmypassworddesktop {
 
     opens me.goral.keepmypassworddesktop to javafx.fxml;
     exports me.goral.keepmypassworddesktop;
+    exports me.goral.keepmypassworddesktop.controllers;
+    opens me.goral.keepmypassworddesktop.controllers to javafx.fxml;
 }

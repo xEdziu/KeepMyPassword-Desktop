@@ -1,15 +1,19 @@
-package me.goral.keepmypassworddesktop;
+package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.ArgonUtil;
 import me.goral.keepmypassworddesktop.util.AuthUtil;
@@ -20,11 +24,13 @@ import javax.crypto.spec.IvParameterSpec;
 import java.util.Base64;
 import java.util.Optional;
 
+import static me.goral.keepmypassworddesktop.MainApp.getStage;
 import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFile;
 
 public class MainAppController {
 
     Boolean login = false;
+    Boolean ready = false;
 
     @FXML
     Button btnLogin;
@@ -123,6 +129,10 @@ public class MainAppController {
                             onLoginButtonClick();
                         } else {
                             System.out.println("Change scene");
+                            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/logged.fxml"));
+                            Parent root = loader.load();
+                            Scene sc = new Scene(root);
+                            MainApp.getStage().setScene(sc);
                         }
                     } else {
                         showAlertDialog("Error", "Invalid username or password",
@@ -156,6 +166,10 @@ public class MainAppController {
                 }
             }
         });
+    }
+
+    public boolean isLogged(){
+        return ready;
     }
 
     public void changeBtnText() {
