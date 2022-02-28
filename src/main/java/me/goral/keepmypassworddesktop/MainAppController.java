@@ -147,6 +147,9 @@ public class MainAppController {
                     String output = uname + ":" + init + ":" + salt;
                     createConfFile(output);
                     System.out.println("Finished registration");
+                    login = true;
+                    changeBtnText();
+                    onLoginButtonClick();
 
                 } catch (Exception e){
                     System.out.println(e.getMessage());
