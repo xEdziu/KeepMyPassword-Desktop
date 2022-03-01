@@ -24,7 +24,6 @@ import javax.crypto.spec.IvParameterSpec;
 import java.util.Base64;
 import java.util.Optional;
 
-import static me.goral.keepmypassworddesktop.MainApp.getStage;
 import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFile;
 
 public class MainAppController {
@@ -132,6 +131,8 @@ public class MainAppController {
                             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/logged.fxml"));
                             Parent root = loader.load();
                             Scene sc = new Scene(root);
+                            String css = MainApp.class.getResource("styles/main.css").toExternalForm();
+                            sc.getStylesheets().add(css);
                             MainApp.getStage().setScene(sc);
                         }
                     } else {
