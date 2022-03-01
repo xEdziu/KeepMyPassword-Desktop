@@ -13,10 +13,8 @@
     -fx-font-size: 30;
 }
 
-#btnLogin {
+.button {
     -fx-alignment: center;
-    -fx-pref-width: 130;
-    -fx-pref-height: 40;
     -fx-padding: 10 25;
     -fx-border-color: #AAA;
     -fx-border-width: 2;
@@ -27,7 +25,12 @@
     -fx-font-size: 15;
 }
 
-#btnLogin:hover {
+#btnLogin {
+    -fx-pref-width: 130;
+    -fx-pref-height: 40;
+}
+
+.button:hover {
     -fx-background-color: #AAA;
     -fx-text-fill: #303033;
 }
