@@ -71,7 +71,7 @@ public class DatabaseHandler {
     }
 
     public static List<List<String>> selectPasswords(){
-        String sql = "SELECT desc, login, pwd FROM passwords";
+        String sql = "SELECT desc, login, pwd, iv FROM main";
         List<List<String>> results = new ArrayList<>();
         try (Connection conn = connect();
         Statement stmt = conn.createStatement();
@@ -82,6 +82,7 @@ public class DatabaseHandler {
                 single.add(rs.getString("desc"));
                 single.add(rs.getString("login"));
                 single.add(rs.getString("pwd"));
+                single.add(rs.getString("iv"));
                 results.add(single);
             }
 

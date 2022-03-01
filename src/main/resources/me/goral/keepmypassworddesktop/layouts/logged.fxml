@@ -7,9 +7,9 @@
    <children>
       <TableView fx:id="contentTable" layoutX="25.0" layoutY="150.0" prefHeight="287.0" prefWidth="463.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Description" />
-          <TableColumn prefWidth="75.0" text="Login" />
-            <TableColumn prefWidth="75.0" text="Password" />
+          <TableColumn fx:id="descColumn" prefWidth="75.0" text="Description" />
+          <TableColumn fx:id="loginColumn" prefWidth="75.0" text="Login" />
+            <TableColumn fx:id="pwdColumn" prefWidth="75.0" text="Password" />
         </columns>
       </TableView>
       <Button fx:id="AddQuery" layoutX="503.0" layoutY="169.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Add" />
