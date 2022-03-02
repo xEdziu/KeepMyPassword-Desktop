@@ -14,10 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import me.goral.keepmypassworddesktop.MainApp;
-import me.goral.keepmypassworddesktop.util.AESUtil;
-import me.goral.keepmypassworddesktop.util.ArgonUtil;
-import me.goral.keepmypassworddesktop.util.AuthUtil;
-import me.goral.keepmypassworddesktop.util.ConfUtil;
+import me.goral.keepmypassworddesktop.util.*;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -126,8 +123,7 @@ public class MainAppController {
                         onLoginButtonClick();
                     }
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
+                    AlertsUtil.showExceptionStackTraceDialog(e);
                 }
             } else {
 
@@ -147,8 +143,7 @@ public class MainAppController {
                     onLoginButtonClick();
 
                 } catch (Exception e){
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
+                    AlertsUtil.showExceptionStackTraceDialog(e);
                 }
             }
         });

@@ -29,7 +29,7 @@ public class ConfUtil {
                 System.out.println("File already exists");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
     }
 
@@ -55,8 +55,7 @@ public class ConfUtil {
             } else showErrorDialog("Something went wrong", "Whoops!", "Sorry, but something went wrong. " +
                     "Please, raise an issue on github and describe what happened.");
         } catch (Exception e){
-            showErrorDialog("Something went wrong", "Whoops!", "Sorry, but something went wrong. " +
-                    "Please, raise an issue on github and describe what happened.");
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
 
     }

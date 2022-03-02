@@ -1,5 +1,6 @@
 package me.goral.keepmypassworddesktop.database;
 import me.goral.keepmypassworddesktop.util.AESUtil;
+import me.goral.keepmypassworddesktop.util.AlertsUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,8 +15,7 @@ public class DatabaseHandler {
             conn = DriverManager.getConnection(url);
             System.out.println("Connection established");
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
         return conn;
     }
@@ -29,8 +29,7 @@ public class DatabaseHandler {
                 System.out.println("Database created");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
     }
 
@@ -49,7 +48,7 @@ public class DatabaseHandler {
             stmt.execute(sql);
             System.out.println("Main table created");
         } catch (SQLException e) {
-            e.printStackTrace();
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
     }
 
@@ -65,8 +64,7 @@ public class DatabaseHandler {
             preparedStatement.executeUpdate();
             System.out.println("Password inserted into database");
         } catch (SQLException e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
     }
 
@@ -76,8 +74,7 @@ public class DatabaseHandler {
              Statement stmt = conn.createStatement()){
             stmt.execute(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
     }
 
@@ -98,8 +95,7 @@ public class DatabaseHandler {
             }
 
         } catch (SQLException e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
         return results;
     }

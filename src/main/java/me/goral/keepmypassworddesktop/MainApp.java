@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
+import me.goral.keepmypassworddesktop.util.AlertsUtil;
 
 public class MainApp extends Application {
 
@@ -39,7 +40,7 @@ public class MainApp extends Application {
             guiStage.show();
             mainController.handleAppRun();
         } catch (Exception e){
-            e.printStackTrace();
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
     }
 

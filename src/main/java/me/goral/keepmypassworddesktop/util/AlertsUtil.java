@@ -4,17 +4,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Optional;
 
 public class AlertsUtil {
@@ -27,19 +29,10 @@ public class AlertsUtil {
         alert.getButtonTypes().clear();
         alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/error-64.png").toString()));
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
-
-        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getDialogPane().getButtonTypes().add(okButtonType);
-        Node okBtn = alert.getDialogPane().lookupButton(okButtonType);
-        okBtn.getStyleClass().add("btn");
-
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
-
         alert.showAndWait();
     }
 
-    public static void showDeleteDataDialog() throws IOException {
+    public static void showDeleteDataDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Deleting all data");
         alert.setHeaderText("You are about to wipe out all your data");
@@ -69,7 +62,6 @@ public class AlertsUtil {
                     "Have a great day!");
         }
     }
-
 
     public static void showLogoutDialog() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -168,5 +160,48 @@ public class AlertsUtil {
             MainAppController controller = loader.getController();
             controller.handleAppRun();
         }
+    }
+
+    public static void showExceptionStackTraceDialog(Exception e){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Exception Dialog");
+        alert.setHeaderText("Oh no! Error!");
+        alert.setContentText("Please report that error to github, so that developer can repair it as soon as possible:\n" +
+                "https://github.com/xEdziu/KeepMyPassword-Desktop/issues/new/choose");
+        alert.getButtonTypes().clear();
+        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/error-64.png").toString()));
+        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getDialogPane().getButtonTypes().add(okButtonType);
+        Node okBtn = alert.getDialogPane().lookupButton(okButtonType);
+        okBtn.getStyleClass().add("btn");
+
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        String exceptionText = sw.toString();
+
+        Label label = new Label("Exception stacktrace: ");
+
+        TextArea textArea = new TextArea(exceptionText);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(label, 0, 0);
+        expContent.add(textArea, 0, 1);
+
+        alert.getDialogPane().setExpandableContent(expContent);
+
+        alert.showAndWait();
     }
 }
