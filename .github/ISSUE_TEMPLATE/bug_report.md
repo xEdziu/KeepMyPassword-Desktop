@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. WIndows]
  - App Version: [e.g. 0.1]
  
-# **Exception Stack Trace**:
+# **Exception Stack Trace**
 If there is an error with stacktrace, please paste it here.
 
 # **Additional context**
