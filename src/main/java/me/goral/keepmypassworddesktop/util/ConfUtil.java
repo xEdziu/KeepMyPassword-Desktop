@@ -33,14 +33,23 @@ public class ConfUtil {
         }
     }
 
-    public static void writeConfFile(String s) throws IOException {
-        FileWriter fw = new FileWriter("conf.conf");
-        fw.write(s);
-        fw.close();
+    public static void writeConfFile(String s) {
+        try {
+            FileWriter fw = new FileWriter("conf.conf");
+            fw.write(s);
+            fw.close();
+        } catch (IOException e){
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
     }
 
-    public static String readConfigFile() throws IOException {
-        return Files.readString(Paths.get("conf.conf"));
+    public static String readConfigFile() {
+        try {
+            return Files.readString(Paths.get("conf.conf"));
+        } catch (IOException e){
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
+        return null;
     }
 
     public static void deleteConfFiles() {

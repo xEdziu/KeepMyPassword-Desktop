@@ -14,7 +14,6 @@ import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Optional;
@@ -63,7 +62,7 @@ public class AlertsUtil {
         }
     }
 
-    public static void showLogoutDialog() throws IOException {
+    public static void showLogoutDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logging out");
         alert.setHeaderText("You are about to log out");
@@ -89,16 +88,19 @@ public class AlertsUtil {
 
         if (result.get() == confirm){
 
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
-            Parent root = loader.load();
+            try {
+                FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
+                Parent root = loader.load();
 
-            MainAppController controller = loader.getController();
-            controller.setIsLogged();
-            Scene sc = new Scene(root);
-            String css = MainApp.class.getResource("styles/main.css").toExternalForm();
-            sc.getStylesheets().add(css);
-            MainApp.getStage().setScene(sc);
-
+                MainAppController controller = loader.getController();
+                controller.setIsLogged();
+                Scene sc = new Scene(root);
+                String css = MainApp.class.getResource("styles/main.css").toExternalForm();
+                sc.getStylesheets().add(css);
+                MainApp.getStage().setScene(sc);
+            } catch (Exception e){
+                showExceptionStackTraceDialog(e);
+            }
         }
     }
     
@@ -123,7 +125,7 @@ public class AlertsUtil {
         alert.showAndWait();
     }
 
-    public static void showDeleteAccountDialog() throws IOException {
+    public static void showDeleteAccountDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Deleting account");
         alert.setHeaderText("You are about to delete your whole account");
@@ -149,16 +151,23 @@ public class AlertsUtil {
 
         if (result.get() == confirm){
 
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
-            Parent root = loader.load();
+            try {
 
-            Scene sc = new Scene(root);
-            String css = MainApp.class.getResource("styles/main.css").toExternalForm();
-            sc.getStylesheets().add(css);
-            MainApp.getStage().setScene(sc);
-            ConfUtil.deleteConfFiles();
-            MainAppController controller = loader.getController();
-            controller.handleAppRun();
+                FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
+                Parent root = loader.load();
+
+                Scene sc = new Scene(root);
+                String css = MainApp.class.getResource("styles/main.css").toExternalForm();
+                sc.getStylesheets().add(css);
+                MainApp.getStage().setScene(sc);
+                ConfUtil.deleteConfFiles();
+                MainAppController controller = loader.getController();
+                controller.handleAppRun();
+
+            } catch (Exception e){
+                showExceptionStackTraceDialog(e);
+            }
+
         }
     }
 

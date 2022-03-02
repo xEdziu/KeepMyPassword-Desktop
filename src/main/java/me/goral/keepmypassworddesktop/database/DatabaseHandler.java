@@ -1,5 +1,4 @@
 package me.goral.keepmypassworddesktop.database;
-import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
 
 import java.sql.*;

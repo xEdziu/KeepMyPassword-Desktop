@@ -10,7 +10,6 @@ import me.goral.keepmypassworddesktop.util.AlertsUtil;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -25,7 +24,7 @@ public class LoggedController {
     private SecretKey key;
 
     @FXML
-    private void initialize() throws Exception {
+    private void initialize() {
         descColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Description"));
         loginColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Login"));
         pwdColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Password"));
@@ -34,25 +33,25 @@ public class LoggedController {
     }
 
     @FXML
-    private void onDeleteAccountClick() throws IOException {
+    private void onDeleteAccountClick() {
         key = null;
         unameLabel.setText("");
         AlertsUtil.showDeleteAccountDialog();
     }
 
     @FXML
-    private void onDeleteDataClick() throws IOException {
+    private void onDeleteDataClick() {
         AlertsUtil.showDeleteDataDialog();
     }
 
     @FXML
-    private void onLogoutButtonClick() throws IOException {
+    private void onLogoutButtonClick() {
         key = null;
         unameLabel.setText("");
         AlertsUtil.showLogoutDialog();
     }
 
-    private void refreshContentTable() throws Exception {
+    private void refreshContentTable() {
         contentTable.getItems().setAll(parsePasswordsList());
     }
 
@@ -64,29 +63,35 @@ public class LoggedController {
         unameLabel.setText(uname);
     }
 
-    private List<PasswordRow> parsePasswordsList() throws Exception {
+    private List<PasswordRow> parsePasswordsList() {
         List<PasswordRow> list = new ArrayList<>();
 
         List<List<String>> passwordsFromDb = DatabaseHandler.selectPasswords();
-        if (!passwordsFromDb.isEmpty()) {
-            for (List<String> r : passwordsFromDb){
-                String descEnc = r.get(0);
-                String loginEnc = r.get(1);
-                String pwdEnc = r.get(2);
-                IvParameterSpec iv = new IvParameterSpec(Base64.getDecoder().decode(r.get(3)));
+        try {
+            if (!passwordsFromDb.isEmpty()) {
+                for (List<String> r : passwordsFromDb){
+                    String descEnc = r.get(0);
+                    String loginEnc = r.get(1);
+                    String pwdEnc = r.get(2);
+                    String ivEnc = r.get(3);
+                    IvParameterSpec iv = new IvParameterSpec(Base64.getDecoder().decode(ivEnc));
 
-                //decrypt data from database
-                String descDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(descEnc)), key, iv);
-                String loginDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(loginEnc)), key, iv);
-                String pwdDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(pwdEnc)), key, iv);
+                    //decrypt data from database
+                    String descDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(descEnc)), key, iv);
+                    String loginDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(loginEnc)), key, iv);
+                    String pwdDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(pwdEnc)), key, iv);
 
-                //add decrypted things to new PasswordRow
-                PasswordRow pr = new PasswordRow(descDec, loginDec, pwdDec);
+                    //add decrypted things to new PasswordRow
+                    PasswordRow pr = new PasswordRow(descDec, loginDec, pwdDec, ivEnc);
 
-                //new PasswordRow to list
-                list.add(pr);
+                    //new PasswordRow to list
+                    list.add(pr);
+                }
             }
+        } catch (Exception e){
+            AlertsUtil.showExceptionStackTraceDialog(e);
         }
+
         return list;
     }
 
@@ -94,11 +99,13 @@ public class LoggedController {
         private final SimpleStringProperty desc;
         private final SimpleStringProperty login;
         private final SimpleStringProperty pwd;
+        private final String iv;
 
-        private PasswordRow(String desc, String login, String pwd){
+        private PasswordRow(String desc, String login, String pwd, String iv){
             this.desc = new SimpleStringProperty(desc);
             this.login = new SimpleStringProperty(login);
             this.pwd = new SimpleStringProperty(pwd);
+            this.iv = iv;
         }
 
         public String getDesc() {
@@ -123,6 +130,10 @@ public class LoggedController {
 
         public void setPwd(String pwd) {
             this.pwd.set(pwd);
+        }
+
+        public String getIv() {
+            return iv;
         }
     }
 }
