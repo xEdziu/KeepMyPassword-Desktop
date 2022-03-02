@@ -26,6 +26,9 @@ If applicable, add screenshots to help explain your problem.
 # **Environment**
  - OS: [e.g. WIndows]
  - App Version: [e.g. 0.1]
+ 
+# **Exception Stack Trace**:
+If there is an error with stacktrace, please paste it here.
 
 # **Additional context**
 Add any other context about the problem here.
