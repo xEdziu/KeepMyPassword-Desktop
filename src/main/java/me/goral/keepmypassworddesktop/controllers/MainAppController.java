@@ -71,7 +71,6 @@ public class MainAppController {
         canBtn.getStyleClass().add("btn");
         regBtn.setDisable(true);
 
-        //TODO add icon, finish styling
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
@@ -127,7 +126,6 @@ public class MainAppController {
                                     "Please provide correct credentials.");
                             onLoginButtonClick();
                         } else {
-                            System.out.println("Change scene");
                             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/logged.fxml"));
                             Parent root = loader.load();
 
@@ -176,6 +174,10 @@ public class MainAppController {
 
     public boolean isLogged(){
         return ready;
+    }
+
+    public void setIsLogged() {
+        login = true;
     }
 
     public void changeBtnText() {

@@ -15,7 +15,6 @@ public class AESUtil {
             InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
         Cipher cipher = Cipher.getInstance(algorithm);
-        //TODO Figure out why key length is incorrect
         cipher.init(Cipher.ENCRYPT_MODE, key, iv);
         byte[] cipherText = cipher.doFinal(input.getBytes());
         return Base64.getEncoder()

@@ -19,6 +19,6 @@
       <Label layoutY="20.0" prefHeight="17.0" prefWidth="700.0" text="Keep My Password" />
       <Label layoutY="70.0" prefHeight="17.0" prefWidth="350.0" text="Logged as:" />
       <Label fx:id="unameLabel" layoutX="350.0" layoutY="70.0" prefHeight="17.0" prefWidth="350.0" />
-      <Button fx:id="logoutButton" layoutX="503.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Logout" />
+      <Button fx:id="logoutButton" layoutX="503.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Logout" onAction="#onLogoutButtonClick"/>
    </children>
 </AnchorPane>

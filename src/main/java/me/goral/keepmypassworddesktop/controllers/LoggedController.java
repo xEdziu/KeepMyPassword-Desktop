@@ -2,18 +2,26 @@ package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 public class LoggedController {
 
@@ -33,13 +41,55 @@ public class LoggedController {
         refreshContentTable();
     }
 
+    @FXML
+    private void onLogoutButtonClick() throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logging out");
+        alert.setHeaderText("You are about to log out");
+        alert.setContentText("Are you sure?");
+        alert.getButtonTypes().clear();
+        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/logout-64.png").toString()));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        ButtonType confirm = new ButtonType("Log out", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(confirm, cancel);
+
+        Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
+        Node btnCancel = alert.getDialogPane().lookupButton(cancel);
+
+        btnConfirm.getStyleClass().add("btn");
+        btnCancel.getStyleClass().add("btn");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == confirm){
+
+            key = null;
+            unameLabel.setText("");
+
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
+            Parent root = loader.load();
+
+            MainAppController controller = loader.getController();
+            controller.setIsLogged();
+            Scene sc = new Scene(root);
+            String css = MainApp.class.getResource("styles/main.css").toExternalForm();
+            sc.getStylesheets().add(css);
+            MainApp.getStage().setScene(sc);
+
+        }
+    }
+
     private void refreshContentTable() throws Exception {
         contentTable.getItems().setAll(parsePasswordsList());
     }
 
     public void setSecretKey(SecretKey k){
         key = k;
-        System.out.println(k);
     }
 
     public void setUnameLabel(String uname) {
