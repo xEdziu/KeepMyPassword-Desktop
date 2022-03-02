@@ -37,7 +37,7 @@ public class MainApp extends Application {
             guiStage.setHeight(500);
             guiStage.setScene(scene);
             guiStage.show();
-            mainController.changeBtnText();
+            mainController.handleAppRun();
         } catch (Exception e){
             e.printStackTrace();
         }

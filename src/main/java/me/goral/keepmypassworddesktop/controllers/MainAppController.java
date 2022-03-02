@@ -28,18 +28,18 @@ import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFile;
 
 public class MainAppController {
 
-    Boolean login = false;
-    Boolean ready = false;
+    private Boolean login = false;
 
     @FXML
     Button btnLogin;
 
-    private void showAlertDialog(String errTitle, String errHeader, String errString){
+    public static void showErrorDialog(String errTitle, String errHeader, String errString){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(errTitle);
         alert.setHeaderText(errHeader);
         alert.setContentText(errString);
         alert.getButtonTypes().clear();
+        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/error-64.png").toString()));
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
 
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -48,7 +48,7 @@ public class MainAppController {
         okBtn.getStyleClass().add("btn");
 
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/error-32.png")));
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
         alert.showAndWait();
     }
@@ -122,7 +122,7 @@ public class MainAppController {
                     if (uname.equals(unameFromString)){
                         boolean authorized = AuthUtil.authorize(encryptedInitial, ivString, key);
                         if (!authorized){
-                            showAlertDialog("Error", "Invalid username or password",
+                            showErrorDialog("Error", "Invalid username or password",
                                     "Please provide correct credentials.");
                             onLoginButtonClick();
                         } else {
@@ -139,7 +139,7 @@ public class MainAppController {
                             MainApp.getStage().setScene(sc);
                         }
                     } else {
-                        showAlertDialog("Error", "Invalid username or password",
+                        showErrorDialog("Error", "Invalid username or password",
                                 "Please provide correct credentials.");
                         onLoginButtonClick();
                     }
@@ -161,7 +161,7 @@ public class MainAppController {
                     createConfFile(output);
                     System.out.println("Finished registration");
                     login = true;
-                    changeBtnText();
+                    handleAppRun();
                     onLoginButtonClick();
 
                 } catch (Exception e){
@@ -172,15 +172,11 @@ public class MainAppController {
         });
     }
 
-    public boolean isLogged(){
-        return ready;
-    }
-
     public void setIsLogged() {
         login = true;
     }
 
-    public void changeBtnText() {
+    public void handleAppRun() {
         if (!ConfUtil.checkIfConfigExists()) {
             btnLogin.setText("Register");
         } else {
