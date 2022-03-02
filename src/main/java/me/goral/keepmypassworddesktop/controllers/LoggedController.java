@@ -30,6 +30,10 @@ public class LoggedController {
         loginColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Login"));
         pwdColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Password"));
 
+        refreshContentTable();
+    }
+
+    private void refreshContentTable() throws Exception {
         contentTable.getItems().setAll(parsePasswordsList());
     }
 
