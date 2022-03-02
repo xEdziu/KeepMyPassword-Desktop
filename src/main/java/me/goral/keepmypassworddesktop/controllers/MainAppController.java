@@ -24,6 +24,7 @@ import javax.crypto.spec.IvParameterSpec;
 import java.util.Base64;
 import java.util.Optional;
 
+import static me.goral.keepmypassworddesktop.util.AlertsUtil.showErrorDialog;
 import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFile;
 
 public class MainAppController {
@@ -33,25 +34,6 @@ public class MainAppController {
     @FXML
     Button btnLogin;
 
-    public static void showErrorDialog(String errTitle, String errHeader, String errString){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(errTitle);
-        alert.setHeaderText(errHeader);
-        alert.setContentText(errString);
-        alert.getButtonTypes().clear();
-        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/error-64.png").toString()));
-        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
-
-        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getDialogPane().getButtonTypes().add(okButtonType);
-        Node okBtn = alert.getDialogPane().lookupButton(okButtonType);
-        okBtn.getStyleClass().add("btn");
-
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
-
-        alert.showAndWait();
-    }
 
     @FXML
     protected void onLoginButtonClick() {

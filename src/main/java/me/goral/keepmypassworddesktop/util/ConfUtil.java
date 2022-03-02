@@ -7,12 +7,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import me.goral.keepmypassworddesktop.MainApp;
-import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static me.goral.keepmypassworddesktop.util.AlertsUtil.showErrorDialog;
+import static me.goral.keepmypassworddesktop.util.AlertsUtil.showInformationDialog;
 
 public class ConfUtil {
 
@@ -55,28 +57,12 @@ public class ConfUtil {
                 System.out.println("Conf File deleted");
                 File db = new File("database.db");
                 if (db.delete()){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Dialog");
-                    alert.setHeaderText("Your account is now deleted");
-                    alert.setContentText("Have a great day!");
-                    alert.getButtonTypes().clear();
-                    alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
-                    alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/information-64.png").toString()));
-
-                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
-
-                    ButtonType btnConfirm = new ButtonType("Great");
-                    alert.getDialogPane().getButtonTypes().add(btnConfirm);
-
-                    Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
-                    confirm.getStyleClass().add("btn");
-
-                    alert.showAndWait();
+                    showInformationDialog("Information Dialog", "Your account is now deleted", "Have a great day!");
                 }
-            } else System.out.println("Failed to delete conf file");
+            } else showErrorDialog("Something went wrong", "Whoops!", "Sorry, but something went wrong. " +
+                    "Please, raise an issue on github and describe what happened.");
         } catch (Exception e){
-            MainAppController.showErrorDialog("Something went wrong", "Whoops!", "Sorry, but something went wrong. " +
+            showErrorDialog("Something went wrong", "Whoops!", "Sorry, but something went wrong. " +
                     "Please, raise an issue on github and describe what happened.");
         }
 
