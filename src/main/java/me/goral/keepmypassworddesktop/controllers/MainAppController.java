@@ -130,6 +130,11 @@ public class MainAppController {
                             System.out.println("Change scene");
                             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/logged.fxml"));
                             Parent root = loader.load();
+
+                            LoggedController loggedController = loader.getController();
+                            loggedController.setSecretKey(key);
+                            loggedController.setUnameLabel(uname);
+
                             Scene sc = new Scene(root);
                             String css = MainApp.class.getResource("styles/main.css").toExternalForm();
                             sc.getStylesheets().add(css);
@@ -175,9 +180,9 @@ public class MainAppController {
 
     public void changeBtnText() {
         if (!ConfUtil.checkIfConfigExists()) {
-            btnLogin.setText("Rejestracja");
+            btnLogin.setText("Register");
         } else {
-            btnLogin.setText("Logowanie");
+            btnLogin.setText("Log in");
             login = true;
         }
     }
