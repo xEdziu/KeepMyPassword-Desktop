@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
+import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -37,6 +38,38 @@ public class AlertsUtil {
 
         alert.showAndWait();
     }
+
+    public static void showDeleteDataDialog() throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Deleting all data");
+        alert.setHeaderText("You are about to wipe out all your data");
+        alert.setContentText("Are you sure?");
+        alert.getButtonTypes().clear();
+        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/warning-64.png").toString()));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        ButtonType confirm = new ButtonType("Wipe data", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(confirm, cancel);
+
+        Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
+        Node btnCancel = alert.getDialogPane().lookupButton(cancel);
+
+        btnConfirm.getStyleClass().add("btn");
+        btnCancel.getStyleClass().add("btn");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == confirm) {
+            DatabaseHandler.truncateData();
+            showInformationDialog("Information Dialog", "Data cleared", "All your passwords have been deleted.\n" +
+                    "Have a great day!");
+        }
+    }
+
 
     public static void showLogoutDialog() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

@@ -70,6 +70,17 @@ public class DatabaseHandler {
         }
     }
 
+    public static void truncateData() {
+        String sql = "DELETE FROM main;";
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement()){
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static List<List<String>> selectPasswords(){
         String sql = "SELECT desc, login, pwd, iv FROM main";
         List<List<String>> results = new ArrayList<>();

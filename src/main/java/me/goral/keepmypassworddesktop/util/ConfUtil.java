@@ -1,12 +1,5 @@
 package me.goral.keepmypassworddesktop.util;
 
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
 import java.io.*;

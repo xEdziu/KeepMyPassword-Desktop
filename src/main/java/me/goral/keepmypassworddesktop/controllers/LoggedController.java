@@ -2,20 +2,11 @@ package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
-import me.goral.keepmypassworddesktop.util.ConfUtil;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -47,6 +38,11 @@ public class LoggedController {
         key = null;
         unameLabel.setText("");
         AlertsUtil.showDeleteAccountDialog();
+    }
+
+    @FXML
+    private void onDeleteDataClick() throws IOException {
+        AlertsUtil.showDeleteDataDialog();
     }
 
     @FXML
