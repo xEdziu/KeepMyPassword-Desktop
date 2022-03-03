@@ -18,6 +18,7 @@ import me.goral.keepmypassworddesktop.util.*;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
 
@@ -109,8 +110,11 @@ public class MainAppController {
                             Parent root = loader.load();
 
                             LoggedController loggedController = loader.getController();
+                            System.out.println("BEFORE RECEIVING KEY");
+                            System.out.println(Arrays.toString(key.getEncoded()));
                             loggedController.setSecretKey(key);
                             loggedController.setUnameLabel(uname);
+
 
                             Scene sc = new Scene(root);
                             String css = MainApp.class.getResource("styles/main.css").toExternalForm();
@@ -123,6 +127,7 @@ public class MainAppController {
                         onLoginButtonClick();
                     }
                 } catch (Exception e) {
+                    System.out.println("test");
                     AlertsUtil.showExceptionStackTraceDialog(e);
                 }
             } else {

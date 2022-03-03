@@ -1,6 +1,8 @@
 package me.goral.keepmypassworddesktop.util;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,8 +16,14 @@ import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 public class AlertsUtil {
@@ -212,5 +220,89 @@ public class AlertsUtil {
         alert.getDialogPane().setExpandableContent(expContent);
 
         alert.showAndWait();
+    }
+
+    public static void showAddPasswordDialog(SecretKey key) {
+        Dialog<List<String>> dialog = new Dialog<>();
+        dialog.setTitle("Adding new password");
+        dialog.setHeaderText("Fulfill form to add password to your database:");
+        dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/add-key-64.png").toString()));
+        dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        dialog.getDialogPane().getButtonTypes().clear();
+
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().setAll(addButtonType, cancelButtonType);
+        Node addBtn = dialog.getDialogPane().lookupButton(addButtonType);
+        Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
+        addBtn.getStyleClass().add("btn");
+        cancelBtn.getStyleClass().add("btn");
+        addBtn.setDisable(true);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField description = new TextField();
+        description.setPromptText("Description");
+        TextField username = new TextField();
+        username.setPromptText("Username");
+        TextField password = new TextField();
+        password.setPromptText("Password");
+
+        grid.add(new Label("Description"), 0, 0);
+        grid.add(description, 1, 0);
+        grid.add(new Label("Username"),0, 1);
+        grid.add(username, 1,1);
+        grid.add(new Label("Password"), 0, 2);
+        grid.add(password, 1, 2);
+
+        username.textProperty().addListener(((observable, oldV, newV) -> addBtn.setDisable(newV.trim().isEmpty())));
+
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(description::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == addButtonType){
+                List<String> r = new ArrayList<>();
+                r.add(description.getText());
+                r.add(username.getText());
+                r.add(password.getText());
+                return r;
+            }
+            return null;
+        });
+
+        Optional<List<String>> res = dialog.showAndWait();
+        res.ifPresent(result -> {
+            String descPlain = result.get(0);
+            String unamePlain = result.get(1);
+            String passPlain = result.get(2);
+            String alg = "AES/CBC/PKCS5Padding";
+
+            try {
+                IvParameterSpec iv = AESUtil.generateIv();
+
+                String descEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, descPlain, key, iv).getBytes(StandardCharsets.UTF_8));
+                String unameEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, unamePlain, key, iv).getBytes(StandardCharsets.UTF_8));
+                String passEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, passPlain, key, iv).getBytes(StandardCharsets.UTF_8));
+                String ivString = Base64.getEncoder().encodeToString(iv.getIV());
+
+                if (DatabaseHandler.insertPassword(descEnc, unameEnc, passEnc, ivString)) {
+                    showInformationDialog("Confirmation Dialog", "Password added",
+                            "Your password has been added to database");
+                } else {
+                    showErrorDialog("Error dialog", "Something wrong happened",
+                            "Please report that error to github, so that developer can repair it as soon as possible");
+                }
+
+            } catch (Exception e){
+                showExceptionStackTraceDialog(e);
+            }
+        });
     }
 }

@@ -11,6 +11,7 @@ import me.goral.keepmypassworddesktop.util.AlertsUtil;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class LoggedController {
     @FXML private TableColumn<PasswordRow, String> descColumn;
     @FXML private TableColumn<PasswordRow, String> loginColumn;
     @FXML private TableColumn<PasswordRow, String> pwdColumn;
+    @FXML private TableColumn<PasswordRow, String> ivColumn;
     @FXML private Label unameLabel;
     private SecretKey key;
 
@@ -28,8 +30,21 @@ public class LoggedController {
         descColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Description"));
         loginColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Login"));
         pwdColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Password"));
+        ivColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("IV"));
+        ivColumn.setVisible(false);
+
+        System.out.println("AFTER RECEIVING KEY");
+        System.out.println(key);
 
         refreshContentTable();
+    }
+
+    @FXML
+    private void onAddClick(){
+        System.out.println("KEY ON ADD");
+        System.out.println(Arrays.toString(key.getEncoded()));
+        //AlertsUtil.showAddPasswordDialog(key);
+        //refreshContentTable();
     }
 
     @FXML
@@ -42,6 +57,7 @@ public class LoggedController {
     @FXML
     private void onDeleteDataClick() {
         AlertsUtil.showDeleteDataDialog();
+        refreshContentTable();
     }
 
     @FXML
@@ -56,6 +72,7 @@ public class LoggedController {
     }
 
     public void setSecretKey(SecretKey k){
+        System.out.println("EXCHANGE");
         key = k;
     }
 
@@ -75,6 +92,8 @@ public class LoggedController {
                     String pwdEnc = r.get(2);
                     String ivEnc = r.get(3);
                     IvParameterSpec iv = new IvParameterSpec(Base64.getDecoder().decode(ivEnc));
+
+                    System.out.println(key);
 
                     //decrypt data from database
                     String descDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(descEnc)), key, iv);
@@ -99,13 +118,13 @@ public class LoggedController {
         private final SimpleStringProperty desc;
         private final SimpleStringProperty login;
         private final SimpleStringProperty pwd;
-        private final String iv;
+        private final SimpleStringProperty iv;
 
         private PasswordRow(String desc, String login, String pwd, String iv){
             this.desc = new SimpleStringProperty(desc);
             this.login = new SimpleStringProperty(login);
             this.pwd = new SimpleStringProperty(pwd);
-            this.iv = iv;
+            this.iv = new SimpleStringProperty(iv);
         }
 
         public String getDesc() {
@@ -133,7 +152,15 @@ public class LoggedController {
         }
 
         public String getIv() {
+            return iv.get();
+        }
+
+        public SimpleStringProperty ivProperty() {
             return iv;
+        }
+
+        public void setIv(String iv) {
+            this.iv.set(iv);
         }
     }
 }
