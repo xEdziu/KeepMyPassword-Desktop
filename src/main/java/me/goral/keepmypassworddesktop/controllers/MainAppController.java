@@ -18,9 +18,8 @@ import me.goral.keepmypassworddesktop.util.*;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 import static me.goral.keepmypassworddesktop.util.AlertsUtil.showErrorDialog;
 import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFile;
@@ -31,6 +30,14 @@ public class MainAppController {
 
     @FXML
     Button btnLogin;
+    @FXML
+    Label dateLabel;
+
+    @FXML
+    private void initialize(){
+        LocalDate l = LocalDate.now();
+        dateLabel.setText(String.valueOf(l.getYear()));
+    }
 
 
     @FXML
