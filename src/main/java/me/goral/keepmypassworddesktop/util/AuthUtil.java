@@ -18,7 +18,7 @@ public class AuthUtil {
         String ivString = Base64.getEncoder().encodeToString(iv.getIV());
         String encryptedInitial = hashSHA(AESUtil.encrypt("AES/CBC/PKCS5Padding", initialValue, key, iv));
 
-        return  initialValue+":"+encryptedInitial+":"+ivString;
+        return  encryptedInitial+":"+ivString;
     }
 
     public static boolean authorize(String encryptedInitial, String ivString, SecretKey key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {

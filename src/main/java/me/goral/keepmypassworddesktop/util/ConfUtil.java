@@ -21,7 +21,6 @@ public class ConfUtil {
         try {
             File f = new File("conf.conf");
             if(f.createNewFile()){
-                System.out.println("File created");
                 writeConfFile(init);
                 DatabaseHandler.createDatabase();
                 DatabaseHandler.createMainTable();

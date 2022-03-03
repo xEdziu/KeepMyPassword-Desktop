@@ -93,13 +93,13 @@ public class MainAppController {
                     String config = ConfUtil.readConfigFile();
                     String[] configArr = config.split(":");
                     String unameFromString = configArr[0];
-                    String encryptedInitial = configArr[2];
-                    String ivString = configArr[3];
-                    String salt = configArr[4];
+                    String encryptedInitial = configArr[1];
+                    String ivString = configArr[2];
+                    String salt = configArr[3];
                     String argon = ArgonUtil.encrypt(plain, salt);
                     SecretKey key = AESUtil.generateKey(argon);
 
-                    if (uname.equals(unameFromString)){
+                    if (SHAUtil.hashSHA(uname).equals(unameFromString)){
                         boolean authorized = AuthUtil.authorize(encryptedInitial, ivString, key);
                         if (!authorized){
                             showErrorDialog("Error", "Invalid username or password",
@@ -136,7 +136,7 @@ public class MainAppController {
                     SecretKey key = AESUtil.generateKey(argon);
                     String init = AuthUtil.encryptInitial(key, iv);
 
-                    String output = uname + ":" + init + ":" + salt;
+                    String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt;
                     createConfFile(output);
                     login = true;
                     handleAppRun();
