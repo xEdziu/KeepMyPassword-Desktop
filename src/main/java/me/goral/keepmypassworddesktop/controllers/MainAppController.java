@@ -39,7 +39,6 @@ public class MainAppController {
         dateLabel.setText(String.valueOf(l.getYear()));
     }
 
-
     @FXML
     protected void onLoginButtonClick() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();

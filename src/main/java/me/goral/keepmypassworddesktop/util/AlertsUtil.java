@@ -246,7 +246,6 @@ public class AlertsUtil {
         Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
         addBtn.getStyleClass().add("btn");
         cancelBtn.getStyleClass().add("btn");
-        addBtn.setDisable(true);
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -266,8 +265,6 @@ public class AlertsUtil {
         grid.add(username, 1,1);
         grid.add(new Label("Password"), 0, 2);
         grid.add(password, 1, 2);
-
-        username.textProperty().addListener(((observable, oldV, newV) -> addBtn.setDisable(newV.trim().isEmpty())));
 
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(description::requestFocus);
