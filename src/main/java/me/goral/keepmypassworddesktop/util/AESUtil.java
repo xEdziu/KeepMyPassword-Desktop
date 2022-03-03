@@ -10,17 +10,12 @@ public class AESUtil {
 
     //use "AES/CBC/PKCS5Padding" algorithm
 
-    public static String encrypt(String algorithm, String input, SecretKey key, IvParameterSpec iv) {
-        try {
-            Cipher cipher = Cipher.getInstance(algorithm);
-            cipher.init(Cipher.ENCRYPT_MODE, key, iv);
-            byte[] cipherText = cipher.doFinal(input.getBytes());
-            return Base64.getEncoder()
+    public static String encrypt(String algorithm, String input, SecretKey key, IvParameterSpec iv) throws InvalidAlgorithmParameterException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException {
+        Cipher cipher = Cipher.getInstance(algorithm);
+        cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+        byte[] cipherText = cipher.doFinal(input.getBytes());
+        return Base64.getEncoder()
                     .encodeToString(cipherText);
-        } catch (Exception e){
-            AlertsUtil.showExceptionStackTraceDialog(e);
-        }
-        return null;
     }
 
     public static String decrypt(String algorithm, String cipherText, SecretKey key, IvParameterSpec iv) {

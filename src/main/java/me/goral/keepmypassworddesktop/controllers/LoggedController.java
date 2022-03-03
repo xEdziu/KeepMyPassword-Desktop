@@ -3,7 +3,6 @@ package me.goral.keepmypassworddesktop.controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
@@ -11,40 +10,40 @@ import me.goral.keepmypassworddesktop.util.AlertsUtil;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
 public class LoggedController {
 
     @FXML private TableView<PasswordRow> contentTable;
-    @FXML private TableColumn<PasswordRow, String> descColumn;
-    @FXML private TableColumn<PasswordRow, String> loginColumn;
-    @FXML private TableColumn<PasswordRow, String> pwdColumn;
-    @FXML private TableColumn<PasswordRow, String> ivColumn;
+    @FXML private TableColumn<PasswordRow, String> descColumn = new TableColumn<>("Description");
+    @FXML private TableColumn<PasswordRow, String> loginColumn = new TableColumn<>("Login");
+    @FXML private TableColumn<PasswordRow, String> pwdColumn = new TableColumn<>("Password");
+    @FXML private TableColumn<PasswordRow, String> ivColumn = new TableColumn<>("IV");
     @FXML private Label unameLabel;
     private SecretKey key;
 
     @FXML
     private void initialize() {
-        descColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Description"));
-        loginColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Login"));
-        pwdColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("Password"));
-        ivColumn.setCellValueFactory(new PropertyValueFactory<PasswordRow, String>("IV"));
+        descColumn.setCellValueFactory(
+                p -> new SimpleStringProperty(p.getValue().getDesc())
+        );
+        loginColumn.setCellValueFactory(
+                p -> new SimpleStringProperty(p.getValue().getLogin())
+        );
+        pwdColumn.setCellValueFactory(
+                p -> new SimpleStringProperty(p.getValue().getPwd())
+        );
+        ivColumn.setCellValueFactory(
+                p -> new SimpleStringProperty(p.getValue().getIv())
+        );
         ivColumn.setVisible(false);
-
-        System.out.println("AFTER RECEIVING KEY");
-        System.out.println(key);
-
-        refreshContentTable();
     }
 
     @FXML
     private void onAddClick(){
-        System.out.println("KEY ON ADD");
-        System.out.println(Arrays.toString(key.getEncoded()));
-        //AlertsUtil.showAddPasswordDialog(key);
-        //refreshContentTable();
+        AlertsUtil.showAddPasswordDialog(key);
+        refreshContentTable();
     }
 
     @FXML
@@ -72,8 +71,8 @@ public class LoggedController {
     }
 
     public void setSecretKey(SecretKey k){
-        System.out.println("EXCHANGE");
         key = k;
+        refreshContentTable();
     }
 
     public void setUnameLabel(String uname) {
@@ -92,8 +91,6 @@ public class LoggedController {
                     String pwdEnc = r.get(2);
                     String ivEnc = r.get(3);
                     IvParameterSpec iv = new IvParameterSpec(Base64.getDecoder().decode(ivEnc));
-
-                    System.out.println(key);
 
                     //decrypt data from database
                     String descDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(descEnc)), key, iv);

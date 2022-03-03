@@ -16,11 +16,17 @@ import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -284,12 +290,13 @@ public class AlertsUtil {
             String passPlain = result.get(2);
             String alg = "AES/CBC/PKCS5Padding";
 
-            try {
-                IvParameterSpec iv = AESUtil.generateIv();
+            IvParameterSpec iv = AESUtil.generateIv();
 
-                String descEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, descPlain, key, iv).getBytes(StandardCharsets.UTF_8));
-                String unameEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, unamePlain, key, iv).getBytes(StandardCharsets.UTF_8));
-                String passEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, passPlain, key, iv).getBytes(StandardCharsets.UTF_8));
+            try {
+                String descEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, descPlain, key, iv).getBytes());
+                String unameEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, unamePlain, key, iv).getBytes());
+                String passEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, passPlain, key, iv).getBytes());
+
                 String ivString = Base64.getEncoder().encodeToString(iv.getIV());
 
                 if (DatabaseHandler.insertPassword(descEnc, unameEnc, passEnc, ivString)) {
@@ -299,8 +306,7 @@ public class AlertsUtil {
                     showErrorDialog("Error dialog", "Something wrong happened",
                             "Please report that error to github, so that developer can repair it as soon as possible");
                 }
-
-            } catch (Exception e){
+            } catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException e) {
                 showExceptionStackTraceDialog(e);
             }
         });

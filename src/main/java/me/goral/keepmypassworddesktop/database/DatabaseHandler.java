@@ -12,7 +12,6 @@ public class DatabaseHandler {
         String url = "jdbc:sqlite:database.db";
         try {
             conn = DriverManager.getConnection(url);
-            System.out.println("Connection established");
         } catch (SQLException e) {
             AlertsUtil.showExceptionStackTraceDialog(e);
         }
@@ -24,8 +23,6 @@ public class DatabaseHandler {
         try (Connection conn = connect()) {
             if (conn != null){
                 DatabaseMetaData metaData = conn.getMetaData();
-                System.out.println("DB driver name: " + metaData.getDriverName());
-                System.out.println("Database created");
             }
         } catch (SQLException e) {
             AlertsUtil.showExceptionStackTraceDialog(e);
@@ -45,7 +42,6 @@ public class DatabaseHandler {
         try (Connection conn = connect();
             Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Main table created");
         } catch (SQLException e) {
             AlertsUtil.showExceptionStackTraceDialog(e);
         }
@@ -60,10 +56,7 @@ public class DatabaseHandler {
             preparedStatement.setString(3, pwd);
             preparedStatement.setString(4, iv);
             int res = preparedStatement.executeUpdate();
-            if (res == 1){
-                System.out.println("Password inserted into database");
-                return true;
-            }
+            if (res == 1) return true;
         } catch (SQLException e){
             AlertsUtil.showExceptionStackTraceDialog(e);
         }

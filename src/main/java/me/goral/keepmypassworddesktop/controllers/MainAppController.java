@@ -110,11 +110,8 @@ public class MainAppController {
                             Parent root = loader.load();
 
                             LoggedController loggedController = loader.getController();
-                            System.out.println("BEFORE RECEIVING KEY");
-                            System.out.println(Arrays.toString(key.getEncoded()));
                             loggedController.setSecretKey(key);
                             loggedController.setUnameLabel(uname);
-
 
                             Scene sc = new Scene(root);
                             String css = MainApp.class.getResource("styles/main.css").toExternalForm();
@@ -127,7 +124,6 @@ public class MainAppController {
                         onLoginButtonClick();
                     }
                 } catch (Exception e) {
-                    System.out.println("test");
                     AlertsUtil.showExceptionStackTraceDialog(e);
                 }
             } else {
@@ -142,7 +138,6 @@ public class MainAppController {
 
                     String output = uname + ":" + init + ":" + salt;
                     createConfFile(output);
-                    System.out.println("Finished registration");
                     login = true;
                     handleAppRun();
                     onLoginButtonClick();

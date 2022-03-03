@@ -26,7 +26,7 @@ public class ConfUtil {
                 DatabaseHandler.createDatabase();
                 DatabaseHandler.createMainTable();
             } else {
-                System.out.println("File already exists");
+                AlertsUtil.showErrorDialog("Error Dialog", "Whoops!", "Configuration file already exists");
             }
         } catch (IOException e) {
             AlertsUtil.showExceptionStackTraceDialog(e);
@@ -56,7 +56,6 @@ public class ConfUtil {
         try {
             File f = new File("conf.conf");
             if (f.delete()){
-                System.out.println("Conf File deleted");
                 File db = new File("database.db");
                 if (db.delete()){
                     showInformationDialog("Information Dialog", "Your account is now deleted", "Have a great day!");
