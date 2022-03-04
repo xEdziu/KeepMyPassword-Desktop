@@ -14,15 +14,17 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import me.goral.keepmypassworddesktop.MainApp;
+import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.*;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 
 import static me.goral.keepmypassworddesktop.util.AlertsUtil.showErrorDialog;
-import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFile;
+import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFiles;
 
 public class MainAppController {
 
@@ -143,7 +145,7 @@ public class MainAppController {
                     String init = AuthUtil.encryptInitial(key, iv);
 
                     String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt;
-                    createConfFile(output);
+                    createConfFiles(output);
                     login = true;
                     handleAppRun();
                     onLoginButtonClick();
@@ -160,8 +162,16 @@ public class MainAppController {
     }
 
     public void handleAppRun() {
-        if (!ConfUtil.checkIfConfigExists()) {
+        if (!ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()) {
             btnLogin.setText("Register");
+        } else if (ConfUtil.checkIfDatabaseExists() && !ConfUtil.checkIfConfigExists()) {
+            File db = new File("database.db");
+            db.delete();
+            btnLogin.setText("Register");
+        } else if (ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()){
+            DatabaseHandler.createDatabase();
+            btnLogin.setText("Log in");
+            login = true;
         } else {
             btnLogin.setText("Log in");
             login = true;

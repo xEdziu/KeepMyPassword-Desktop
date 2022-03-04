@@ -13,11 +13,15 @@ public class ConfUtil {
 
     public static boolean checkIfConfigExists(){
         File tmp = new File("conf.conf");
-        File database = new File("database.db");
-        return tmp.exists() && database.exists();
+        return tmp.exists();
     }
 
-    public static void createConfFile(String init) {
+    public static boolean checkIfDatabaseExists(){
+        File database = new File("database.db");
+        return database.exists();
+    }
+
+    public static void createConfFiles(String init) {
         try {
             File f = new File("conf.conf");
             if(f.createNewFile()){
