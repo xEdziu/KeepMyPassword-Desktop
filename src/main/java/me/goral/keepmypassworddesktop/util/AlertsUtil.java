@@ -40,7 +40,14 @@ public class AlertsUtil {
         alert.setContentText(errBody);
         alert.getButtonTypes().clear();
         alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/error-64.png").toString()));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        ButtonType btnConfirm = new ButtonType("OK");
+        alert.getDialogPane().getButtonTypes().add(btnConfirm);
+
+        Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
+        confirm.getStyleClass().add("btn");
         alert.showAndWait();
     }
 
