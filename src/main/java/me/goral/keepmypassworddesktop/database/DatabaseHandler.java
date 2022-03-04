@@ -94,4 +94,21 @@ public class DatabaseHandler {
         }
         return results;
     }
+
+    public static void updatePassword(String desc, String login, String pwd, String ivNew, String ivOld) throws SQLException {
+        String sql = "UPDATE main SET " +
+                "desc = ?, login = ?, pwd = ?, iv = ? " +
+                "WHERE iv = ?;";
+        try (Connection conn = connect()){
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, desc);
+            preparedStatement.setString(2, login);
+            preparedStatement.setString(3, pwd);
+            preparedStatement.setString(4, ivNew);
+            preparedStatement.setString(5, ivOld);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
+    }
 }
