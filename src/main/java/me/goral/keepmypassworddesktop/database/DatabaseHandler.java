@@ -111,4 +111,17 @@ public class DatabaseHandler {
             AlertsUtil.showExceptionStackTraceDialog(e);
         }
     }
+
+    public static boolean deletePassword(String iv) throws SQLException {
+        String sql = "DELETE FROM main WHERE iv = ?";
+        try (Connection conn = connect()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, iv);
+            int res = stmt.executeUpdate();
+            if (res == 1) return true;
+        } catch (SQLException e){
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
+        return false;
+    }
 }

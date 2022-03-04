@@ -129,7 +129,7 @@ public class AlertsUtil {
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
-        ButtonType btnConfirm = new ButtonType("Great");
+        ButtonType btnConfirm = new ButtonType("OK");
         alert.getDialogPane().getButtonTypes().add(btnConfirm);
 
         Node confirm = alert.getDialogPane().lookupButton(btnConfirm);

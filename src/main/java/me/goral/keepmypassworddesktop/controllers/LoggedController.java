@@ -1,6 +1,10 @@
 package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
@@ -9,6 +13,7 @@ import me.goral.keepmypassworddesktop.util.AlertsUtil;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -44,6 +49,30 @@ public class LoggedController {
     private void onAddClick(){
         AlertsUtil.showAddPasswordDialog(key);
         refreshContentTable();
+    }
+
+    @FXML
+    private void onRemoveClick(){
+        PasswordRow row = contentTable.getSelectionModel().getSelectedItem();
+        if (row != null){
+            String iv = row.getIv();
+            try {
+                if (DatabaseHandler.deletePassword(iv)){
+                    refreshContentTable();
+                } else {
+                    AlertsUtil.showErrorDialog("Error Alert",
+                            "Sorry. Something went wrong while deleting your password",
+                            "Please report that error to github, so that developer can repair it as soon as possible:\n" +
+                                    "https://github.com/xEdziu/KeepMyPassword-Desktop/issues/new/choose");
+                }
+
+            } catch (SQLException e) {
+                AlertsUtil.showExceptionStackTraceDialog(e);
+            }
+        } else {
+            AlertsUtil.showInformationDialog("No item selected", "Wait a minute..",
+                    "You haven't selected any item to remove!");
+        }
     }
 
     @FXML
