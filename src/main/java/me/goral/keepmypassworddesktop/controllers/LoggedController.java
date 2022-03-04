@@ -1,12 +1,10 @@
 package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
@@ -43,6 +41,10 @@ public class LoggedController {
                 p -> new SimpleStringProperty(p.getValue().getIv())
         );
         ivColumn.setVisible(false);
+
+        descColumn.setResizable(false);
+        loginColumn.setResizable(false);
+        pwdColumn.setResizable(false);
     }
 
     @FXML
