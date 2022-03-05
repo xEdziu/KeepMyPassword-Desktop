@@ -10,19 +10,14 @@
 
 - java >= 17.0.2
 
-[Java Download](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-
-## Running project through terminal
-
-```sh
-java -jar KeepMyPassword-Desktop-1.0.0.jar
-```
+## [Instalation guide](https://github.com/xEdziu/KeepMyPassword-Desktop/wiki/Installation-guide)
 
 ## Author
 
 👤 **Adrian Goral**
 
 * Github: [@xEdziu](https://github.com/xEdziu)
+* Facebook: [Adrian Goral](https://www.facebook.com/adrian.goral.6)
 
 ## 🤝 Contributing
 
