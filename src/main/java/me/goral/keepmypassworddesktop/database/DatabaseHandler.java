@@ -74,7 +74,7 @@ public class DatabaseHandler {
     }
 
     public static List<List<String>> selectPasswords(){
-        String sql = "SELECT desc, login, pwd, iv FROM main";
+        String sql = "SELECT id, desc, login, pwd, iv FROM main";
         List<List<String>> results = new ArrayList<>();
         try (Connection conn = connect();
         Statement stmt = conn.createStatement();
@@ -82,6 +82,8 @@ public class DatabaseHandler {
 
             while (rs.next()){
                 List<String> single = new ArrayList<>();
+                int id = rs.getInt("id");
+                single.add(String.valueOf(id));
                 single.add(rs.getString("desc"));
                 single.add(rs.getString("login"));
                 single.add(rs.getString("pwd"));
@@ -95,21 +97,24 @@ public class DatabaseHandler {
         return results;
     }
 
-    public static void updatePassword(String desc, String login, String pwd, String ivNew, String ivOld) throws SQLException {
+    public static boolean updatePassword(String desc, String login, String pwd, String iv, int id) {
         String sql = "UPDATE main SET " +
                 "desc = ?, login = ?, pwd = ?, iv = ? " +
-                "WHERE iv = ?;";
+                "WHERE id = ?;";
         try (Connection conn = connect()){
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, desc);
             preparedStatement.setString(2, login);
             preparedStatement.setString(3, pwd);
-            preparedStatement.setString(4, ivNew);
-            preparedStatement.setString(5, ivOld);
-            preparedStatement.executeUpdate();
+            preparedStatement.setString(4, iv);
+            preparedStatement.setInt(5, id);
+            int res = preparedStatement.executeUpdate();
+            if (res == 1) return true;
+            else System.out.println(res);
         } catch (SQLException e) {
             AlertsUtil.showExceptionStackTraceDialog(e);
         }
+        return false;
     }
 
     public static boolean deletePassword(String iv) throws SQLException {

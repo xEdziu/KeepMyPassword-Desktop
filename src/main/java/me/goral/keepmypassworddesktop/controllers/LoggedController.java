@@ -3,8 +3,6 @@ package me.goral.keepmypassworddesktop.controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
-import javafx.util.Callback;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
@@ -19,6 +17,7 @@ import java.util.List;
 public class LoggedController {
 
     @FXML private TableView<PasswordRow> contentTable;
+    @FXML private TableColumn<PasswordRow, String> idColumn = new TableColumn<>("id");
     @FXML private TableColumn<PasswordRow, String> descColumn = new TableColumn<>("Description");
     @FXML private TableColumn<PasswordRow, String> loginColumn = new TableColumn<>("Login");
     @FXML private TableColumn<PasswordRow, String> pwdColumn = new TableColumn<>("Password");
@@ -28,6 +27,9 @@ public class LoggedController {
 
     @FXML
     private void initialize() {
+        idColumn.setCellValueFactory(
+                p -> new SimpleStringProperty(p.getValue().getId())
+        );
         descColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getDesc())
         );
@@ -45,6 +47,20 @@ public class LoggedController {
         descColumn.setResizable(false);
         loginColumn.setResizable(false);
         pwdColumn.setResizable(false);
+
+        contentTable.setRowFactory( tv -> {
+            TableRow<PasswordRow> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())){
+                    PasswordRow rowData = row.getItem();
+                    int id = Integer.parseInt(rowData.getId());
+                    AlertsUtil.showUpdatePasswordDialog(id, rowData.getDesc(),rowData.getLogin(),
+                            rowData.getPwd(), key, rowData.getIv());
+                    refreshContentTable();
+                }
+            });
+            return row;
+        });
     }
 
     @FXML
@@ -117,10 +133,11 @@ public class LoggedController {
         try {
             if (!passwordsFromDb.isEmpty()) {
                 for (List<String> r : passwordsFromDb){
-                    String descEnc = r.get(0);
-                    String loginEnc = r.get(1);
-                    String pwdEnc = r.get(2);
-                    String ivEnc = r.get(3);
+                    String id = r.get(0);
+                    String descEnc = r.get(1);
+                    String loginEnc = r.get(2);
+                    String pwdEnc = r.get(3);
+                    String ivEnc = r.get(4);
                     IvParameterSpec iv = new IvParameterSpec(Base64.getDecoder().decode(ivEnc));
 
                     //decrypt data from database
@@ -129,7 +146,7 @@ public class LoggedController {
                     String pwdDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(pwdEnc)), key, iv);
 
                     //add decrypted things to new PasswordRow
-                    PasswordRow pr = new PasswordRow(descDec, loginDec, pwdDec, ivEnc);
+                    PasswordRow pr = new PasswordRow(id, descDec, loginDec, pwdDec, ivEnc);
 
                     //new PasswordRow to list
                     list.add(pr);
@@ -143,16 +160,26 @@ public class LoggedController {
     }
 
     public static class PasswordRow {
+        private final SimpleStringProperty id;
         private final SimpleStringProperty desc;
         private final SimpleStringProperty login;
         private final SimpleStringProperty pwd;
         private final SimpleStringProperty iv;
 
-        private PasswordRow(String desc, String login, String pwd, String iv){
+        private PasswordRow(String id, String desc, String login, String pwd, String iv){
+            this.id = new SimpleStringProperty(id);
             this.desc = new SimpleStringProperty(desc);
             this.login = new SimpleStringProperty(login);
             this.pwd = new SimpleStringProperty(pwd);
             this.iv = new SimpleStringProperty(iv);
+        }
+
+        public String getId() {
+            return id.get();
+        }
+
+        public void setId(String id) {
+            this.id.set(id);
         }
 
         public String getDesc() {

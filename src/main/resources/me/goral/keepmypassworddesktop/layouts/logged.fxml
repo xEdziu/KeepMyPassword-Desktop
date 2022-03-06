@@ -7,10 +7,11 @@
    <children>
       <TableView fx:id="contentTable" layoutX="25.0" layoutY="150.0" prefHeight="287.0" prefWidth="465.0">
         <columns>
-          <TableColumn fx:id="descColumn" prefWidth="155.0" text="Description" />
-          <TableColumn fx:id="loginColumn" prefWidth="155.0" text="Login" />
+            <TableColumn fx:id="idColumn" prefWidth="0" text="id" />
+            <TableColumn fx:id="descColumn" prefWidth="155.0" text="Description" />
+            <TableColumn fx:id="loginColumn" prefWidth="155.0" text="Login" />
             <TableColumn fx:id="pwdColumn" prefWidth="155.0" text="Password" />
-            <TableColumn fx:id="ivColumn" prefWidth="0" text="Password" />
+            <TableColumn fx:id="ivColumn" prefWidth="0" text="iv" />
         </columns>
       </TableView>
       <Button layoutX="503.0" layoutY="169.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Add" onAction="#onAddClick" />

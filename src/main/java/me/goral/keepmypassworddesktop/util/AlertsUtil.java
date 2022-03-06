@@ -314,4 +314,85 @@ public class AlertsUtil {
             }
         });
     }
+
+    public static void showUpdatePasswordDialog(int id, String desc, String login, String pwd, SecretKey key, String iv) {
+        Dialog<List<String>> dialog = new Dialog<>();
+        dialog.setTitle("Updating password");
+        dialog.setHeaderText("Fulfill form to update password in your database:");
+        dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/add-key-64.png").toString()));
+        dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        dialog.getDialogPane().getButtonTypes().clear();
+
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        ButtonType addButtonType = new ButtonType("Update", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().setAll(addButtonType, cancelButtonType);
+        Node addBtn = dialog.getDialogPane().lookupButton(addButtonType);
+        Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
+        addBtn.getStyleClass().add("btn");
+        cancelBtn.getStyleClass().add("btn");
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField description = new TextField();
+        description.setText(desc);
+        TextField username = new TextField();
+        username.setText(login);
+        TextField password = new TextField();
+        password.setText(pwd);
+
+        grid.add(new Label("Description"), 0, 0);
+        grid.add(description, 1, 0);
+        grid.add(new Label("Username"),0, 1);
+        grid.add(username, 1,1);
+        grid.add(new Label("Password"), 0, 2);
+        grid.add(password, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(description::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == addButtonType){
+                List<String> r = new ArrayList<>();
+                r.add(description.getText());
+                r.add(username.getText());
+                r.add(password.getText());
+                return r;
+            }
+            return null;
+        });
+
+        Optional<List<String>> res = dialog.showAndWait();
+        res.ifPresent(result -> {
+            String descPlain = result.get(0);
+            String unamePlain = result.get(1);
+            String passPlain = result.get(2);
+            String alg = "AES/CBC/PKCS5Padding";
+
+            IvParameterSpec ivSpec = AESUtil.generateIv();
+
+            try {
+                String descEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, descPlain, key, ivSpec).getBytes());
+                String unameEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, unamePlain, key, ivSpec).getBytes());
+                String passEnc = Base64.getEncoder().encodeToString(AESUtil.encrypt(alg, passPlain, key, ivSpec).getBytes());
+
+                String newIv = Base64.getEncoder().encodeToString(ivSpec.getIV());
+
+                if (DatabaseHandler.updatePassword(descEnc, unameEnc, passEnc, newIv, id)) {
+                    showInformationDialog("Confirmation Dialog", "Data updated",
+                            "Your credentials has been updated");
+                } else {
+                    showErrorDialog("Error dialog", "Something wrong happened",
+                            "Please report that error to github, so that developer can repair it as soon as possible");
+                }
+            } catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException e) {
+                showExceptionStackTraceDialog(e);
+            }
+        });
+    }
 }
