@@ -95,8 +95,6 @@ public class LoggedController {
 
     @FXML
     private void onDeleteAccountClick() {
-        key = null;
-        unameLabel.setText("");
         AlertsUtil.showDeleteAccountDialog();
     }
 
