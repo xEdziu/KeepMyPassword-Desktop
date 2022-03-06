@@ -108,8 +108,6 @@ public class LoggedController {
 
     @FXML
     private void onLogoutButtonClick() {
-        key = null;
-        unameLabel.setText("");
         AlertsUtil.showLogoutDialog();
     }
 
