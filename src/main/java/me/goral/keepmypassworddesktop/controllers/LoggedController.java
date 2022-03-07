@@ -73,9 +73,9 @@ public class LoggedController {
     private void onRemoveClick(){
         PasswordRow row = contentTable.getSelectionModel().getSelectedItem();
         if (row != null){
-            String iv = row.getIv();
+            String id = row.getId();
             try {
-                if (DatabaseHandler.deletePassword(iv)){
+                if (DatabaseHandler.deletePassword(id)){
                     refreshContentTable();
                 } else {
                     AlertsUtil.showErrorDialog("Error Alert",

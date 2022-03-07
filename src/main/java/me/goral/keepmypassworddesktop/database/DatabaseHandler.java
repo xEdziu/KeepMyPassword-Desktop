@@ -117,11 +117,11 @@ public class DatabaseHandler {
         return false;
     }
 
-    public static boolean deletePassword(String iv) throws SQLException {
-        String sql = "DELETE FROM main WHERE iv = ?";
+    public static boolean deletePassword(String id) throws SQLException {
+        String sql = "DELETE FROM main WHERE id = ?";
         try (Connection conn = connect()){
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, iv);
+            stmt.setString(1, id);
             int res = stmt.executeUpdate();
             if (res == 1) return true;
         } catch (SQLException e){
