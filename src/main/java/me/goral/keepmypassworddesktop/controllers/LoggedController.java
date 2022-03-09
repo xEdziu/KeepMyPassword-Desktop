@@ -3,6 +3,8 @@ package me.goral.keepmypassworddesktop.controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
@@ -11,6 +13,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -47,6 +50,50 @@ public class LoggedController {
         descColumn.setResizable(false);
         loginColumn.setResizable(false);
         pwdColumn.setResizable(false);
+
+        descColumn.setCellFactory(c -> new TableCell<>(){
+
+            private Text text = new Text();
+            {
+                prefWidthProperty().bind(descColumn.widthProperty());
+                text.wrappingWidthProperty().bind(widthProperty());
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    text.setText(item);
+                    setGraphic(text);
+                }
+            }
+        });
+//
+//        loginColumn.setCellFactory(column -> new TableCell<>() {
+//            @Override
+//            public void updateItem(String item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (!isEmpty()) {
+//                    Text text = new Text(item);
+//                    text.wrappingWidthProperty().bind(loginColumn.widthProperty());
+//                    setGraphic(text);
+//                }
+//            }
+//        });
+//
+//        pwdColumn.setCellFactory(column -> new TableCell<>() {
+//            @Override
+//            public void updateItem(String item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (!isEmpty()) {
+//                    Text text = new Text(item);
+//                    text.wrappingWidthProperty().bind(loginColumn.widthProperty());
+//                    setGraphic(text);
+//                }
+//            }
+//        });
 
         contentTable.setRowFactory( tv -> {
             TableRow<PasswordRow> row = new TableRow<>();
