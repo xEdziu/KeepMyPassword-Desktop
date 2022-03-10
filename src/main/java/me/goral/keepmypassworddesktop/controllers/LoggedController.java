@@ -5,10 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
@@ -17,7 +14,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -55,6 +51,8 @@ public class LoggedController {
         loginColumn.setResizable(false);
         pwdColumn.setResizable(false);
 
+        //TODO: make setCellFactory for all row
+
         descColumn.setCellFactory(c -> new TableCell<>() {
 
             private Text text = new Text();
@@ -70,7 +68,7 @@ public class LoggedController {
                     setGraphic(null);
                 } else {
                     text.setText(item);
-                    changeTableBackgroundOnHover(text);
+                    changeCellTextColorOnHover(text);
                     setGraphic(text);
                 }
             }
