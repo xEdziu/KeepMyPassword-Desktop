@@ -1,8 +1,12 @@
 package me.goral.keepmypassworddesktop.controllers;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
@@ -51,12 +55,12 @@ public class LoggedController {
         loginColumn.setResizable(false);
         pwdColumn.setResizable(false);
 
-        descColumn.setCellFactory(c -> new TableCell<>(){
+        descColumn.setCellFactory(c -> new TableCell<>() {
 
             private Text text = new Text();
             {
                 prefWidthProperty().bind(descColumn.widthProperty());
-                text.wrappingWidthProperty().bind(widthProperty());
+                text.wrappingWidthProperty().bind(widthProperty().subtract(2));
             }
 
             @Override
@@ -66,34 +70,53 @@ public class LoggedController {
                     setGraphic(null);
                 } else {
                     text.setText(item);
+                    changeTableBackgroundOnHover(text);
                     setGraphic(text);
                 }
             }
         });
-//
-//        loginColumn.setCellFactory(column -> new TableCell<>() {
-//            @Override
-//            public void updateItem(String item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (!isEmpty()) {
-//                    Text text = new Text(item);
-//                    text.wrappingWidthProperty().bind(loginColumn.widthProperty());
-//                    setGraphic(text);
-//                }
-//            }
-//        });
-//
-//        pwdColumn.setCellFactory(column -> new TableCell<>() {
-//            @Override
-//            public void updateItem(String item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (!isEmpty()) {
-//                    Text text = new Text(item);
-//                    text.wrappingWidthProperty().bind(loginColumn.widthProperty());
-//                    setGraphic(text);
-//                }
-//            }
-//        });
+
+        loginColumn.setCellFactory(c -> new TableCell<>() {
+
+            private Text text = new Text();
+            {
+                prefWidthProperty().bind(loginColumn.widthProperty());
+                text.wrappingWidthProperty().bind(widthProperty().subtract(2));
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    text.setText(item);
+                    changeCellTextColorOnHover(text);
+                    setGraphic(text);
+                }
+            }
+        });
+
+        pwdColumn.setCellFactory(c -> new TableCell<>() {
+
+            private Text text = new Text();
+            {
+                prefWidthProperty().bind(pwdColumn.widthProperty());
+                text.wrappingWidthProperty().bind(widthProperty().subtract(2));
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    text.setText(item);
+                    changeCellTextColorOnHover(text);
+                    setGraphic(text);
+                }
+            }
+        });
 
         contentTable.setRowFactory( tv -> {
             TableRow<PasswordRow> row = new TableRow<>();
@@ -108,6 +131,19 @@ public class LoggedController {
             });
             return row;
         });
+    }
+
+    private void changeCellTextColorOnHover(Node node) {
+        node.styleProperty().bind(
+                Bindings
+                        .when(node.hoverProperty())
+                        .then(
+                                new SimpleStringProperty("-fx-fill: #303033")
+                        )
+                        .otherwise(
+                                new SimpleStringProperty("-fx-fill: #AAA")
+                        )
+        );
     }
 
     @FXML
