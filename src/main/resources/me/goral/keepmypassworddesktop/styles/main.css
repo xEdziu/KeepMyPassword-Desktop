@@ -67,16 +67,21 @@
     -fx-padding: 2 0 2 10px;
 }
 
-.table-row-cell {
+.table-row-cell, .txt{
     -fx-background-color: #303033;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
     -fx-text-background-color: #AAA;
+    -fx-fill: #AAA;
 }
 
-.table-row-cell:hover {
+.table-row-cell:hover{
     -fx-background-color: #AAA;
     -fx-text-background-color: #303033;
+}
+
+.table-row-cell:hover  .txt {
+    -fx-fill: #303033;
 }
 
 .table-view .virtual-flow .scroll-bar:vertical,
@@ -109,4 +114,9 @@
 .table-row-cell:selected {
     -fx-background-color: #AAA;
     -fx-text-background-color: #303033;
+    -fx-fill: #303033;
+}
+
+.table-row-cell:selected .txt {
+    -fx-fill: #303033;
 }

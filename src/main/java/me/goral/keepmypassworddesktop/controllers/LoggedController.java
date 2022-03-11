@@ -51,8 +51,6 @@ public class LoggedController {
         loginColumn.setResizable(false);
         pwdColumn.setResizable(false);
 
-        //TODO: make setCellFactory for all row
-
         descColumn.setCellFactory(c -> new TableCell<>() {
 
             private Text text = new Text();
@@ -68,7 +66,7 @@ public class LoggedController {
                     setGraphic(null);
                 } else {
                     text.setText(item);
-                    changeCellTextColorOnHover(text);
+                    text.getStyleClass().add("txt");
                     setGraphic(text);
                 }
             }
@@ -89,7 +87,7 @@ public class LoggedController {
                     setGraphic(null);
                 } else {
                     text.setText(item);
-                    changeCellTextColorOnHover(text);
+                    text.getStyleClass().add("txt");
                     setGraphic(text);
                 }
             }
@@ -99,8 +97,8 @@ public class LoggedController {
 
             private Text text = new Text();
             {
-                prefWidthProperty().bind(pwdColumn.widthProperty());
-                text.wrappingWidthProperty().bind(widthProperty().subtract(2));
+                prefWidthProperty().bind(pwdColumn.widthProperty().subtract(12));
+                text.wrappingWidthProperty().bind(widthProperty());
             }
 
             @Override
@@ -110,7 +108,7 @@ public class LoggedController {
                     setGraphic(null);
                 } else {
                     text.setText(item);
-                    changeCellTextColorOnHover(text);
+                    text.getStyleClass().add("txt");
                     setGraphic(text);
                 }
             }
@@ -129,19 +127,6 @@ public class LoggedController {
             });
             return row;
         });
-    }
-
-    private void changeCellTextColorOnHover(Node node) {
-        node.styleProperty().bind(
-                Bindings
-                        .when(node.hoverProperty())
-                        .then(
-                                new SimpleStringProperty("-fx-fill: #303033")
-                        )
-                        .otherwise(
-                                new SimpleStringProperty("-fx-fill: #AAA")
-                        )
-        );
     }
 
     @FXML
