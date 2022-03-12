@@ -1,9 +1,7 @@
 package me.goral.keepmypassworddesktop.controllers;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
@@ -128,6 +126,12 @@ public class LoggedController {
             return row;
         });
     }
+
+    @FXML
+    private void onGenPwdClick(){
+        AlertsUtil.showGeneratePasswordDialog();
+    }
+
 
     @FXML
     private void onAddClick(){

@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
@@ -234,6 +236,151 @@ public class AlertsUtil {
         alert.showAndWait();
     }
 
+    public static void showGeneratePasswordDialog(){
+        Dialog<List<String>> dialog = new Dialog<>();
+        dialog.setTitle("Generating new password");
+        dialog.setHeaderText("Provide needed parameters:");
+        dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/add-key-64.png").toString()));
+        dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        dialog.getDialogPane().getButtonTypes().clear();
+
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        ButtonType generateButtonType = new ButtonType("Generate", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        dialog.getDialogPane().getButtonTypes().setAll(generateButtonType, cancelButtonType);
+        Node addBtn = dialog.getDialogPane().lookupButton(generateButtonType);
+        Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
+        addBtn.getStyleClass().add("btn");
+        cancelBtn.getStyleClass().add("btn");
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField length = new TextField();
+        length.setText("1");
+        TextField lowerNum = new TextField();
+        lowerNum.setText("0");
+        TextField upperNum = new TextField();
+        upperNum.setText("0");
+        TextField digitNum = new TextField();
+        digitNum.setText("0");
+        TextField specialNum = new TextField();
+        specialNum.setText("0");
+
+        grid.add(new Label("Length"), 0, 0);
+        grid.add(length, 1, 0);
+        grid.add(new Label("Number of lower case characters"),0, 1);
+        grid.add(lowerNum, 1,1);
+        grid.add(new Label("Number of upper case characters"), 0, 2);
+        grid.add(upperNum, 1, 2);
+        grid.add(new Label("Number of digits"),0, 3);
+        grid.add(digitNum, 1, 3);
+        grid.add(new Label("Number of special characters"), 0, 4);
+        grid.add(specialNum, 1, 4);
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == generateButtonType){
+                List<String> r = new ArrayList<>();
+                r.add(length.getText());
+                r.add(lowerNum.getText());
+                r.add(upperNum.getText());
+                r.add(digitNum.getText());
+                r.add(specialNum.getText());
+                return r;
+            }
+            return null;
+        });
+
+        Optional<List<String>> res = dialog.showAndWait();
+        res.ifPresent(result -> {
+            String len = result.get(0);
+            String lower = result.get(1);
+            String upper = result.get(2);
+            String digit = result.get(3);
+            String special = result.get(4);
+
+            int intLen, intLower, intUpper, intDigit, intSpecial;
+
+            if (isInteger(len)) intLen = Integer.parseInt(len);
+            else {
+                showErrorDialog("Error Dialog", "Whoops!", "Length parameter is not a number!");
+                return;
+            }
+
+            if (isInteger(lower)) intLower = Integer.parseInt(lower);
+            else {
+                showErrorDialog("Error Dialog", "Whoops!", "Lower characters parameter is not a number!");
+                return;
+            }
+
+            if (isInteger(upper)) intUpper = Integer.parseInt(upper);
+            else {
+                showErrorDialog("Error Dialog", "Whoops!", "Upper parameter is not a number!");
+                return;
+            }
+
+            if (isInteger(digit)) intDigit = Integer.parseInt(digit);
+            else {
+                showErrorDialog("Error Dialog", "Whoops!", "Digits parameter is not a number!");
+                return;
+            }
+
+
+            if (isInteger(special)) intSpecial = Integer.parseInt(special);
+            else {
+                showErrorDialog("Error Dialog", "Whoops!", "Special chars parameter is not a number!");
+                return;
+            }
+            String pwd = PasswordGeneratorUtil.generatePassword(intLen, intLower, intUpper, intDigit, intSpecial);
+            if (pwd != null) showGeneratedPasswordDialog(pwd);
+
+        });
+    }
+
+    public static void showGeneratedPasswordDialog(String pwd){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("New Password Dialog");
+        alert.setHeaderText("Here is your new password!");
+        alert.setContentText(pwd);
+        alert.getButtonTypes().clear();
+        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/information-64.png").toString()));
+
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        ButtonType btnConfirm = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType btnCopy = new ButtonType("Copy");
+        alert.getDialogPane().getButtonTypes().addAll(btnCopy, btnConfirm);
+
+        Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
+        Node copy = alert.getDialogPane().lookupButton(btnCopy);
+        confirm.getStyleClass().add("btn");
+        copy.getStyleClass().add("btn");
+
+        alert.setResultConverter(dialogButton -> {
+            if (dialogButton == btnCopy){
+                final Clipboard clipboard = Clipboard.getSystemClipboard();
+                final ClipboardContent clipboardContent = new ClipboardContent();
+                clipboardContent.putString(pwd);
+                clipboard.setContent(clipboardContent);
+                if (clipboard.hasString()){
+                    System.out.println(clipboard.getString());
+                }
+            }
+            return null;
+        });
+
+        alert.showAndWait();
+    }
+
     public static void showAddPasswordDialog(SecretKey key) {
         Dialog<List<String>> dialog = new Dialog<>();
         dialog.setTitle("Adding new password");
@@ -394,5 +541,29 @@ public class AlertsUtil {
                 showExceptionStackTraceDialog(e);
             }
         });
+    }
+
+    public static boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 }

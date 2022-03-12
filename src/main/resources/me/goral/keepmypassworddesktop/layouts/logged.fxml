@@ -14,13 +14,14 @@
             <TableColumn fx:id="ivColumn" prefWidth="0" text="iv" />
         </columns>
       </TableView>
-      <Button layoutX="503.0" layoutY="169.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Add" onAction="#onAddClick" />
-      <Button layoutX="503.0" layoutY="219.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Remove" onAction="#onRemoveClick" />
-      <Button layoutX="503.0" layoutY="269.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Delete Data" onAction="#onDeleteDataClick" />
-      <Button layoutX="503.0" layoutY="369.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Delete Account" onAction="#onDeleteAccountClick"/>
+      <Button layoutX="503.0" layoutY="213.0" mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="163.0" text="Add" />
+      <Button layoutX="503.0" layoutY="262.0" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="163.0" text="Remove" />
+      <Button layoutX="503.0" layoutY="312.0" mnemonicParsing="false" onAction="#onDeleteDataClick" prefHeight="25.0" prefWidth="163.0" text="Delete Data" />
+      <Button layoutX="503.0" layoutY="412.0" mnemonicParsing="false" onAction="#onDeleteAccountClick" prefHeight="25.0" prefWidth="163.0" text="Delete Account" />
       <Label fx:id="titleLabel" layoutY="20.0" prefHeight="17.0" prefWidth="700.0" text="Keep My Password" />
       <Label layoutY="80.0" prefHeight="17.0" prefWidth="350.0" text="Logged as:" />
       <Label fx:id="unameLabel" layoutX="350.0" layoutY="80.0" prefHeight="17.0" prefWidth="350.0" />
-      <Button layoutX="503.0" layoutY="319.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Logout" onAction="#onLogoutButtonClick"/>
+      <Button layoutX="503.0" layoutY="362.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="25.0" prefWidth="163.0" text="Logout" />
+      <Button fx:id="genPwd" layoutX="503.0" layoutY="163.0" mnemonicParsing="false" onAction="#onGenPwdClick" prefHeight="25.0" prefWidth="163.0" text="Generate" />
    </children>
 </AnchorPane>

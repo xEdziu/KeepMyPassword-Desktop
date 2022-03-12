@@ -47,7 +47,7 @@ public class PasswordGeneratorUtil {
             CharacterRule upperCaseRule = new CharacterRule(upperCaseChars);
             upperCaseRule.setNumberOfCharacters(upperNum);
 
-            CharacterData digitCaseChars = EnglishCharacterData.UpperCase;
+            CharacterData digitCaseChars = EnglishCharacterData.Digit;
             CharacterRule digitCaseRule = new CharacterRule(digitCaseChars);
             digitCaseRule.setNumberOfCharacters(digitNum);
 
