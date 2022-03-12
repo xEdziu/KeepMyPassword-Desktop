@@ -8,13 +8,13 @@
 
 ## What is KeepMyPassword?
 
-KeepMyPassword is open-source project under MIT license. Its aim is to provide a REAL secure place to store all your sensitive data.
+KeepMyPassword is an open-source project under MIT license. Its aim is to provide a REAL secure place to store all your sensitive data.
 
 ## Prerequisites
 
 - java >= 17.0.2
 
-## [Instalation guide](https://github.com/xEdziu/KeepMyPassword-Desktop/wiki/Installation-guide)
+## [Installation guide](https://github.com/xEdziu/KeepMyPassword-Desktop/wiki/Installation-guide)
 
 ## Author
 
