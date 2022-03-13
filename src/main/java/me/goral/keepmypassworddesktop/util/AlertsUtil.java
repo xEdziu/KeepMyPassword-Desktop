@@ -348,7 +348,6 @@ public class AlertsUtil {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("New Password Dialog");
         alert.setHeaderText("Here is your new password!");
-        alert.setContentText(pwd);
         alert.getButtonTypes().clear();
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
         alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/information-64.png").toString()));
@@ -364,6 +363,20 @@ public class AlertsUtil {
         Node copy = alert.getDialogPane().lookupButton(btnCopy);
         confirm.getStyleClass().add("btn");
         copy.getStyleClass().add("btn");
+
+        TextArea textArea = new TextArea(pwd);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(new Label("Your new password:"), 0, 0);
+        expContent.add(textArea, 0, 1);
+
+        alert.getDialogPane().setExpandableContent(expContent);
 
         alert.setResultConverter(dialogButton -> {
             if (dialogButton == btnCopy){
