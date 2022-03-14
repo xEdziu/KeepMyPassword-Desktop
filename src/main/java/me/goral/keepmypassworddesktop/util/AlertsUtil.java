@@ -13,6 +13,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
@@ -367,15 +368,18 @@ public class AlertsUtil {
         TextArea textArea = new TextArea(pwd);
         textArea.setEditable(false);
         textArea.setWrapText(true);
+        textArea.setMaxHeight(new Text(pwd).getLayoutBounds().getHeight());
 
         GridPane.setVgrow(textArea, Priority.ALWAYS);
         GridPane.setHgrow(textArea, Priority.ALWAYS);
 
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.setMaxHeight(new Text(pwd).getLayoutBounds().getHeight());
         expContent.add(new Label("Your new password:"), 0, 0);
         expContent.add(textArea, 0, 1);
 
+        alert.getDialogPane().setExpanded(true);
         alert.getDialogPane().setExpandableContent(expContent);
 
         alert.setResultConverter(dialogButton -> {
