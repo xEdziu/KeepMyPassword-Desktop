@@ -5,6 +5,7 @@ import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Locale;
 
 import static me.goral.keepmypassworddesktop.util.AlertsUtil.showErrorDialog;
 import static me.goral.keepmypassworddesktop.util.AlertsUtil.showInformationDialog;
@@ -68,6 +69,13 @@ public class ConfUtil {
         } catch (Exception e){
             AlertsUtil.showExceptionStackTraceDialog(e);
         }
+    }
 
+    public static int detectOS() {
+        String os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
+        if (os.contains("win")) return 1;
+        else if (os.contains("osx")) return 2;
+        else if (os.contains("nix") || os.contains("aix") || os.contains("nux")) return 3;
+        return 0;
     }
 }
