@@ -15,9 +15,9 @@ public class PasswordGeneratorUtil {
             AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
                     "Sum of all arguments is greater than general length");
             return null;
-        } else if (length < 1) {
+        } else if (length < 5) {
             AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Length must be at least 1");
+                    "Length must be at least 5");
             return null;
         } else if (lowerNum < 0) {
             AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
