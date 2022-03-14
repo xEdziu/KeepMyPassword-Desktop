@@ -262,7 +262,7 @@ public class AlertsUtil {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField length = new TextField();
-        length.setText("1");
+        length.setText("5");
         TextField lowerNum = new TextField();
         lowerNum.setText("0");
         TextField upperNum = new TextField();
@@ -310,32 +310,32 @@ public class AlertsUtil {
 
             if (isInteger(len)) intLen = Integer.parseInt(len);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Length parameter is not a number!");
+                showErrorDialog("Error Dialog", "Whoops!", "Length parameter is not an integer!");
                 return;
             }
 
             if (isInteger(lower)) intLower = Integer.parseInt(lower);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Lower characters parameter is not a number!");
+                showErrorDialog("Error Dialog", "Whoops!", "Lower characters parameter is not an integer!");
                 return;
             }
 
             if (isInteger(upper)) intUpper = Integer.parseInt(upper);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Upper parameter is not a number!");
+                showErrorDialog("Error Dialog", "Whoops!", "Upper parameter is not an integer!");
                 return;
             }
 
             if (isInteger(digit)) intDigit = Integer.parseInt(digit);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Digits parameter is not a number!");
+                showErrorDialog("Error Dialog", "Whoops!", "Digits parameter is not an integer!");
                 return;
             }
 
 
             if (isInteger(special)) intSpecial = Integer.parseInt(special);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Special chars parameter is not a number!");
+                showErrorDialog("Error Dialog", "Whoops!", "Special chars parameter is not an integer!");
                 return;
             }
             String pwd = PasswordGeneratorUtil.generatePassword(intLen, intLower, intUpper, intDigit, intSpecial);
