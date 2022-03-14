@@ -41,15 +41,15 @@ public class PasswordGeneratorUtil {
 
             CharacterData lowerCaseChars = EnglishCharacterData.LowerCase;
             CharacterRule lowerCaseRule = new CharacterRule(lowerCaseChars);
-            lowerCaseRule.setNumberOfCharacters(lowerNum);
+            lowerCaseRule.setNumberOfCharacters(lowerNum == 0 ? 1 : lowerNum);
 
             CharacterData upperCaseChars = EnglishCharacterData.UpperCase;
             CharacterRule upperCaseRule = new CharacterRule(upperCaseChars);
-            upperCaseRule.setNumberOfCharacters(upperNum);
+            upperCaseRule.setNumberOfCharacters(upperNum == 0 ? 1 : upperNum);
 
             CharacterData digitCaseChars = EnglishCharacterData.Digit;
             CharacterRule digitCaseRule = new CharacterRule(digitCaseChars);
-            digitCaseRule.setNumberOfCharacters(digitNum);
+            digitCaseRule.setNumberOfCharacters(digitNum == 0 ? 1 : digitNum);
 
             CharacterData specialChars = new CharacterData() {
                 @Override
@@ -63,7 +63,7 @@ public class PasswordGeneratorUtil {
                 }
             };
             CharacterRule splCharRule = new CharacterRule(specialChars);
-            splCharRule.setNumberOfCharacters(specialNum);
+            splCharRule.setNumberOfCharacters(specialNum == 0 ? 1 : specialNum);
 
             return gen.generatePassword(length, splCharRule, lowerCaseRule,
                     upperCaseRule, digitCaseRule);

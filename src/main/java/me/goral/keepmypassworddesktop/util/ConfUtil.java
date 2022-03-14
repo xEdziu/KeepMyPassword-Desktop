@@ -12,19 +12,42 @@ import static me.goral.keepmypassworddesktop.util.AlertsUtil.showInformationDial
 
 public class ConfUtil {
 
+
+    private static final String confFileName = "config.conf";
+    private static final String databaseFileName = "database.db";
+    private static String workingDirectory;
+
+    public static int setWorkingDirectory(){
+        int os = detectOS();
+        switch (os) {
+            case 1 -> workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";
+            case 2 -> workingDirectory = System.getProperty("user.home") + "/Library/KeepMyPassword/";
+            case 3 -> workingDirectory = System.getProperty("user.home") + "/KeepMyPassword/";
+            default -> {
+            }
+        }
+        File workingDir = new File(workingDirectory);
+        workingDir.mkdir();
+        return os;
+    }
+
+    public static String getWorkingDirectory() {
+        return workingDirectory;
+    }
+
     public static boolean checkIfConfigExists(){
-        File tmp = new File("conf.conf");
+        File tmp = new File(workingDirectory + confFileName);
         return tmp.exists();
     }
 
     public static boolean checkIfDatabaseExists(){
-        File database = new File("database.db");
+        File database = new File(workingDirectory + databaseFileName);
         return database.exists();
     }
 
     public static void createConfFiles(String init) {
         try {
-            File f = new File("conf.conf");
+            File f = new File(workingDirectory + confFileName);
             if(f.createNewFile()){
                 writeConfFile(init);
                 DatabaseHandler.createDatabase();
@@ -39,7 +62,7 @@ public class ConfUtil {
 
     public static void writeConfFile(String s) {
         try {
-            FileWriter fw = new FileWriter("conf.conf");
+            FileWriter fw = new FileWriter(workingDirectory + confFileName);
             fw.write(s);
             fw.close();
         } catch (IOException e){
@@ -49,7 +72,7 @@ public class ConfUtil {
 
     public static String readConfigFile() {
         try {
-            return Files.readString(Paths.get("conf.conf"));
+            return Files.readString(Paths.get(workingDirectory + confFileName));
         } catch (IOException e){
             AlertsUtil.showExceptionStackTraceDialog(e);
         }
@@ -58,9 +81,9 @@ public class ConfUtil {
 
     public static void deleteConfFiles() {
         try {
-            File f = new File("conf.conf");
+            File f = new File(workingDirectory + confFileName);
             if (f.delete()){
-                File db = new File("database.db");
+                File db = new File(workingDirectory + databaseFileName);
                 if (db.delete()){
                     showInformationDialog("Information Dialog", "Your account is now deleted", "Have a great day!");
                 }

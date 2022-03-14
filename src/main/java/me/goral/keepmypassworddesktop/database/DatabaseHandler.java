@@ -1,5 +1,6 @@
 package me.goral.keepmypassworddesktop.database;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
+import me.goral.keepmypassworddesktop.util.ConfUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ public class DatabaseHandler {
 
     private static Connection connect(){
         Connection conn = null;
-        String url = "jdbc:sqlite:database.db";
+        String url = "jdbc:sqlite:"+ ConfUtil.getWorkingDirectory() +"database.db";
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
@@ -19,7 +20,6 @@ public class DatabaseHandler {
     }
 
     public static void createDatabase(){
-        String url = "jdbc:sqlite:database.db";
         try (Connection conn = connect()) {
             if (conn != null){
                 DatabaseMetaData metaData = conn.getMetaData();

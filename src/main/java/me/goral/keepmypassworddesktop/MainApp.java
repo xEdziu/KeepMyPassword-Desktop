@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
+import me.goral.keepmypassworddesktop.util.ConfUtil;
 
 public class MainApp extends Application {
 
@@ -26,6 +27,8 @@ public class MainApp extends Application {
             guiStage = stage;
             Parent root = loader.load();
             Scene scene = new Scene(root);
+
+            if (ConfUtil.setWorkingDirectory() == 0) throw new Exception("Error while reading os directory");
 
             String css = MainApp.class.getResource("styles/main.css").toExternalForm();
             MainAppController mainController = loader.getController();
