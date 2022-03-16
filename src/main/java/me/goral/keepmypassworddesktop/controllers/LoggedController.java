@@ -1,9 +1,13 @@
 package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
@@ -38,7 +42,7 @@ public class LoggedController {
                 p -> new SimpleStringProperty(p.getValue().getLogin())
         );
         pwdColumn.setCellValueFactory(
-                p -> new SimpleStringProperty(p.getValue().getPwd())
+                p -> new SimpleStringProperty(p.getValue().getActivePwd())
         );
         ivColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getIv())
@@ -112,6 +116,20 @@ public class LoggedController {
             }
         });
 
+        contentTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (oldSelection != null) {
+                oldSelection.hidePwd();
+                pwdColumn.setCellValueFactory(p -> oldSelection.activePwdProperty());
+            }
+            if (newSelection != null) {
+                newSelection.unHidePwd();
+                System.out.println("newSelection active: " + newSelection.getActivePwd());
+                obs.getValue().unHidePwd();
+                pwdColumn.setCellValueFactory(p -> newSelection.activePwdProperty());
+            }
+
+        });
+
         contentTable.setRowFactory( tv -> {
             TableRow<PasswordRow> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -131,7 +149,6 @@ public class LoggedController {
     private void onGenPwdClick(){
         AlertsUtil.showGeneratePasswordDialog();
     }
-
 
     @FXML
     private void onAddClick(){
@@ -229,8 +246,10 @@ public class LoggedController {
         private final SimpleStringProperty id;
         private final SimpleStringProperty desc;
         private final SimpleStringProperty login;
+        private final SimpleStringProperty hiddenPwd;
         private final SimpleStringProperty pwd;
         private final SimpleStringProperty iv;
+        private SimpleStringProperty activePwd;
 
         private PasswordRow(String id, String desc, String login, String pwd, String iv){
             this.id = new SimpleStringProperty(id);
@@ -238,6 +257,8 @@ public class LoggedController {
             this.login = new SimpleStringProperty(login);
             this.pwd = new SimpleStringProperty(pwd);
             this.iv = new SimpleStringProperty(iv);
+            this.hiddenPwd = new SimpleStringProperty("*".repeat(10));
+            this.activePwd = this.hiddenPwd;
         }
 
         public String getId() {
@@ -282,6 +303,34 @@ public class LoggedController {
 
         public void setIv(String iv) {
             this.iv.set(iv);
+        }
+
+        public String getHiddenPwd() {
+            return hiddenPwd.get();
+        }
+
+        public void setHiddenPwd(String hiddenPwd) {
+            this.hiddenPwd.set(hiddenPwd);
+        }
+
+        public String getActivePwd() {
+            return activePwd.get();
+        }
+
+        public SimpleStringProperty activePwdProperty() {
+            return activePwd;
+        }
+
+        public void setActivePwd(String activePwd) {
+            this.activePwd.set(activePwd);
+        }
+
+        public void hidePwd(){
+            this.activePwd = this.hiddenPwd;
+        }
+
+        public void unHidePwd(){
+            this.activePwd = this.pwd;
         }
     }
 }
