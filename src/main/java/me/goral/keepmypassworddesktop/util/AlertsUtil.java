@@ -302,10 +302,15 @@ public class AlertsUtil {
         Optional<List<String>> res = dialog.showAndWait();
         res.ifPresent(result -> {
             String len = result.get(0);
+            if (len.length() == 0) len = "0";
             String lower = result.get(1);
+            if (lower.length() == 0) lower = "0";
             String upper = result.get(2);
+            if (upper.length() == 0) upper = "0";
             String digit = result.get(3);
+            if (digit.length() == 0) digit = "0";
             String special = result.get(4);
+            if (special.length() == 0) special = "0";
 
             int intLen, intLower, intUpper, intDigit, intSpecial;
 

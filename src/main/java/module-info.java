@@ -1,6 +1,7 @@
 module me.goral.keepmypassworddesktop {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
     requires javafx.web;
 
     requires org.controlsfx.controls;
