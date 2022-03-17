@@ -42,7 +42,7 @@ public class LoggedController {
                 p -> new SimpleStringProperty(p.getValue().getLogin())
         );
         pwdColumn.setCellValueFactory(
-                p -> new SimpleStringProperty(p.getValue().getActivePwd())
+                p -> new SimpleStringProperty(p.getValue().getPwd())
         );
         ivColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getIv())
@@ -96,7 +96,6 @@ public class LoggedController {
         });
 
         pwdColumn.setCellFactory(c -> new TableCell<>() {
-
             private Text text = new Text();
             {
                 prefWidthProperty().bind(pwdColumn.widthProperty().subtract(12));
@@ -116,23 +115,21 @@ public class LoggedController {
             }
         });
 
-        contentTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (oldSelection != null) {
-                oldSelection.hidePwd();
-                pwdColumn.setCellValueFactory(p -> oldSelection.activePwdProperty());
-            }
-            if (newSelection != null) {
-                newSelection.unHidePwd();
-                System.out.println("newSelection active: " + newSelection.getActivePwd());
-                obs.getValue().unHidePwd();
-                pwdColumn.setCellValueFactory(p -> newSelection.activePwdProperty());
-            }
-
-        });
+//        contentTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+//            if (oldSelection != null) {
+//                oldSelection.hidePwd();
+//            }
+//            if (newSelection != null) {
+//                newSelection.unHidePwd();
+//            }
+//            refreshContentTable();
+//        });
 
         contentTable.setRowFactory( tv -> {
             TableRow<PasswordRow> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                System.out.println("main: " + contentTable.getSelectionModel().getSelectedIndex());
+                System.out.println("pwdColumn: " + pwdColumn.getTableView().getSelectionModel().getSelectedIndex());
                 if (event.getClickCount() == 2 && (!row.isEmpty())){
                     PasswordRow rowData = row.getItem();
                     int id = Integer.parseInt(rowData.getId());
