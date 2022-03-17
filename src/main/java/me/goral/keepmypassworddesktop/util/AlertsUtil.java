@@ -13,8 +13,10 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class AlertsUtil {
 
@@ -433,6 +436,14 @@ public class AlertsUtil {
         username.setPromptText("Username");
         TextField password = new TextField();
         password.setPromptText("Password");
+        Label pwdCheck = new Label("No password");
+        pwdCheck.setTextFill(Color.web("#b3b3b3"));
+
+        password.textProperty().addListener((observable, oldValue, newValue) -> {
+            Pair<String, Color> res = checkPasswordComplexity(newValue);
+            pwdCheck.setText(res.getKey());
+            pwdCheck.setTextFill(res.getValue());
+        });
 
         grid.add(new Label("Description"), 0, 0);
         grid.add(description, 1, 0);
@@ -440,6 +451,7 @@ public class AlertsUtil {
         grid.add(username, 1,1);
         grid.add(new Label("Password"), 0, 2);
         grid.add(password, 1, 2);
+        grid.add(pwdCheck, 1, 3);
 
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(description::requestFocus);
@@ -456,6 +468,7 @@ public class AlertsUtil {
         });
 
         Optional<List<String>> res = dialog.showAndWait();
+
         res.ifPresent(result -> {
             String descPlain = result.get(0);
             String unamePlain = result.get(1);
@@ -587,5 +600,20 @@ public class AlertsUtil {
             }
         }
         return true;
+    }
+
+    private static Pair<String, Color> checkPasswordComplexity(String pwd){
+
+        Pattern strongPattern = Pattern.compile("(?=.[!@#$%^&*()_+])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
+        Pattern mediumPattern = Pattern.compile("((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))");
+
+        if (strongPattern.matcher(pwd).find()) {
+            return new Pair<>("Strong password", Color.web("#008a15"));
+        }
+        else if (mediumPattern.matcher(pwd).find()) {
+            return new Pair<>("Medium password", Color.web("#947100"));
+        }
+        else if (pwd.isEmpty()) return new Pair<>("No password", Color.web("#b3b3b3"));
+        else return new Pair<>("Weak password", Color.web("#940005"));
     }
 }
