@@ -613,7 +613,7 @@ public class AlertsUtil {
 
     private static Pair<String, Color> checkPasswordComplexity(String pwd){
 
-        Pattern strongPattern = Pattern.compile("(?=.[!@#$%^&*()_+])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
+        Pattern strongPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
         Pattern mediumPattern = Pattern.compile("((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))");
 
         if (strongPattern.matcher(pwd).find()) {
