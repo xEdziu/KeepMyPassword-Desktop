@@ -527,6 +527,14 @@ public class AlertsUtil {
         username.setText(login);
         TextField password = new TextField();
         password.setText(pwd);
+        Label pwdCheck = new Label();
+
+        password.textProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("old: " +oldValue + " changed to: " + newValue);
+            Pair<String, Color> res = checkPasswordComplexity(newValue);
+            pwdCheck.setText(res.getKey());
+            pwdCheck.setTextFill(res.getValue());
+        });
 
         grid.add(new Label("Description"), 0, 0);
         grid.add(description, 1, 0);
@@ -534,6 +542,7 @@ public class AlertsUtil {
         grid.add(username, 1,1);
         grid.add(new Label("Password"), 0, 2);
         grid.add(password, 1, 2);
+        grid.add(pwdCheck, 1, 3);
 
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(description::requestFocus);
