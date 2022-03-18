@@ -8,6 +8,11 @@ import java.util.List;
 
 public class DatabaseHandler {
 
+    /**
+     * Connect to the database and return the connection
+     * 
+     * @return The connection object.
+     */
     private static Connection connect(){
         Connection conn = null;
         String url = "jdbc:sqlite:"+ ConfUtil.getWorkingDirectory() +"database.db";
@@ -19,6 +24,9 @@ public class DatabaseHandler {
         return conn;
     }
 
+    /**
+     * Create a database if it doesn't already exist
+     */
     public static void createDatabase(){
         try (Connection conn = connect()) {
             if (conn != null){
@@ -29,6 +37,9 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Create the main table if it doesn't exist
+     */
     public static void createMainTable(){
         String sql = """
                 CREATE TABLE IF NOT EXISTS main (
@@ -47,6 +58,15 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * Insert a new password into the database
+     * 
+     * @param desc description of the password
+     * @param login the login name of the user
+     * @param pwd the password to be stored
+     * @param iv the initialization vector used to encrypt the password.
+     * @return Returns boolean value.
+     */
     public static boolean insertPassword(String desc, String login, String pwd, String iv){
         String sql = "INSERT INTO main (desc, login, pwd, iv) VALUES (?,?,?,?);";
         try (Connection conn = connect();
@@ -63,6 +83,9 @@ public class DatabaseHandler {
         return false;
     }
 
+    /**
+     * `truncateData()`: Deletes all rows from the `main` table
+     */
     public static void truncateData() {
         String sql = "DELETE FROM main;";
         try (Connection conn = connect();
@@ -73,6 +96,11 @@ public class DatabaseHandler {
         }
     }
 
+    /**
+     * It selects all passwords from the database.
+     * 
+     * @return A list of lists. Each list contains the id, description, login, password, and iv.
+     */
     public static List<List<String>> selectPasswords(){
         String sql = "SELECT id, desc, login, pwd, iv FROM main";
         List<List<String>> results = new ArrayList<>();
@@ -97,6 +125,16 @@ public class DatabaseHandler {
         return results;
     }
 
+    /**
+     * Update the password for a given entry
+     * 
+     * @param desc the description of the password
+     * @param login the login name of the user
+     * @param pwd the password to be encrypted
+     * @param iv the initialization vector used to encrypt the password.
+     * @param id the id of the record to update
+     * @return Returns boolean value.
+     */
     public static boolean updatePassword(String desc, String login, String pwd, String iv, int id) {
         String sql = "UPDATE main SET " +
                 "desc = ?, login = ?, pwd = ?, iv = ? " +
@@ -117,6 +155,12 @@ public class DatabaseHandler {
         return false;
     }
 
+    /**
+     * Delete a password from the database
+     * 
+     * @param id The id of the password to delete.
+     * @return Returns boolean value.
+     */
     public static boolean deletePassword(String id) throws SQLException {
         String sql = "DELETE FROM main WHERE id = ?";
         try (Connection conn = connect()){
