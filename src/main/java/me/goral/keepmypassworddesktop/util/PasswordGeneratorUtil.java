@@ -9,6 +9,17 @@ import static org.passay.IllegalCharacterRule.ERROR_CODE;
 
 public class PasswordGeneratorUtil {
 
+    /**
+     * Generate a password of a given length, with a given number of lowercase letters, uppercase
+     * letters, digits, and special characters
+     * 
+     * @param length The length of the password to generate.
+     * @param lowerNum The number of lower case characters to include in the password.
+     * @param upperNum The number of upper case characters to include in the password.
+     * @param digitNum The number of digits to include in the password.
+     * @param specialNum The number of special characters to include in the password.
+     * @return The generated password.
+     */
     public static String generatePassword(int length, int lowerNum, int upperNum, int digitNum, int specialNum){
 
         if ((lowerNum + upperNum + digitNum + specialNum) > length){
