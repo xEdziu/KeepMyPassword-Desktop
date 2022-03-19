@@ -39,6 +39,13 @@ import java.util.regex.Pattern;
 
 public class AlertsUtil {
 
+    /**
+     * Show an error dialog with a title, header, and body
+     * 
+     * @param errTitle The title of the error dialog.
+     * @param errHeader The header text of the error dialog.
+     * @param errBody The body of the error message.
+     */
     public static void showErrorDialog(String errTitle, String errHeader, String errBody){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(errTitle);
@@ -57,6 +64,9 @@ public class AlertsUtil {
         alert.showAndWait();
     }
 
+    /**
+     * Show a dialog to confirm the deletion of all data
+     */
     public static void showDeleteDataDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Deleting all data");
@@ -88,6 +98,9 @@ public class AlertsUtil {
         }
     }
 
+    /**
+     * Show a dialog to confirm logout
+     */
     public static void showLogoutDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logging out");
@@ -130,6 +143,13 @@ public class AlertsUtil {
         }
     }
     
+    /**
+     * Show an information dialog
+     * 
+     * @param infTitle The title of the dialog box.
+     * @param infHeader The header text of the dialog.
+     * @param infBody The body of the dialog.
+     */
     public static void showInformationDialog(String infTitle, String infHeader, String infBody){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(infTitle);
@@ -151,6 +171,9 @@ public class AlertsUtil {
         alert.showAndWait();
     }
 
+    /**
+     * Show a dialog to confirm the deletion of the account
+     */
     public static void showDeleteAccountDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Deleting account");
@@ -197,6 +220,11 @@ public class AlertsUtil {
         }
     }
 
+    /**
+     * It shows a dialog with the stacktrace of the exception.
+     * 
+     * @param e The exception that was thrown.
+     */
     public static void showExceptionStackTraceDialog(Exception e){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Exception Dialog");
@@ -240,6 +268,9 @@ public class AlertsUtil {
         alert.showAndWait();
     }
 
+    /**
+     * It shows a dialog that allows the user to specify the parameters for the password generation.
+     */
     public static void showGeneratePasswordDialog(){
         Dialog<List<String>> dialog = new Dialog<>();
         dialog.setTitle("Generating new password");
@@ -353,6 +384,11 @@ public class AlertsUtil {
         });
     }
 
+    /**
+     * It shows a dialog with the generated password.
+     * 
+     * @param pwd The password to be shown to the user.
+     */
     public static void showGeneratedPasswordDialog(String pwd){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("New Password Dialog");
@@ -406,6 +442,11 @@ public class AlertsUtil {
         alert.showAndWait();
     }
 
+    /**
+     * It shows a dialog to add new password to the database.
+     * 
+     * @param key The key to encrypt the password with.
+     */
     public static void showAddPasswordDialog(SecretKey key) {
         Dialog<List<String>> dialog = new Dialog<>();
         dialog.setTitle("Adding new password");
@@ -497,6 +538,16 @@ public class AlertsUtil {
         });
     }
 
+    /**
+     * It shows a dialog to update password in the database.
+     * 
+     * @param id id of the password to update
+     * @param desc description of the password
+     * @param login the username of the account
+     * @param pwd the password to be updated
+     * @param key The key used to encrypt the data.
+     * @param iv the initialization vector used to encrypt the data.
+     */
     public static void showUpdatePasswordDialog(int id, String desc, String login, String pwd, SecretKey key, String iv) {
         Dialog<List<String>> dialog = new Dialog<>();
         dialog.setTitle("Updating password");
@@ -587,6 +638,12 @@ public class AlertsUtil {
         });
     }
 
+    /**
+     * Check if the string is a valid integer
+     * 
+     * @param str The string to be checked.
+     * @return The method returns true if the string is an integer, false otherwise.
+     */
     public static boolean isInteger(String str) {
         if (str == null) {
             return false;
@@ -611,6 +668,13 @@ public class AlertsUtil {
         return true;
     }
 
+    /**
+     * Check the password complexity and return a color based on the strength of the password
+     * 
+     * @param pwd The password to check.
+     * @return The Pair class is a container class that holds two values. The first value is the
+     * password strength and the second value is the color of the password strength.
+     */
     private static Pair<String, Color> checkPasswordComplexity(String pwd){
 
         Pattern strongPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
