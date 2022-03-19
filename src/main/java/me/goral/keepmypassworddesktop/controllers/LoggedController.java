@@ -1,13 +1,9 @@
 package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
@@ -28,10 +24,15 @@ public class LoggedController {
     @FXML private TableColumn<PasswordRow, String> pwdColumn = new TableColumn<>("Password");
     @FXML private TableColumn<PasswordRow, String> ivColumn = new TableColumn<>("IV");
     @FXML private Label unameLabel;
+    @FXML private Button showBtn;
     private SecretKey key;
+    private boolean showed = false;
 
     @FXML
     private void initialize() {
+
+        showBtn.getStyleClass().add("show");
+
         idColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getId())
         );
@@ -42,7 +43,7 @@ public class LoggedController {
                 p -> new SimpleStringProperty(p.getValue().getLogin())
         );
         pwdColumn.setCellValueFactory(
-                p -> new SimpleStringProperty(p.getValue().getPwd())
+                p -> new SimpleStringProperty(p.getValue().getActivePwd())
         );
         ivColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getIv())
@@ -55,7 +56,7 @@ public class LoggedController {
 
         descColumn.setCellFactory(c -> new TableCell<>() {
 
-            private Text text = new Text();
+            private final Text text = new Text();
             {
                 prefWidthProperty().bind(descColumn.widthProperty());
                 text.wrappingWidthProperty().bind(widthProperty().subtract(2));
@@ -76,7 +77,7 @@ public class LoggedController {
 
         loginColumn.setCellFactory(c -> new TableCell<>() {
 
-            private Text text = new Text();
+            private final Text text = new Text();
             {
                 prefWidthProperty().bind(loginColumn.widthProperty());
                 text.wrappingWidthProperty().bind(widthProperty().subtract(2));
@@ -96,7 +97,7 @@ public class LoggedController {
         });
 
         pwdColumn.setCellFactory(c -> new TableCell<>() {
-            private Text text = new Text();
+            private final Text text = new Text();
             {
                 prefWidthProperty().bind(pwdColumn.widthProperty().subtract(12));
                 text.wrappingWidthProperty().bind(widthProperty());
@@ -115,15 +116,6 @@ public class LoggedController {
             }
         });
 
-//        contentTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            if (oldSelection != null) {
-//                oldSelection.hidePwd();
-//            }
-//            if (newSelection != null) {
-//                newSelection.unHidePwd();
-//            }
-//            refreshContentTable();
-//        });
 
         contentTable.setRowFactory( tv -> {
             TableRow<PasswordRow> row = new TableRow<>();
@@ -183,6 +175,21 @@ public class LoggedController {
     }
 
     @FXML
+    private void onShowBtnClick(){
+
+
+        if (!showed){
+            showBtn.getStyleClass().clear();
+            showBtn.getStyleClass().addAll("button","hide");
+        } else {
+            showBtn.getStyleClass().clear();
+            showBtn.getStyleClass().addAll("button","show");
+        }
+        showed = !showed;
+        refreshContentTable();
+    }
+
+    @FXML
     private void onDeleteDataClick() {
         AlertsUtil.showDeleteDataDialog();
         refreshContentTable();
@@ -194,7 +201,7 @@ public class LoggedController {
     }
 
     private void refreshContentTable() {
-        contentTable.getItems().setAll(parsePasswordsList());
+        contentTable.getItems().setAll(parsePasswordsList(showed));
     }
 
     public void setSecretKey(SecretKey k){
@@ -206,7 +213,7 @@ public class LoggedController {
         unameLabel.setText(uname);
     }
 
-    private List<PasswordRow> parsePasswordsList() {
+    private List<PasswordRow> parsePasswordsList(boolean visible) {
         List<PasswordRow> list = new ArrayList<>();
 
         List<List<String>> passwordsFromDb = DatabaseHandler.selectPasswords();
@@ -226,7 +233,7 @@ public class LoggedController {
                     String pwdDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(pwdEnc)), key, iv);
 
                     //add decrypted things to new PasswordRow
-                    PasswordRow pr = new PasswordRow(id, descDec, loginDec, pwdDec, ivEnc);
+                    PasswordRow pr = new PasswordRow(id, descDec, loginDec, pwdDec, ivEnc, visible);
 
                     //new PasswordRow to list
                     list.add(pr);
@@ -246,16 +253,16 @@ public class LoggedController {
         private final SimpleStringProperty hiddenPwd;
         private final SimpleStringProperty pwd;
         private final SimpleStringProperty iv;
-        private SimpleStringProperty activePwd;
+        private final SimpleStringProperty activePwd;
 
-        private PasswordRow(String id, String desc, String login, String pwd, String iv){
+        private PasswordRow(String id, String desc, String login, String pwd, String iv, boolean showed){
             this.id = new SimpleStringProperty(id);
             this.desc = new SimpleStringProperty(desc);
             this.login = new SimpleStringProperty(login);
             this.pwd = new SimpleStringProperty(pwd);
             this.iv = new SimpleStringProperty(iv);
             this.hiddenPwd = new SimpleStringProperty("*".repeat(10));
-            this.activePwd = this.hiddenPwd;
+            this.activePwd = showed ? this.pwd : this.hiddenPwd;
         }
 
         public String getId() {
@@ -320,14 +327,6 @@ public class LoggedController {
 
         public void setActivePwd(String activePwd) {
             this.activePwd.set(activePwd);
-        }
-
-        public void hidePwd(){
-            this.activePwd = this.hiddenPwd;
-        }
-
-        public void unHidePwd(){
-            this.activePwd = this.pwd;
         }
     }
 }

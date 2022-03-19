@@ -14,14 +14,15 @@
             <TableColumn fx:id="ivColumn" prefWidth="0" text="iv" />
         </columns>
       </TableView>
-      <Button layoutX="503.0" layoutY="213.0" mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="163.0" text="Add" />
-      <Button layoutX="503.0" layoutY="262.0" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="163.0" text="Remove" />
-      <Button layoutX="503.0" layoutY="312.0" mnemonicParsing="false" onAction="#onDeleteDataClick" prefHeight="25.0" prefWidth="163.0" text="Delete Data" />
-      <Button layoutX="503.0" layoutY="412.0" mnemonicParsing="false" onAction="#onDeleteAccountClick" prefHeight="25.0" prefWidth="163.0" text="Delete Account" />
+      <Button layoutX="503.0" layoutY="213.0" mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="163.0" text="Add" wrapText="true" />
+      <Button layoutX="503.0" layoutY="262.0" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="163.0" text="Remove" wrapText="true" />
+      <Button layoutX="503.0" layoutY="312.0" mnemonicParsing="false" onAction="#onDeleteDataClick" prefHeight="25.0" prefWidth="163.0" text="Delete Data" wrapText="true" />
+      <Button layoutX="503.0" layoutY="412.0" mnemonicParsing="false" onAction="#onDeleteAccountClick" prefHeight="25.0" prefWidth="163.0" text="Delete Account" wrapText="true" />
       <Label fx:id="titleLabel" layoutY="20.0" prefHeight="17.0" prefWidth="700.0" text="Keep My Password" />
       <Label layoutY="80.0" prefHeight="17.0" prefWidth="350.0" text="Logged as:" />
       <Label fx:id="unameLabel" layoutX="350.0" layoutY="80.0" prefHeight="17.0" prefWidth="350.0" />
-      <Button layoutX="503.0" layoutY="362.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="25.0" prefWidth="163.0" text="Logout" />
-      <Button fx:id="genPwd" layoutX="503.0" layoutY="163.0" mnemonicParsing="false" onAction="#onGenPwdClick" prefHeight="25.0" prefWidth="163.0" text="Generate" />
+      <Button layoutX="503.0" layoutY="362.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="25.0" prefWidth="163.0" text="Logout" wrapText="true" />
+      <Button fx:id="genPwd" layoutX="503.0" layoutY="163.0" mnemonicParsing="false" onAction="#onGenPwdClick" prefHeight="25.0" prefWidth="163.0" text="Generate" wrapText="true" />
+      <Button fx:id="showBtn" layoutX="462.0" layoutY="110.0" maxWidth="16" mnemonicParsing="false" onAction="#onShowBtnClick" prefHeight="16" prefWidth="16" />
    </children>
 </AnchorPane>

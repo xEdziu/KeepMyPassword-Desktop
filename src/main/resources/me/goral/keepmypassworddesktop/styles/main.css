@@ -13,6 +13,35 @@
     -fx-font-size: 30;
 }
 
+#showBtn {
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-style: none;
+    -fx-fill: #AAA !important;
+    -fx-max-height: 16;
+    -fx-max-width: 16;
+}
+
+#showBtn:hover {
+    -fx-background-color: none !important;
+    -fx-text-fill: none !important;
+}
+
+.hide {
+    -fx-fill: #AAA;
+    -fx-background-size: cover;
+    -fx-background-image: url(https://img.icons8.com/dotty/128/AAAAAA/hide.png);
+    /*TODO: download new images and put them locally*/
+    /*-fx-background-image: url("../images/hide-32.png");*/
+}
+
+.show {
+    -fx-fill: #AAA;
+    -fx-background-size: cover;
+    -fx-background-image: url(https://img.icons8.com/dotty/128/AAAAAA/visible.png);
+}
+
 .button {
     -fx-alignment: center;
     -fx-padding: 10 25;
