@@ -31,15 +31,13 @@
 .hide {
     -fx-fill: #AAA;
     -fx-background-size: cover;
-    -fx-background-image: url(https://img.icons8.com/dotty/128/AAAAAA/hide.png);
-    /*TODO: download new images and put them locally*/
-    /*-fx-background-image: url("../images/hide-32.png");*/
+    -fx-background-image: url("../images/hide-80.png");
 }
 
 .show {
     -fx-fill: #AAA;
     -fx-background-size: cover;
-    -fx-background-image: url(https://img.icons8.com/dotty/128/AAAAAA/visible.png);
+    -fx-background-image: url("../images/show-80.png");
 }
 
 .button {
