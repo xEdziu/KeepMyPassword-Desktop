@@ -7,7 +7,7 @@
    <children>
       <Label layoutY="406.0" prefHeight="17.0" prefWidth="375.0" text="Adrian Goral" />
       <Label fx:id="titleLabel" layoutY="61.0" prefHeight="17.0" prefWidth="750.0" text="Keep My Password" />
-      <Label fx:id="dateLabel" layoutX="349.0" layoutY="397.0" prefHeight="17.0" prefWidth="375.0" />
+      <Label fx:id="dateLabel" layoutX="349.0" layoutY="375.0" prefHeight="17.0" prefWidth="375.0" />
       <Button fx:id="btnLogin" layoutX="310.0" layoutY="210.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="40.0" prefWidth="130.0" text="Login" />
    </children>
 </AnchorPane>

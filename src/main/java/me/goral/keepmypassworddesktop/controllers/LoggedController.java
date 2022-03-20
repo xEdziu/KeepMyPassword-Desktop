@@ -29,9 +29,6 @@ public class LoggedController {
     @FXML private Button showBtn;
     @FXML private Button addButton;
     @FXML private Button removeButton;
-    @FXML private Button clearDataButton;
-    @FXML private Button deleteAccountButton;
-    @FXML private Button logoutButton;
     @FXML private Button genPwd;
     @FXML private Button settingsButton;
     private SecretKey key;
@@ -47,9 +44,6 @@ public class LoggedController {
         showBtn.getStyleClass().add("show");
         addButton.setWrapText(true);
         removeButton.setWrapText(true);
-        clearDataButton.setWrapText(true);
-        deleteAccountButton.setWrapText(true);
-        logoutButton.setWrapText(true);
         genPwd.setWrapText(true);
         ImageView imageView = new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-128.png").toExternalForm());
         settingsButton.setGraphic(imageView);
@@ -206,16 +200,6 @@ public class LoggedController {
     }
 
     /**
-     * This function is called when the user clicks the delete account button.
-     * It shows a confirmation dialog to the user and if the user clicks yes,
-     * it deletes the account from the database
-     */
-    @FXML
-    private void onDeleteAccountClick() {
-        AlertsUtil.showDeleteAccountDialog();
-    }
-
-    /**
      * If the passwords are hidden, show them.
      * If the passwords are visible, hide them.
      * Refresh the table.
@@ -231,26 +215,6 @@ public class LoggedController {
         }
         showed = !showed;
         refreshContentTable();
-    }
-
-    /**
-     * This function is called when the user clicks the delete data button.
-     * It shows a confirmation dialog to the user and if the user clicks yes,
-     * it deletes all the data from the database.
-     */
-    @FXML
-    private void onDeleteDataClick() {
-        AlertsUtil.showDeleteDataDialog();
-        refreshContentTable();
-    }
-
-    /**
-     * The onLogoutButtonClick() function is called when the logout button is clicked.
-     * It shows a logout dialog
-     */
-    @FXML
-    private void onLogoutButtonClick() {
-        AlertsUtil.showLogoutDialog();
     }
 
     /**
@@ -318,8 +282,16 @@ public class LoggedController {
         return list;
     }
 
+    /**
+     * This function is called when the user clicks the settings button
+     */
     public void onSettingsButtonClick() {
-        AlertsUtil.showSettingsDialog();
+        try {
+            AlertsUtil.showSettingsDialog();
+        } catch (Exception e){
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
+
     }
 
     /**
