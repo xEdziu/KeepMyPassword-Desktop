@@ -14,15 +14,13 @@
             <TableColumn fx:id="ivColumn" prefWidth="0" text="iv" />
         </columns>
       </TableView>
-      <Button fx:id="addButton" layoutX="509.0" layoutY="205.0" mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="195" text="Add" wrapText="true" />
-      <Button fx:id="removeButton" layoutX="509.0" layoutY="254.0" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="195.0" text="Remove" wrapText="true" />
-      <Button fx:id="clearDataButton" layoutX="509.0" layoutY="304.0" mnemonicParsing="false" onAction="#onDeleteDataClick" prefHeight="25.0" prefWidth="195.0" text="Delete Data" wrapText="true" />
-      <Button fx:id="deleteAccountButton" layoutX="509.0" layoutY="404.0" mnemonicParsing="false" onAction="#onDeleteAccountClick" prefHeight="25.0" prefWidth="195.0" text="Delete Account" wrapText="true" />
+      <Button fx:id="addButton" layoutX="509.0" layoutY="225.0" mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="195" text="Add" wrapText="true" />
+      <Button fx:id="removeButton" layoutX="509.0" layoutY="275.0" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="195.0" text="Remove" wrapText="true" />
       <Label fx:id="titleLabel" layoutY="20.0" prefHeight="17.0" prefWidth="750.0" text="Keep My Password" />
-      <Label layoutY="85.0" prefHeight="17.0" prefWidth="187.5" text="Logged as:" />
-      <Label fx:id="unameLabel" layoutX="187.5" layoutY="85.0" prefHeight="17.0" prefWidth="187.5" />
-      <Button fx:id="logoutButton" layoutX="509.0" layoutY="354.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="25.0" prefWidth="195.0" text="Logout" wrapText="true" />
-      <Button fx:id="genPwd" layoutX="509.0" layoutY="155.0" mnemonicParsing="false" onAction="#onGenPwdClick" prefHeight="25.0" prefWidth="195.0" text="Generate Password" wrapText="true" />
+      <Label layoutX="479.0" layoutY="365.0" prefHeight="17.0" prefWidth="272.0" text="Logged as:" />
+      <Label fx:id="unameLabel" layoutX="479.0" layoutY="408.0" prefHeight="17.0" prefWidth="272.0" />
+      <Button fx:id="genPwd" layoutX="509.0" layoutY="175.0" mnemonicParsing="false" onAction="#onGenPwdClick" prefHeight="25.0" prefWidth="195.0" text="Generate Password" wrapText="true" />
       <Button fx:id="showBtn" layoutX="442.0" layoutY="109.0" maxWidth="16" mnemonicParsing="false" onAction="#onShowBtnClick" prefHeight="16" prefWidth="16" />
+      <Button fx:id="settingsButton" layoutX="625.0" layoutY="5.0" maxHeight="128" maxWidth="128" mnemonicParsing="false" onAction="#onSettingsButtonClick" prefHeight="64" prefWidth="64" />
    </children>
 </AnchorPane>

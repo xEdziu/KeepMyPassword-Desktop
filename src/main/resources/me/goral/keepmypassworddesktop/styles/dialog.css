@@ -13,6 +13,15 @@
     -fx-text-fill: #AAA;
 }
 
+.optionsButton {
+    -fx-pref-height: 20;
+    -fx-pref-width: 150;
+    -fx-text-fill: #303033;
+    -fx-border-color: #303033;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+
 .btn:hover {
     -fx-background-color: #AAA;
     -fx-text-fill: #303033;

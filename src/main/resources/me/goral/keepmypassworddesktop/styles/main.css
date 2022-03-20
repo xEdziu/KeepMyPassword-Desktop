@@ -13,6 +13,14 @@
     -fx-font-size: 35;
 }
 
+#settingsButton  {
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-style: none;
+    -fx-fill: #AAA !important;
+}
+
 #showBtn {
     -fx-cursor: hand;
     -fx-border-color: transparent;
@@ -24,6 +32,11 @@
 }
 
 #showBtn:hover {
+    -fx-background-color: none !important;
+    -fx-text-fill: none !important;
+}
+
+#settingsButton:hover {
     -fx-background-color: none !important;
     -fx-text-fill: none !important;
 }

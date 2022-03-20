@@ -3,7 +3,9 @@ package me.goral.keepmypassworddesktop.controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
@@ -27,10 +29,8 @@ public class LoggedController {
     @FXML private Button showBtn;
     @FXML private Button addButton;
     @FXML private Button removeButton;
-    @FXML private Button clearDataButton;
-    @FXML private Button deleteAccountButton;
-    @FXML private Button logoutButton;
     @FXML private Button genPwd;
+    @FXML private Button settingsButton;
     private SecretKey key;
     private boolean showed = false;
 
@@ -44,10 +44,14 @@ public class LoggedController {
         showBtn.getStyleClass().add("show");
         addButton.setWrapText(true);
         removeButton.setWrapText(true);
-        clearDataButton.setWrapText(true);
-        deleteAccountButton.setWrapText(true);
-        logoutButton.setWrapText(true);
         genPwd.setWrapText(true);
+        ImageView imageView = new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-128.png").toExternalForm());
+        settingsButton.setGraphic(imageView);
+        settingsButton.setContentDisplay(ContentDisplay.TOP);
+        imageView.fitWidthProperty().bind(settingsButton.widthProperty().divide(2));
+        imageView.setPreserveRatio(true);
+
+        settingsButton.setMaxWidth(Double.MAX_VALUE);
 
         idColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getId())
@@ -196,16 +200,6 @@ public class LoggedController {
     }
 
     /**
-     * This function is called when the user clicks the delete account button.
-     * It shows a confirmation dialog to the user and if the user clicks yes,
-     * it deletes the account from the database
-     */
-    @FXML
-    private void onDeleteAccountClick() {
-        AlertsUtil.showDeleteAccountDialog();
-    }
-
-    /**
      * If the passwords are hidden, show them.
      * If the passwords are visible, hide them.
      * Refresh the table.
@@ -221,26 +215,6 @@ public class LoggedController {
         }
         showed = !showed;
         refreshContentTable();
-    }
-
-    /**
-     * This function is called when the user clicks the delete data button.
-     * It shows a confirmation dialog to the user and if the user clicks yes,
-     * it deletes all the data from the database.
-     */
-    @FXML
-    private void onDeleteDataClick() {
-        AlertsUtil.showDeleteDataDialog();
-        refreshContentTable();
-    }
-
-    /**
-     * The onLogoutButtonClick() function is called when the logout button is clicked.
-     * It shows a logout dialog
-     */
-    @FXML
-    private void onLogoutButtonClick() {
-        AlertsUtil.showLogoutDialog();
     }
 
     /**
@@ -309,13 +283,24 @@ public class LoggedController {
     }
 
     /**
+     * This function is called when the user clicks the settings button
+     */
+    public void onSettingsButtonClick() {
+        try {
+            AlertsUtil.showSettingsDialog();
+        } catch (Exception e){
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
+
+    }
+
+    /**
      * This class is used to store the password information
      */
     public static class PasswordRow {
         private final SimpleStringProperty id;
         private final SimpleStringProperty desc;
         private final SimpleStringProperty login;
-        private final SimpleStringProperty hiddenPwd;
         private final SimpleStringProperty pwd;
         private final SimpleStringProperty iv;
         private final SimpleStringProperty activePwd;
@@ -327,8 +312,8 @@ public class LoggedController {
             this.login = new SimpleStringProperty(login);
             this.pwd = new SimpleStringProperty(pwd);
             this.iv = new SimpleStringProperty(iv);
-            this.hiddenPwd = new SimpleStringProperty("*".repeat(10));
-            this.activePwd = showed ? this.pwd : this.hiddenPwd;
+            SimpleStringProperty hiddenPwd = new SimpleStringProperty("*".repeat(10));
+            this.activePwd = showed ? this.pwd : hiddenPwd;
         }
 
         /**

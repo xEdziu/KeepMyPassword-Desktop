@@ -172,6 +172,63 @@ public class AlertsUtil {
     }
 
     /**
+     * Show a dialog with the settings options
+     */
+    public static void showSettingsDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Settings");
+        alert.setHeaderText("Select desired option");
+        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-64.png").toString()));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(cancel);
+
+        Node cancelNode = alert.getDialogPane().lookupButton(cancel);
+
+        cancelNode.getStyleClass().add("btn");
+
+        GridPane grid = new GridPane();
+
+        Button delAcc = new Button("Delete account");
+        delAcc.getStyleClass().addAll("btn","optionsButton");
+        Button delData = new Button("Delete data");
+        delData.getStyleClass().addAll("btn","optionsButton");
+        Button logout = new Button("Logout");
+        logout.getStyleClass().addAll("btn","optionsButton");
+
+        delAcc.setOnMouseClicked(mouseEvent -> {
+            showDeleteAccountDialog();
+            alert.close();
+        });
+        delData.setOnMouseClicked(mouseEvent -> showDeleteDataDialog());
+
+        logout.setOnMouseClicked(mouseEvent -> {
+            showLogoutDialog();
+            alert.close();
+        });
+
+        GridPane.setColumnIndex(delAcc, 0);
+        GridPane.setRowIndex(delAcc, 0);
+        grid.getChildren().add(delAcc);
+
+        GridPane.setColumnIndex(delData, 0);
+        GridPane.setRowIndex(delData, 1);
+        grid.getChildren().add(delData);
+
+        GridPane.setColumnIndex(logout, 0);
+        GridPane.setRowIndex(logout, 2);
+        grid.getChildren().add(logout);
+
+        alert.getDialogPane().setContent(grid);
+
+        alert.showAndWait();
+    }
+
+    /**
      * Show a dialog to confirm the deletion of the account
      */
     public static void showDeleteAccountDialog() {
