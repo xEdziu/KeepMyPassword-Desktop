@@ -28,6 +28,10 @@ public class LoggedController {
     private SecretKey key;
     private boolean showed = false;
 
+    /**
+     * The function creates a new TableRow object and sets the onMouseClicked event handler to the event.
+     * If the user double clicks on the row, the function will show the update password dialog
+     */
     @FXML
     private void initialize() {
 
@@ -134,17 +138,29 @@ public class LoggedController {
         });
     }
 
+    /**
+     * The function is called when the user clicks the "Generate Password" button.
+     *
+     * It shows a dialog that allows the user to generate custom password.
+     */
     @FXML
     private void onGenPwdClick(){
         AlertsUtil.showGeneratePasswordDialog();
     }
 
+    /**
+     * This function is called when the user clicks the add button.
+     * It shows the add password dialog and refreshes the content table.
+     */
     @FXML
     private void onAddClick(){
         AlertsUtil.showAddPasswordDialog(key);
         refreshContentTable();
     }
 
+    /**
+     * This function is called when the user clicks the "Remove" button
+     */
     @FXML
     private void onRemoveClick(){
         PasswordRow row = contentTable.getSelectionModel().getSelectedItem();
@@ -169,15 +185,23 @@ public class LoggedController {
         }
     }
 
+    /**
+     * This function is called when the user clicks the delete account button.
+     * It shows a confirmation dialog to the user and if the user clicks yes,
+     * it deletes the account from the database
+     */
     @FXML
     private void onDeleteAccountClick() {
         AlertsUtil.showDeleteAccountDialog();
     }
 
+    /**
+     * If the passwords are hidden, show them.
+     * If the passwords are visible, hide them.
+     * Refresh the table.
+     */
     @FXML
     private void onShowBtnClick(){
-
-
         if (!showed){
             showBtn.getStyleClass().clear();
             showBtn.getStyleClass().addAll("button","hide");
@@ -189,30 +213,58 @@ public class LoggedController {
         refreshContentTable();
     }
 
+    /**
+     * This function is called when the user clicks the delete data button.
+     * It shows a confirmation dialog to the user and if the user clicks yes,
+     * it deletes all the data from the database.
+     */
     @FXML
     private void onDeleteDataClick() {
         AlertsUtil.showDeleteDataDialog();
         refreshContentTable();
     }
 
+    /**
+     * The onLogoutButtonClick() function is called when the logout button is clicked.
+     * It shows a logout dialog
+     */
     @FXML
     private void onLogoutButtonClick() {
         AlertsUtil.showLogoutDialog();
     }
 
+    /**
+     * It takes the passwords list and parses it into a list of Password objects
+     */
     private void refreshContentTable() {
         contentTable.getItems().setAll(parsePasswordsList(showed));
     }
 
+    /**
+     * Set the secret key to be used for encryption and decryption
+     *
+     * @param k The key to use for encryption/decryption.
+     */
     public void setSecretKey(SecretKey k){
         key = k;
         refreshContentTable();
     }
 
+    /**
+     * It sets the text of the label to the value of the parameter.
+     *
+     * @param uname The username of the user.
+     */
     public void setUnameLabel(String uname) {
         unameLabel.setText(uname);
     }
 
+    /**
+     * It takes a list of passwords from the database, decrypts them and adds them to a list of PasswordRow objects
+     *
+     * @param visible boolean
+     * @return A list of PasswordRow objects.
+     */
     private List<PasswordRow> parsePasswordsList(boolean visible) {
         List<PasswordRow> list = new ArrayList<>();
 
@@ -246,6 +298,9 @@ public class LoggedController {
         return list;
     }
 
+    /**
+     * This class is used to store the password information
+     */
     public static class PasswordRow {
         private final SimpleStringProperty id;
         private final SimpleStringProperty desc;
@@ -255,6 +310,7 @@ public class LoggedController {
         private final SimpleStringProperty iv;
         private final SimpleStringProperty activePwd;
 
+        // Creating a new PasswordRow object.
         private PasswordRow(String id, String desc, String login, String pwd, String iv, boolean showed){
             this.id = new SimpleStringProperty(id);
             this.desc = new SimpleStringProperty(desc);
@@ -265,68 +321,115 @@ public class LoggedController {
             this.activePwd = showed ? this.pwd : this.hiddenPwd;
         }
 
+        /**
+         * Get the value of the id property
+         *
+         * @return The id of the object.
+         */
         public String getId() {
             return id.get();
         }
 
+        /**
+         * It sets the id of the question to the id passed in.
+         *
+         * @param id The id of the parameter.
+         */
         public void setId(String id) {
             this.id.set(id);
         }
 
+        /**
+         * It returns the description of the item.
+         *
+         * @return The getter method returns the value of the private field.
+         */
         public String getDesc() {
             return desc.get();
         }
 
+        /**
+         * It sets the description of the question.
+         *
+         * @param desc The description of the parameter.
+         */
         public void setDesc(String desc) {
             this.desc.set(desc);
         }
 
+        /**
+         * Get the value of the login property
+         *
+         * @return The getter method returns the value of the login field.
+         */
         public String getLogin() {
             return login.get();
         }
 
+        /**
+         * It sets the login of the user.
+         *
+         * @param login The name of the parameter.
+         */
         public void setLogin(String login) {
             this.login.set(login);
         }
 
+        /**
+         * Get the value of the password field
+         *
+         * @return The password.
+         */
         public String getPwd() {
             return pwd.get();
         }
 
+        /**
+         * It sets the password.
+         *
+         * @param pwd The password to be set.
+         */
         public void setPwd(String pwd) {
             this.pwd.set(pwd);
         }
 
+        /**
+         * It returns the iv value.
+         *
+         * @return The iv field is a volatile field.
+         *         The get method returns the value of the field.
+         */
         public String getIv() {
             return iv.get();
         }
 
+        /**
+         * Returns the iv property
+         *
+         * @return A property object.
+         */
         public SimpleStringProperty ivProperty() {
             return iv;
         }
 
+        /**
+         * It sets the iv variable to the value of the iv parameter.
+         *
+         * @param iv The initialization vector.
+         */
         public void setIv(String iv) {
             this.iv.set(iv);
         }
 
-        public String getHiddenPwd() {
-            return hiddenPwd.get();
-        }
 
-        public void setHiddenPwd(String hiddenPwd) {
-            this.hiddenPwd.set(hiddenPwd);
-        }
-
+        /**
+         * This function returns the value of the activePwd variable
+         *
+         * @return The value of the activePwd field.
+         */
         public String getActivePwd() {
             return activePwd.get();
         }
 
-        public SimpleStringProperty activePwdProperty() {
-            return activePwd;
-        }
-
-        public void setActivePwd(String activePwd) {
-            this.activePwd.set(activePwd);
-        }
     }
 }
