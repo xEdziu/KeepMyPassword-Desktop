@@ -35,12 +35,19 @@ public class MainAppController {
     @FXML
     Label dateLabel;
 
+    /**
+     * The function sets the text of the dateLabel to the current year
+     */
     @FXML
     private void initialize(){
         LocalDate l = LocalDate.now();
         dateLabel.setText(String.valueOf(l.getYear()));
     }
 
+    /**
+     * If the user is logging in, we check if the username and password are correct. If they are, we show the logged in
+     * screen. If they are not, we show an error dialog
+     */
     @FXML
     protected void onLoginButtonClick() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
@@ -161,6 +168,12 @@ public class MainAppController {
         login = true;
     }
 
+    /**
+     * If the database and config files don't exist, then the user is
+     * registering. If the database exists but the config file doesn't, then the user is registering. If the config file
+     * exists but the database doesn't, then the user is registering. If the config file and database exist, then the user is
+     * logging in
+     */
     public void handleAppRun() {
         if (!ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()) {
             btnLogin.setText("Register");
