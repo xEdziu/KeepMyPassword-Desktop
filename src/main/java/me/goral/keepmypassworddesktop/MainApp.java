@@ -37,7 +37,7 @@ public class MainApp extends Application {
             guiStage.setTitle("Keep My Password");
             guiStage.setResizable(false);
             guiStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
-            guiStage.setWidth(700);
+            guiStage.setWidth(750);
             guiStage.setHeight(500);
             guiStage.setScene(scene);
             guiStage.show();

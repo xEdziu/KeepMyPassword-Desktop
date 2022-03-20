@@ -10,7 +10,7 @@
 }
 
 #titleLabel {
-    -fx-font-size: 30;
+    -fx-font-size: 35;
 }
 
 #showBtn {
@@ -50,6 +50,7 @@
     -fx-cursor: hand;
     -fx-text-fill: #AAA;
     -fx-font-size: 15;
+    -fx-wrap-text: true;
 }
 
 #btnLogin {

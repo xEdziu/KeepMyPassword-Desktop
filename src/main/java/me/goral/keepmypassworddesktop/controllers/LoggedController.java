@@ -25,17 +25,29 @@ public class LoggedController {
     @FXML private TableColumn<PasswordRow, String> ivColumn = new TableColumn<>("IV");
     @FXML private Label unameLabel;
     @FXML private Button showBtn;
+    @FXML private Button addButton;
+    @FXML private Button removeButton;
+    @FXML private Button clearDataButton;
+    @FXML private Button deleteAccountButton;
+    @FXML private Button logoutButton;
+    @FXML private Button genPwd;
     private SecretKey key;
     private boolean showed = false;
 
     /**
      * The function creates a new TableRow object and sets the onMouseClicked event handler to the event.
-     * If the user double clicks on the row, the function will show the update password dialog
+     * If the user double-clicks on the row, the function will show the update password dialog
      */
     @FXML
     private void initialize() {
 
         showBtn.getStyleClass().add("show");
+        addButton.setWrapText(true);
+        removeButton.setWrapText(true);
+        clearDataButton.setWrapText(true);
+        deleteAccountButton.setWrapText(true);
+        logoutButton.setWrapText(true);
+        genPwd.setWrapText(true);
 
         idColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getId())
@@ -124,8 +136,6 @@ public class LoggedController {
         contentTable.setRowFactory( tv -> {
             TableRow<PasswordRow> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                System.out.println("main: " + contentTable.getSelectionModel().getSelectedIndex());
-                System.out.println("pwdColumn: " + pwdColumn.getTableView().getSelectionModel().getSelectedIndex());
                 if (event.getClickCount() == 2 && (!row.isEmpty())){
                     PasswordRow rowData = row.getItem();
                     int id = Integer.parseInt(rowData.getId());
