@@ -319,7 +319,7 @@ public class LoggedController {
     }
 
     public void onSettingsButtonClick() {
-
+        AlertsUtil.showSettingsDialog();
     }
 
     /**

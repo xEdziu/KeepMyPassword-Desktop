@@ -172,6 +172,53 @@ public class AlertsUtil {
     }
 
     /**
+     * Show a dialog with the settings options
+     */
+    public static void showSettingsDialog() {
+        Dialog<Object> dialog = new Dialog<>();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        dialog.setTitle("Settings");
+        dialog.setHeaderText("Select option that you want to do");
+        dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-64.png").toString()));
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        //TODO convert alert to dialog to set buttons in pane
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(cancel);
+
+        Node cancelNode = alert.getDialogPane().lookupButton(cancel);
+
+        cancelNode.getStyleClass().add("btn");
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        Button delAcc = new Button("Delete account");
+        delAcc.getStyleClass().add("btn");
+        Button delData = new Button("Delete data");
+        delData.getStyleClass().add("btn");
+        Button logout = new Button("Logout");
+        logout.getStyleClass().add("btn");
+
+        delAcc.setOnMouseClicked(mouseEvent -> showDeleteAccountDialog());
+        delData.setOnMouseClicked(mouseEvent -> showDeleteDataDialog());
+        logout.setOnMouseClicked(mouseEvent -> showLogoutDialog());
+
+        grid.add(logout, 0, 0);
+        grid.add(delData, 0,1);
+        grid.add(logout, 2, 0);
+
+        alert.getDialogPane().setContent(grid);
+
+        alert.showAndWait();
+    }
+
+    /**
      * Show a dialog to confirm the deletion of the account
      */
     public static void showDeleteAccountDialog() {
