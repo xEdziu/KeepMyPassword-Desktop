@@ -356,13 +356,13 @@ public class AlertsUtil {
         TextField length = new TextField();
         length.setText("5");
         TextField lowerNum = new TextField();
-        lowerNum.setText("0");
+        lowerNum.setText("1");
         TextField upperNum = new TextField();
-        upperNum.setText("0");
+        upperNum.setText("1");
         TextField digitNum = new TextField();
-        digitNum.setText("0");
+        digitNum.setText("1");
         TextField specialNum = new TextField();
-        specialNum.setText("0");
+        specialNum.setText("1");
 
         grid.add(new Label("Length"), 0, 0);
         grid.add(length, 1, 0);
@@ -393,15 +393,15 @@ public class AlertsUtil {
         Optional<List<String>> res = dialog.showAndWait();
         res.ifPresent(result -> {
             String len = result.get(0);
-            if (len.length() == 0) len = "0";
+            if (len.length() == 0) len = "1";
             String lower = result.get(1);
-            if (lower.length() == 0) lower = "0";
+            if (lower.length() == 0) lower = "1";
             String upper = result.get(2);
-            if (upper.length() == 0) upper = "0";
+            if (upper.length() == 0) upper = "1";
             String digit = result.get(3);
-            if (digit.length() == 0) digit = "0";
+            if (digit.length() == 0) digit = "1";
             String special = result.get(4);
-            if (special.length() == 0) special = "0";
+            if (special.length() == 0) special = "1";
 
             int intLen, intLower, intUpper, intDigit, intSpecial;
 

@@ -30,54 +30,60 @@ public class PasswordGeneratorUtil {
             AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
                     "Length must be at least 5");
             return null;
-        } else if (lowerNum < 0) {
+        } else if (lowerNum < 1) {
             AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Lower case number must not be lower than 0");
+                    "Lower case number must not be lower than 1");
             return null;
-        } else if (upperNum < 0) {
+        } else if (upperNum < 1) {
             AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Upper case number must not be lower than 0");
+                    "Upper case number must not be lower than 1");
             return null;
-        } else if (digitNum < 0) {
+        } else if (digitNum < 1) {
             AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Digit number must not be lower than 0");
+                    "Digit number must not be lower than 1");
             return null;
-        } else if (specialNum < 0) {
+        } else if (specialNum < 1) {
             AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Special character number must not be lower than 0");
+                    "Special character number must not be lower than 1");
             return null;
         } else {
 
-            PasswordGenerator gen = new PasswordGenerator();
+            try {
+                PasswordGenerator gen = new PasswordGenerator();
 
-            CharacterData lowerCaseChars = EnglishCharacterData.LowerCase;
-            CharacterRule lowerCaseRule = new CharacterRule(lowerCaseChars);
-            lowerCaseRule.setNumberOfCharacters(lowerNum == 0 ? 1 : lowerNum);
+                CharacterData lowerCaseChars = EnglishCharacterData.LowerCase;
+                CharacterRule lowerCaseRule = new CharacterRule(lowerCaseChars);
+                lowerCaseRule.setNumberOfCharacters(lowerNum);
 
-            CharacterData upperCaseChars = EnglishCharacterData.UpperCase;
-            CharacterRule upperCaseRule = new CharacterRule(upperCaseChars);
-            upperCaseRule.setNumberOfCharacters(upperNum == 0 ? 1 : upperNum);
+                CharacterData upperCaseChars = EnglishCharacterData.UpperCase;
+                CharacterRule upperCaseRule = new CharacterRule(upperCaseChars);
+                upperCaseRule.setNumberOfCharacters(upperNum);
 
-            CharacterData digitCaseChars = EnglishCharacterData.Digit;
-            CharacterRule digitCaseRule = new CharacterRule(digitCaseChars);
-            digitCaseRule.setNumberOfCharacters(digitNum == 0 ? 1 : digitNum);
+                CharacterData digitCaseChars = EnglishCharacterData.Digit;
+                CharacterRule digitCaseRule = new CharacterRule(digitCaseChars);
+                digitCaseRule.setNumberOfCharacters(digitNum);
 
-            CharacterData specialChars = new CharacterData() {
-                @Override
-                public String getErrorCode() {
-                    return ERROR_CODE;
-                }
+                CharacterData specialChars = new CharacterData() {
+                    @Override
+                    public String getErrorCode() {
+                        return ERROR_CODE;
+                    }
 
-                @Override
-                public String getCharacters() {
-                    return "!@#$%^&*()_+";
-                }
-            };
-            CharacterRule splCharRule = new CharacterRule(specialChars);
-            splCharRule.setNumberOfCharacters(specialNum == 0 ? 1 : specialNum);
+                    @Override
+                    public String getCharacters() {
+                        return "!@#$%^&*()_+";
+                    }
+                };
+                CharacterRule splCharRule = new CharacterRule(specialChars);
+                splCharRule.setNumberOfCharacters(specialNum);
 
-            return gen.generatePassword(length, splCharRule, lowerCaseRule,
-                    upperCaseRule, digitCaseRule);
+                return gen.generatePassword(length, splCharRule, lowerCaseRule,
+                        upperCaseRule, digitCaseRule);
+            } catch (Exception e){
+                AlertsUtil.showExceptionStackTraceDialog(e);
+            }
+
+            return null;
         }
     }
 }
