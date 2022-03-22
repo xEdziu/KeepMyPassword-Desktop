@@ -1,9 +1,13 @@
 package me.goral.keepmypassworddesktop.util;
 
+import javafx.scene.paint.Color;
+import javafx.util.Pair;
 import org.passay.CharacterData;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
+
+import java.util.regex.Pattern;
 
 import static org.passay.IllegalCharacterRule.ERROR_CODE;
 
@@ -85,5 +89,27 @@ public class PasswordGeneratorUtil {
 
             return null;
         }
+    }
+
+    /**
+     * Check the password complexity and return a color based on the strength of the password
+     *
+     * @param pwd The password to check.
+     * @return The Pair class is a container class that holds two values. The first value is the
+     * password strength and the second value is the color of the password strength.
+     */
+    public static Pair<String, Color> checkPasswordComplexity(String pwd){
+
+        Pattern strongPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
+        Pattern mediumPattern = Pattern.compile("((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))");
+
+        if (strongPattern.matcher(pwd).find()) {
+            return new Pair<>("Strong password", Color.web("#008a15"));
+        }
+        else if (mediumPattern.matcher(pwd).find()) {
+            return new Pair<>("Medium password", Color.web("#947100"));
+        }
+        else if (pwd.isEmpty()) return new Pair<>("No password", Color.web("#b3b3b3"));
+        else return new Pair<>("Weak password", Color.web("#940005"));
     }
 }

@@ -225,6 +225,17 @@ public class LoggedController {
     }
 
     /**
+     * It takes a table view and a boolean as parameters. It then parses the passwords list and returns a list of
+     * PasswordRow objects
+     *
+     * @param tv the TableView to refresh
+     * @param s boolean
+     */
+    public void refreshContentTable(TableView<PasswordRow> tv, boolean s) {
+        tv.getItems().setAll(parsePasswordsList(s));
+    }
+
+    /**
      * Set the secret key to be used for encryption and decryption
      *
      * @param k The key to use for encryption/decryption.
@@ -287,7 +298,7 @@ public class LoggedController {
      */
     public void onSettingsButtonClick() {
         try {
-            AlertsUtil.showSettingsDialog();
+            AlertsUtil.showSettingsDialog(contentTable, showed);
         } catch (Exception e){
             AlertsUtil.showExceptionStackTraceDialog(e);
         }

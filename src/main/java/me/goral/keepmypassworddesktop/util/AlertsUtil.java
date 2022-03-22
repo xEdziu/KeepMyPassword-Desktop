@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import me.goral.keepmypassworddesktop.MainApp;
+import me.goral.keepmypassworddesktop.controllers.LoggedController;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
@@ -36,6 +37,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static me.goral.keepmypassworddesktop.util.PasswordGeneratorUtil.checkPasswordComplexity;
 
 public class AlertsUtil {
 
@@ -174,7 +177,7 @@ public class AlertsUtil {
     /**
      * Show a dialog with the settings options
      */
-    public static void showSettingsDialog() {
+    public static void showSettingsDialog(TableView<LoggedController.PasswordRow> tv, boolean s) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Settings");
         alert.setHeaderText("Select desired option");
@@ -204,7 +207,11 @@ public class AlertsUtil {
             showDeleteAccountDialog();
             alert.close();
         });
-        delData.setOnMouseClicked(mouseEvent -> showDeleteDataDialog());
+        delData.setOnMouseClicked(mouseEvent -> {
+            showDeleteDataDialog();
+            LoggedController lc = new LoggedController();
+            lc.refreshContentTable(tv, s);
+        });
 
         logout.setOnMouseClicked(mouseEvent -> {
             showLogoutDialog();
@@ -393,15 +400,30 @@ public class AlertsUtil {
         Optional<List<String>> res = dialog.showAndWait();
         res.ifPresent(result -> {
             String len = result.get(0);
-            if (len.length() == 0) len = "1";
+            if (len.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Length parameter can't be empty!");
+                return;
+            }
             String lower = result.get(1);
-            if (lower.length() == 0) lower = "1";
+            if (lower.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Lowe case number parameter can't be empty!");
+                return;
+            }
             String upper = result.get(2);
-            if (upper.length() == 0) upper = "1";
+            if (upper.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Upper case number parameter can't be empty!");
+                return;
+            }
             String digit = result.get(3);
-            if (digit.length() == 0) digit = "1";
+            if (digit.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Number of digits parameter can't be empty!");
+                return;
+            }
             String special = result.get(4);
-            if (special.length() == 0) special = "1";
+            if (special.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Special chars parameter can't be empty!");
+                return;
+            }
 
             int intLen, intLower, intUpper, intDigit, intSpecial;
 
@@ -725,25 +747,4 @@ public class AlertsUtil {
         return true;
     }
 
-    /**
-     * Check the password complexity and return a color based on the strength of the password
-     * 
-     * @param pwd The password to check.
-     * @return The Pair class is a container class that holds two values. The first value is the
-     * password strength and the second value is the color of the password strength.
-     */
-    private static Pair<String, Color> checkPasswordComplexity(String pwd){
-
-        Pattern strongPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
-        Pattern mediumPattern = Pattern.compile("((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))");
-
-        if (strongPattern.matcher(pwd).find()) {
-            return new Pair<>("Strong password", Color.web("#008a15"));
-        }
-        else if (mediumPattern.matcher(pwd).find()) {
-            return new Pair<>("Medium password", Color.web("#947100"));
-        }
-        else if (pwd.isEmpty()) return new Pair<>("No password", Color.web("#b3b3b3"));
-        else return new Pair<>("Weak password", Color.web("#940005"));
-    }
 }
