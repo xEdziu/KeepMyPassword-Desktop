@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import me.goral.keepmypassworddesktop.MainApp;
+import me.goral.keepmypassworddesktop.controllers.LoggedController;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
@@ -174,7 +175,7 @@ public class AlertsUtil {
     /**
      * Show a dialog with the settings options
      */
-    public static void showSettingsDialog() {
+    public static void showSettingsDialog(TableView<LoggedController.PasswordRow> tv, boolean s) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Settings");
         alert.setHeaderText("Select desired option");
@@ -204,7 +205,11 @@ public class AlertsUtil {
             showDeleteAccountDialog();
             alert.close();
         });
-        delData.setOnMouseClicked(mouseEvent -> showDeleteDataDialog());
+        delData.setOnMouseClicked(mouseEvent -> {
+            showDeleteDataDialog();
+            LoggedController lc = new LoggedController();
+            lc.refreshContentTable(tv, s);
+        });
 
         logout.setOnMouseClicked(mouseEvent -> {
             showLogoutDialog();
