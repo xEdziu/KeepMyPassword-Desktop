@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import me.goral.keepmypassworddesktop.MainApp;
@@ -91,6 +92,16 @@ public class MainAppController {
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == registerButtonType){
+
+                Pair<String, Color> checker = PasswordGeneratorUtil.checkPasswordComplexity(password.getText());
+
+                if (password.getText().isEmpty() && !login){
+                    AlertsUtil.showErrorDialog("Error", "There is a problem.", "You can't register with empty password.");
+                    return null;
+                } else if ((!checker.getKey().equals("Strong password") && !checker.getKey().equals("Medium password")) && !login){
+                    AlertsUtil.showErrorDialog("Error", "There is a problem.", "Password is not strong enough.");
+                    return null;
+                }
                 return new Pair<>(username.getText(), password.getText());
             }
             return null;
