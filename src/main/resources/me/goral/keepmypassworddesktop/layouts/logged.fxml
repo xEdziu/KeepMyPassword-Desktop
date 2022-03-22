@@ -22,6 +22,6 @@
       <Button fx:id="genPwd" layoutX="509.0" layoutY="175.0" mnemonicParsing="false" onAction="#onGenPwdClick" prefHeight="25.0" prefWidth="195.0" text="Generate Password" wrapText="true" />
       <Button fx:id="showBtn" layoutX="442.0" layoutY="109.0" maxWidth="16" mnemonicParsing="false" onAction="#onShowBtnClick" prefHeight="16" prefWidth="16" />
       <Button fx:id="settingsButton" layoutX="625.0" layoutY="5.0" maxHeight="128" maxWidth="128" mnemonicParsing="false" onAction="#onSettingsButtonClick" prefHeight="64" prefWidth="64" />
-      <Label layoutY="75.0" prefHeight="17.0" prefWidth="750.0" text="v2.3.1" textAlignment="CENTER" />
+      <Label layoutY="75.0" prefHeight="17.0" prefWidth="750.0" text="v2.3.2" textAlignment="CENTER" />
    </children>
 </AnchorPane>
