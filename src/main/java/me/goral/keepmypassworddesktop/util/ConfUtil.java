@@ -123,8 +123,8 @@ public class ConfUtil {
             File f = new File(workingDirectory + confFileName);
             if (f.delete()){
                 File db = new File(workingDirectory + databaseFileName);
-                if (db.delete()){
-                    showInformationDialog("Information Dialog", "Your account is now deleted", "Have a great day!");
+                if (!db.delete()){
+                    throw new Exception("Database could not be deleted");
                 }
             } else showErrorDialog("Something went wrong", "Whoops!", "Sorry, but something went wrong. " +
                     "Please, raise an issue on github and describe what happened.");
