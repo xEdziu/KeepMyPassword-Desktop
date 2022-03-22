@@ -7,10 +7,10 @@ assignees: xEdziu
 
 ---
 ## **Actual behaviour**
-What should happen instead of what happend?
+A clear and concise description of what the bug is.
 
 ## **Expected behaviour**
-A clear and concise description of what the bug is.
+What should happen instead of what happend?
 
 ## **Reproduce Steps**
 Steps to reproduce the behavior:
