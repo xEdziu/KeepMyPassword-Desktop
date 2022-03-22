@@ -100,14 +100,10 @@ public class MainAppController {
 
                 if (password.getText().isEmpty() && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "You can't register with empty password.");
-                    dialog.close();
-                    restartLoginForm(newUname, "");
-                    return null;
+                    return new Pair<>("err"+newUname, newPwd);
                 } else if ((!checker.getKey().equals("Strong password") && !checker.getKey().equals("Medium password")) && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "Password is not strong enough.");
-                    dialog.close();
-                    restartLoginForm(newUname, newPwd);
-                    return null;
+                    return new Pair<>("err"+newUname, newPwd);
                 } else {
                     return new Pair<>(newUname, newPwd);
                 }
@@ -120,6 +116,11 @@ public class MainAppController {
 
             String uname = result.getKey();
             String plain = result.getValue();
+
+            if (uname.startsWith("err")){
+                restartLoginForm(uname.substring(3), plain);
+                return;
+            }
 
             if (login){
                 //login
@@ -239,14 +240,10 @@ public class MainAppController {
 
                 if (password.getText().isEmpty() && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "You can't register with empty password.");
-                    dialog.close();
-                    restartLoginForm(newUname, "");
-                    return null;
+                    return new Pair<>("err"+newUname, newPwd);
                 } else if ((!checker.getKey().equals("Strong password") && !checker.getKey().equals("Medium password")) && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "Password is not strong enough.");
-                    dialog.close();
-                    restartLoginForm(newUname, newPwd);
-                    return null;
+                    return new Pair<>("err"+newUname, newPwd);
                 } else {
                     return new Pair<>(newUname, newPwd);
                 }
@@ -259,6 +256,11 @@ public class MainAppController {
 
             String uname = result.getKey();
             String plain = result.getValue();
+
+            if (uname.startsWith("err")){
+                restartLoginForm(uname.substring(3), plain);
+                return;
+            }
 
             if (login){
                 //login
