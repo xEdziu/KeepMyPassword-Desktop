@@ -6,12 +6,11 @@ labels: bug
 assignees: xEdziu
 
 ---
+## **Actual behaviour**
+What should happen instead of what happend?
 
 ## **Expected behaviour**
 A clear and concise description of what the bug is.
-
-## **Actual behaviour**
-What should happen instead of what happend?
 
 ## **Reproduce Steps**
 Steps to reproduce the behavior:
