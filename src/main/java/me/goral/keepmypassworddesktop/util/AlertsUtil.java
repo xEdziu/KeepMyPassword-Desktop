@@ -404,6 +404,10 @@ public class AlertsUtil {
                 showErrorDialog("Error", "Invalid input", "Length parameter can't be empty!");
                 return;
             }
+            if (len.length() >= 6) {
+                showErrorDialog("Error", "You can't generate that long password.", "Why would you need 6-digits long password anyway?");
+                return;
+            }
             String lower = result.get(1);
             if (lower.length() == 0) {
                 showErrorDialog("Error", "Invalid input", "Lowe case number parameter can't be empty!");
@@ -491,14 +495,14 @@ public class AlertsUtil {
         TextArea textArea = new TextArea(pwd);
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        textArea.setMaxHeight(new Text(pwd).getLayoutBounds().getHeight());
+        textArea.setMaxHeight(Double.MAX_VALUE);
 
         GridPane.setVgrow(textArea, Priority.ALWAYS);
         GridPane.setHgrow(textArea, Priority.ALWAYS);
 
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.setMaxHeight(new Text(pwd).getLayoutBounds().getHeight());
+        expContent.setMaxHeight(Double.MAX_VALUE);
         expContent.add(new Label("Your new password:"), 0, 0);
         expContent.add(textArea, 0, 1);
 
