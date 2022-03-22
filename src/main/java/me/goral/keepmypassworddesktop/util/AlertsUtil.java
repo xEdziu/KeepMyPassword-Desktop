@@ -495,14 +495,14 @@ public class AlertsUtil {
         TextArea textArea = new TextArea(pwd);
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        textArea.setMaxHeight(new Text(pwd).getLayoutBounds().getHeight());
+        textArea.setMaxHeight(Double.MAX_VALUE);
 
         GridPane.setVgrow(textArea, Priority.ALWAYS);
         GridPane.setHgrow(textArea, Priority.ALWAYS);
 
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.setMaxHeight(new Text(pwd).getLayoutBounds().getHeight());
+        expContent.setMaxHeight(Double.MAX_VALUE);
         expContent.add(new Label("Your new password:"), 0, 0);
         expContent.add(textArea, 0, 1);
 
