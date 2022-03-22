@@ -404,6 +404,10 @@ public class AlertsUtil {
                 showErrorDialog("Error", "Invalid input", "Length parameter can't be empty!");
                 return;
             }
+            if (len.length() >= 6) {
+                showErrorDialog("Error", "You can't generate that long password.", "Why would you need 6-digits long password anyway?");
+                return;
+            }
             String lower = result.get(1);
             if (lower.length() == 0) {
                 showErrorDialog("Error", "Invalid input", "Lowe case number parameter can't be empty!");
