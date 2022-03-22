@@ -393,15 +393,30 @@ public class AlertsUtil {
         Optional<List<String>> res = dialog.showAndWait();
         res.ifPresent(result -> {
             String len = result.get(0);
-            if (len.length() == 0) len = "1";
+            if (len.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Length parameter can't be empty!");
+                return;
+            }
             String lower = result.get(1);
-            if (lower.length() == 0) lower = "1";
+            if (lower.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Lowe case number parameter can't be empty!");
+                return;
+            }
             String upper = result.get(2);
-            if (upper.length() == 0) upper = "1";
+            if (upper.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Upper case number parameter can't be empty!");
+                return;
+            }
             String digit = result.get(3);
-            if (digit.length() == 0) digit = "1";
+            if (digit.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Number of digits parameter can't be empty!");
+                return;
+            }
             String special = result.get(4);
-            if (special.length() == 0) special = "1";
+            if (special.length() == 0) {
+                showErrorDialog("Error", "Invalid input", "Special chars parameter can't be empty!");
+                return;
+            }
 
             int intLen, intLower, intUpper, intDigit, intSpecial;
 
