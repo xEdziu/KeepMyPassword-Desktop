@@ -70,7 +70,7 @@ public class AlertsUtil {
     /**
      * Show a dialog to confirm the deletion of all data
      */
-    public static void showDeleteDataDialog() {
+    public static void showDeleteDataDialog(TableView<LoggedController.PasswordRow> tv, boolean s) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Deleting all data");
         alert.setHeaderText("You are about to wipe out all your data");
@@ -96,6 +96,8 @@ public class AlertsUtil {
 
         if (result.get() == confirm) {
             DatabaseHandler.truncateData();
+            LoggedController lc = new LoggedController();
+            lc.refreshContentTable(tv, s);
             showInformationDialog("Information Dialog", "Data cleared", "All your passwords have been deleted.\n" +
                     "Have a great day!");
         }
@@ -208,9 +210,8 @@ public class AlertsUtil {
             alert.close();
         });
         delData.setOnMouseClicked(mouseEvent -> {
-            showDeleteDataDialog();
-            LoggedController lc = new LoggedController();
-            lc.refreshContentTable(tv, s);
+            showDeleteDataDialog(tv, s);
+            alert.close();
         });
 
         logout.setOnMouseClicked(mouseEvent -> {

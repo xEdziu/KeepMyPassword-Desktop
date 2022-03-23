@@ -26,6 +26,7 @@ import java.util.*;
 
 import static me.goral.keepmypassworddesktop.util.AlertsUtil.showErrorDialog;
 import static me.goral.keepmypassworddesktop.util.ConfUtil.createConfFiles;
+import static me.goral.keepmypassworddesktop.util.PasswordGeneratorUtil.checkPasswordComplexity;
 
 public class MainAppController {
 
@@ -79,11 +80,22 @@ public class MainAppController {
         username.setPromptText("Username");
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
+        Label pwdCheck = new Label("No password");
+        pwdCheck.setTextFill(Color.web("#b3b3b3"));
+
+        password.textProperty().addListener((observable, oldValue, newValue) -> {
+            Pair<String, Color> res = checkPasswordComplexity(newValue);
+            pwdCheck.setText(res.getKey());
+            pwdCheck.setTextFill(res.getValue());
+        });
 
         grid.add(new Label("Username"), 0, 0);
         grid.add(username, 1, 0);
         grid.add(new Label("Password"), 0, 1);
         grid.add(password, 1, 1);
+        if (!login) {
+            grid.add(pwdCheck, 1, 2);
+        }
 
         username.textProperty().addListener(((observableValue, oldV, newV) -> regBtn.setDisable(newV.trim().isEmpty())));
 
@@ -96,7 +108,7 @@ public class MainAppController {
                 String newUname = username.getText();
                 String newPwd = password.getText();
 
-                Pair<String, Color> checker = PasswordGeneratorUtil.checkPasswordComplexity(newPwd);
+                Pair<String, Color> checker = checkPasswordComplexity(newPwd);
 
                 if (password.getText().isEmpty() && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "You can't register with empty password.");
@@ -219,11 +231,23 @@ public class MainAppController {
         username.setText(unameString);
         PasswordField password = new PasswordField();
         password.setText(passwordString);
+        Label pwdCheck = new Label("No password");
+        pwdCheck.setTextFill(Color.web("#b3b3b3"));
+
+        password.textProperty().addListener((observable, oldValue, newValue) -> {
+            Pair<String, Color> res = checkPasswordComplexity(newValue);
+            pwdCheck.setText(res.getKey());
+            pwdCheck.setTextFill(res.getValue());
+        });
 
         grid.add(new Label("Username"), 0, 0);
         grid.add(username, 1, 0);
         grid.add(new Label("Password"), 0, 1);
         grid.add(password, 1, 1);
+        if (!login) {
+            grid.add(pwdCheck, 1, 2);
+        }
+
 
         username.textProperty().addListener(((observableValue, oldV, newV) -> regBtn.setDisable(newV.trim().isEmpty())));
         regBtn.setDisable(unameString.trim().isEmpty());
@@ -237,7 +261,7 @@ public class MainAppController {
                 String newUname = username.getText();
                 String newPwd = password.getText();
 
-                Pair<String, Color> checker = PasswordGeneratorUtil.checkPasswordComplexity(newPwd);
+                Pair<String, Color> checker = checkPasswordComplexity(newPwd);
 
                 if (password.getText().isEmpty() && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "You can't register with empty password.");
