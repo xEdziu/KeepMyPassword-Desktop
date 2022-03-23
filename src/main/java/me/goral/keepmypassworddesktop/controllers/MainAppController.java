@@ -126,6 +126,7 @@ public class MainAppController {
                 //login
                 try {
                     String config = ConfUtil.readConfigFile();
+                    if (config == null) return;
                     String[] configArr = config.split(":");
                     String unameFromString = configArr[0];
                     String encryptedInitial = configArr[1];
@@ -266,6 +267,7 @@ public class MainAppController {
                 //login
                 try {
                     String config = ConfUtil.readConfigFile();
+                    if (config == null) return;
                     String[] configArr = config.split(":");
                     String unameFromString = configArr[0];
                     String encryptedInitial = configArr[1];

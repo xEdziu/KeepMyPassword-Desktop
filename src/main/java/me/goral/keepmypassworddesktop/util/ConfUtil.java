@@ -7,8 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Locale;
 
-import static me.goral.keepmypassworddesktop.util.AlertsUtil.showErrorDialog;
-import static me.goral.keepmypassworddesktop.util.AlertsUtil.showInformationDialog;
 
 public class ConfUtil {
 
@@ -108,8 +106,14 @@ public class ConfUtil {
      */
     public static String readConfigFile() {
         try {
-            return Files.readString(Paths.get(workingDirectory + confFileName));
-        } catch (IOException e){
+            String confString = Files.readString(Paths.get(workingDirectory + confFileName));
+            if (confString.isEmpty() ){
+                deleteConfFiles();
+                AlertsUtil.showErrorDialog("Error", "Configuration file is empty.", "Deleting account. Please restart program.");
+            } else {
+                return confString;
+            }
+        } catch (Exception e){
             AlertsUtil.showExceptionStackTraceDialog(e);
         }
         return null;
@@ -121,13 +125,14 @@ public class ConfUtil {
     public static void deleteConfFiles() {
         try {
             File f = new File(workingDirectory + confFileName);
-            if (f.delete()){
-                File db = new File(workingDirectory + databaseFileName);
-                if (!db.delete()){
-                    throw new Exception("Database could not be deleted");
-                }
-            } else showErrorDialog("Something went wrong", "Whoops!", "Sorry, but something went wrong. " +
-                    "Please, raise an issue on github and describe what happened.");
+            File db = new File(workingDirectory + databaseFileName);
+            if (f.exists()){
+                if (!f.delete()) throw new Exception("Configuration file could not be deleted");
+            }
+            if (db.exists()){
+                if (!db.delete()) throw new Exception("Database could not be deleted");
+            }
+
         } catch (Exception e){
             AlertsUtil.showExceptionStackTraceDialog(e);
         }
