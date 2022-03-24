@@ -68,11 +68,20 @@ public class LoggedController {
         ivColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getIv())
         );
+        idColumn.setVisible(false);
         ivColumn.setVisible(false);
 
+        idColumn.setResizable(false);
         descColumn.setResizable(false);
         loginColumn.setResizable(false);
         pwdColumn.setResizable(false);
+        ivColumn.setResizable(false);
+
+        idColumn.setReorderable(false);
+        descColumn.setReorderable(false);
+        loginColumn.setReorderable(false);
+        pwdColumn.setReorderable(false);
+        ivColumn.setReorderable(false);
 
         descColumn.setCellFactory(c -> new TableCell<>() {
 
