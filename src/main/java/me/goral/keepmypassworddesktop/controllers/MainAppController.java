@@ -84,7 +84,7 @@ public class MainAppController {
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
 
-        CheckBox checkBox = new CheckBox();
+        CheckBox checkBox = new CheckBox("Show/Hide password");
 
         tf.managedProperty().bind(checkBox.selectedProperty());
         tf.visibleProperty().bind(checkBox.selectedProperty());
@@ -251,7 +251,7 @@ public class MainAppController {
         PasswordField password = new PasswordField();
         password.setText(passwordString);
 
-        CheckBox checkBox = new CheckBox();
+        CheckBox checkBox = new CheckBox("Show/Hide password");
 
         tf.managedProperty().bind(checkBox.selectedProperty());
         tf.visibleProperty().bind(checkBox.selectedProperty());
