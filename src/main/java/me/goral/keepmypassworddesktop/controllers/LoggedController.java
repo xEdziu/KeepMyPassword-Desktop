@@ -44,6 +44,7 @@ public class LoggedController {
         showBtn.getStyleClass().add("show");
         addButton.setWrapText(true);
         removeButton.setWrapText(true);
+
         genPwd.setWrapText(true);
         ImageView imageView = new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-128.png").toExternalForm());
         settingsButton.setGraphic(imageView);

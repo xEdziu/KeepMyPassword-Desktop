@@ -78,8 +78,22 @@ public class MainAppController {
 
         TextField username = new TextField();
         username.setPromptText("Username");
+        TextField tf = new TextField();
+        tf.setManaged(false);
+        tf.setVisible(false);
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
+
+        CheckBox checkBox = new CheckBox();
+
+        tf.managedProperty().bind(checkBox.selectedProperty());
+        tf.visibleProperty().bind(checkBox.selectedProperty());
+
+        password.managedProperty().bind(checkBox.selectedProperty().not());
+        password.visibleProperty().bind(checkBox.selectedProperty().not());
+
+        tf.textProperty().bindBidirectional(password.textProperty());
+
         Label pwdCheck = new Label("No password");
         pwdCheck.setTextFill(Color.web("#b3b3b3"));
 
@@ -93,6 +107,8 @@ public class MainAppController {
         grid.add(username, 1, 0);
         grid.add(new Label("Password"), 0, 1);
         grid.add(password, 1, 1);
+        grid.add(tf, 1,1);
+        grid.add(checkBox,2,1);
         if (!login) {
             grid.add(pwdCheck, 1, 2);
         }
@@ -229,8 +245,22 @@ public class MainAppController {
 
         TextField username = new TextField();
         username.setText(unameString);
+        TextField tf = new TextField();
+        tf.setManaged(false);
+        tf.setVisible(false);
         PasswordField password = new PasswordField();
         password.setText(passwordString);
+
+        CheckBox checkBox = new CheckBox();
+
+        tf.managedProperty().bind(checkBox.selectedProperty());
+        tf.visibleProperty().bind(checkBox.selectedProperty());
+
+        password.managedProperty().bind(checkBox.selectedProperty().not());
+        password.visibleProperty().bind(checkBox.selectedProperty().not());
+
+        tf.textProperty().bindBidirectional(password.textProperty());
+
         Label pwdCheck = new Label("No password");
         pwdCheck.setTextFill(Color.web("#b3b3b3"));
 
@@ -244,6 +274,8 @@ public class MainAppController {
         grid.add(username, 1, 0);
         grid.add(new Label("Password"), 0, 1);
         grid.add(password, 1, 1);
+        grid.add(tf, 1,1);
+        grid.add(checkBox,2,1);
         if (!login) {
             grid.add(pwdCheck, 1, 2);
         }
