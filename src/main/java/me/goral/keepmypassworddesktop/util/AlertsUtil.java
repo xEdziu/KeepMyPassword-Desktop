@@ -63,7 +63,7 @@ public class AlertsUtil {
         alert.getDialogPane().getButtonTypes().add(btnConfirm);
 
         Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
-        confirm.getStyleClass().add("btn");
+        confirm.getStyleClass().add("btn");//NON-NLS
         alert.showAndWait();
     }
 
@@ -89,8 +89,8 @@ public class AlertsUtil {
         Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
         Node btnCancel = alert.getDialogPane().lookupButton(cancel);
 
-        btnConfirm.getStyleClass().add("btn");
-        btnCancel.getStyleClass().add("btn");
+        btnConfirm.getStyleClass().add("btn");//NON-NLS
+        btnCancel.getStyleClass().add("btn");//NON-NLS
 
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -125,8 +125,8 @@ public class AlertsUtil {
         Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
         Node btnCancel = alert.getDialogPane().lookupButton(cancel);
 
-        btnConfirm.getStyleClass().add("btn");
-        btnCancel.getStyleClass().add("btn");
+        btnConfirm.getStyleClass().add("btn");//NON-NLS
+        btnCancel.getStyleClass().add("btn");//NON-NLS
 
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -171,7 +171,7 @@ public class AlertsUtil {
         alert.getDialogPane().getButtonTypes().add(btnConfirm);
 
         Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
-        confirm.getStyleClass().add("btn");
+        confirm.getStyleClass().add("btn");//NON-NLS
 
         alert.showAndWait();
     }
@@ -194,16 +194,16 @@ public class AlertsUtil {
 
         Node cancelNode = alert.getDialogPane().lookupButton(cancel);
 
-        cancelNode.getStyleClass().add("btn");
+        cancelNode.getStyleClass().add("btn");//NON-NLS
 
         GridPane grid = new GridPane();
 
         Button delAcc = new Button("Delete account");
-        delAcc.getStyleClass().addAll("btn","optionsButton");
+        delAcc.getStyleClass().addAll("btn","optionsButton");//NON-NLS
         Button delData = new Button("Delete data");
-        delData.getStyleClass().addAll("btn","optionsButton");
+        delData.getStyleClass().addAll("btn","optionsButton");//NON-NLS
         Button logout = new Button("Logout");
-        logout.getStyleClass().addAll("btn","optionsButton");
+        logout.getStyleClass().addAll("btn","optionsButton");//NON-NLS
 
         delAcc.setOnMouseClicked(mouseEvent -> {
             showDeleteAccountDialog();
@@ -258,8 +258,8 @@ public class AlertsUtil {
         Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
         Node btnCancel = alert.getDialogPane().lookupButton(cancel);
 
-        btnConfirm.getStyleClass().add("btn");
-        btnCancel.getStyleClass().add("btn");
+        btnConfirm.getStyleClass().add("btn");//NON-NLS
+        btnCancel.getStyleClass().add("btn");//NON-NLS
 
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -303,7 +303,7 @@ public class AlertsUtil {
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getDialogPane().getButtonTypes().add(okButtonType);
         Node okBtn = alert.getDialogPane().lookupButton(okButtonType);
-        okBtn.getStyleClass().add("btn");
+        okBtn.getStyleClass().add("btn");//NON-NLS
 
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
@@ -353,8 +353,8 @@ public class AlertsUtil {
         dialog.getDialogPane().getButtonTypes().setAll(generateButtonType, cancelButtonType);
         Node addBtn = dialog.getDialogPane().lookupButton(generateButtonType);
         Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
-        addBtn.getStyleClass().add("btn");
-        cancelBtn.getStyleClass().add("btn");
+        addBtn.getStyleClass().add("btn");//NON-NLS
+        cancelBtn.getStyleClass().add("btn");//NON-NLS
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -490,8 +490,8 @@ public class AlertsUtil {
 
         Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
         Node copy = alert.getDialogPane().lookupButton(btnCopy);
-        confirm.getStyleClass().add("btn");
-        copy.getStyleClass().add("btn");
+        confirm.getStyleClass().add("btn");//NON-NLS
+        copy.getStyleClass().add("btn");//NON-NLS
 
         TextArea textArea = new TextArea(pwd);
         textArea.setEditable(false);
@@ -547,8 +547,8 @@ public class AlertsUtil {
         dialog.getDialogPane().getButtonTypes().setAll(addButtonType, cancelButtonType);
         Node addBtn = dialog.getDialogPane().lookupButton(addButtonType);
         Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
-        addBtn.getStyleClass().add("btn");
-        cancelBtn.getStyleClass().add("btn");
+        addBtn.getStyleClass().add("btn");//NON-NLS
+        cancelBtn.getStyleClass().add("btn");//NON-NLS
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -562,7 +562,7 @@ public class AlertsUtil {
         TextField password = new TextField();
         password.setPromptText("Password");
         Label pwdCheck = new Label("No password");
-        pwdCheck.setTextFill(Color.web("#b3b3b3"));
+        pwdCheck.setTextFill(Color.web("#b3b3b3"));//NON-NLS
 
         password.textProperty().addListener((observable, oldValue, newValue) -> {
             Pair<String, Color> res = checkPasswordComplexity(newValue);
@@ -598,7 +598,7 @@ public class AlertsUtil {
             String descPlain = result.get(0);
             String unamePlain = result.get(1);
             String passPlain = result.get(2);
-            String alg = "AES/CBC/PKCS5Padding";
+            String alg = "AES/CBC/PKCS5Padding";//NON-NLS
 
             IvParameterSpec iv = AESUtil.generateIv();
 
@@ -648,8 +648,8 @@ public class AlertsUtil {
         dialog.getDialogPane().getButtonTypes().setAll(addButtonType, cancelButtonType);
         Node addBtn = dialog.getDialogPane().lookupButton(addButtonType);
         Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
-        addBtn.getStyleClass().add("btn");
-        cancelBtn.getStyleClass().add("btn");
+        addBtn.getStyleClass().add("btn");//NON-NLS
+        cancelBtn.getStyleClass().add("btn");//NON-NLS
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -665,7 +665,6 @@ public class AlertsUtil {
         Label pwdCheck = new Label();
 
         password.textProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("old: " +oldValue + " changed to: " + newValue);
             Pair<String, Color> res = checkPasswordComplexity(newValue);
             pwdCheck.setText(res.getKey());
             pwdCheck.setTextFill(res.getValue());
@@ -698,7 +697,7 @@ public class AlertsUtil {
             String descPlain = result.get(0);
             String unamePlain = result.get(1);
             String passPlain = result.get(2);
-            String alg = "AES/CBC/PKCS5Padding";
+            String alg = "AES/CBC/PKCS5Padding";//NON-NLS
 
             IvParameterSpec ivSpec = AESUtil.generateIv();
 

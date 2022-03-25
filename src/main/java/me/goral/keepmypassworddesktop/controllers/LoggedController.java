@@ -20,11 +20,11 @@ import java.util.List;
 public class LoggedController {
 
     @FXML private TableView<PasswordRow> contentTable;
-    @FXML private TableColumn<PasswordRow, String> idColumn = new TableColumn<>("id");
+    @FXML private TableColumn<PasswordRow, String> idColumn = new TableColumn<>("id");//NON-NLS
     @FXML private TableColumn<PasswordRow, String> descColumn = new TableColumn<>("Description");
     @FXML private TableColumn<PasswordRow, String> loginColumn = new TableColumn<>("Login");
     @FXML private TableColumn<PasswordRow, String> pwdColumn = new TableColumn<>("Password");
-    @FXML private TableColumn<PasswordRow, String> ivColumn = new TableColumn<>("IV");
+    @FXML private TableColumn<PasswordRow, String> ivColumn = new TableColumn<>("IV");//NON-NLS
     @FXML private Label unameLabel;
     @FXML private Button showBtn;
     @FXML private Button addButton;
@@ -41,7 +41,7 @@ public class LoggedController {
     @FXML
     private void initialize() {
 
-        showBtn.getStyleClass().add("show");
+        showBtn.getStyleClass().add("show"); //NON-NLS
         addButton.setWrapText(true);
         removeButton.setWrapText(true);
         genPwd.setWrapText(true);
@@ -98,7 +98,7 @@ public class LoggedController {
                     setGraphic(null);
                 } else {
                     text.setText(item);
-                    text.getStyleClass().add("txt");
+                    text.getStyleClass().add("txt");//NON-NLS
                     setGraphic(text);
                 }
             }
@@ -119,7 +119,7 @@ public class LoggedController {
                     setGraphic(null);
                 } else {
                     text.setText(item);
-                    text.getStyleClass().add("txt");
+                    text.getStyleClass().add("txt");//NON-NLS
                     setGraphic(text);
                 }
             }
@@ -139,7 +139,7 @@ public class LoggedController {
                     setGraphic(null);
                 } else {
                     text.setText(item);
-                    text.getStyleClass().add("txt");
+                    text.getStyleClass().add("txt");//NON-NLS
                     setGraphic(text);
                 }
             }
@@ -217,10 +217,10 @@ public class LoggedController {
     private void onShowBtnClick(){
         if (!showed){
             showBtn.getStyleClass().clear();
-            showBtn.getStyleClass().addAll("button","hide");
+            showBtn.getStyleClass().addAll("button","hide");//NON-NLS
         } else {
             showBtn.getStyleClass().clear();
-            showBtn.getStyleClass().addAll("button","show");
+            showBtn.getStyleClass().addAll("button","show");//NON-NLS
         }
         showed = !showed;
         refreshContentTable();
@@ -284,9 +284,9 @@ public class LoggedController {
                     IvParameterSpec iv = new IvParameterSpec(Base64.getDecoder().decode(ivEnc));
 
                     //decrypt data from database
-                    String descDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(descEnc)), key, iv);
-                    String loginDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(loginEnc)), key, iv);
-                    String pwdDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(pwdEnc)), key, iv);
+                    String descDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(descEnc)), key, iv);//NON-NLS
+                    String loginDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(loginEnc)), key, iv);//NON-NLS
+                    String pwdDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(pwdEnc)), key, iv);//NON-NLS
 
                     //add decrypted things to new PasswordRow
                     PasswordRow pr = new PasswordRow(id, descDec, loginDec, pwdDec, ivEnc, visible);

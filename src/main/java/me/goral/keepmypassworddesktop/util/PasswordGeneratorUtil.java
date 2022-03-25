@@ -104,12 +104,16 @@ public class PasswordGeneratorUtil {
         Pattern mediumPattern = Pattern.compile("((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))");
 
         if (strongPattern.matcher(pwd).find()) {
-            return new Pair<>("Strong password", Color.web("#008a15"));
+            return new Pair<>("Strong password",
+                    Color.web("#008a15"));//NON-NLS
         }
         else if (mediumPattern.matcher(pwd).find()) {
-            return new Pair<>("Medium password", Color.web("#947100"));
+            return new Pair<>("Medium password",
+                    Color.web("#947100"));//NON-NLS
         }
-        else if (pwd.isEmpty()) return new Pair<>("No password", Color.web("#b3b3b3"));
-        else return new Pair<>("Weak password", Color.web("#940005"));
+        else if (pwd.isEmpty()) return new Pair<>("No password",
+                Color.web("#b3b3b3"));//NON-NLS
+        else return new Pair<>("Weak password",
+                    Color.web("#940005"));//NON-NLS
     }
 }

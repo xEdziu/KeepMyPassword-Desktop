@@ -64,8 +64,8 @@ public class MainAppController {
         dialog.getDialogPane().getButtonTypes().setAll(registerButtonType, cancelButtonType);
         Node regBtn = dialog.getDialogPane().lookupButton(registerButtonType);
         Node canBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
-        regBtn.getStyleClass().add("btn");
-        canBtn.getStyleClass().add("btn");
+        regBtn.getStyleClass().add("btn");//NON-NLS
+        canBtn.getStyleClass().add("btn");//NON-NLS
         regBtn.setDisable(true);
 
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
@@ -95,7 +95,7 @@ public class MainAppController {
         tf.textProperty().bindBidirectional(password.textProperty());
 
         Label pwdCheck = new Label("No password");
-        pwdCheck.setTextFill(Color.web("#b3b3b3"));
+        pwdCheck.setTextFill(Color.web("#b3b3b3"));//NON-NLS
 
         password.textProperty().addListener((observable, oldValue, newValue) -> {
             Pair<String, Color> res = checkPasswordComplexity(newValue);
@@ -128,10 +128,10 @@ public class MainAppController {
 
                 if (password.getText().isEmpty() && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "You can't register with empty password.");
-                    return new Pair<>("err"+newUname, newPwd);
+                    return new Pair<>("err"+newUname, newPwd);//NON-NLS
                 } else if ((!checker.getKey().equals("Strong password") && !checker.getKey().equals("Medium password")) && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "Password is not strong enough.");
-                    return new Pair<>("err"+newUname, newPwd);
+                    return new Pair<>("err"+newUname, newPwd);//NON-NLS
                 } else {
                     return new Pair<>(newUname, newPwd);
                 }
@@ -145,7 +145,7 @@ public class MainAppController {
             String uname = result.getKey();
             String plain = result.getValue();
 
-            if (uname.startsWith("err")){
+            if (uname.startsWith("err")){//NON-NLS
                 restartLoginForm(uname.substring(3), plain);
                 return;
             }
@@ -227,12 +227,12 @@ public class MainAppController {
         dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
 
         ButtonType registerButtonType = new ButtonType(dialogType, ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);//NON-NLS
         dialog.getDialogPane().getButtonTypes().setAll(registerButtonType, cancelButtonType);
         Node regBtn = dialog.getDialogPane().lookupButton(registerButtonType);
         Node canBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
-        regBtn.getStyleClass().add("btn");
-        canBtn.getStyleClass().add("btn");
+        regBtn.getStyleClass().add("btn");//NON-NLS
+        canBtn.getStyleClass().add("btn");//NON-NLS
         regBtn.setDisable(true);
 
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
@@ -262,7 +262,7 @@ public class MainAppController {
         tf.textProperty().bindBidirectional(password.textProperty());
 
         Label pwdCheck = new Label("No password");
-        pwdCheck.setTextFill(Color.web("#b3b3b3"));
+        pwdCheck.setTextFill(Color.web("#b3b3b3"));//NON-NLS
 
         password.textProperty().addListener((observable, oldValue, newValue) -> {
             Pair<String, Color> res = checkPasswordComplexity(newValue);
@@ -297,10 +297,10 @@ public class MainAppController {
 
                 if (password.getText().isEmpty() && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "You can't register with empty password.");
-                    return new Pair<>("err"+newUname, newPwd);
+                    return new Pair<>("err"+newUname, newPwd);//NON-NLS
                 } else if ((!checker.getKey().equals("Strong password") && !checker.getKey().equals("Medium password")) && !login){
                     AlertsUtil.showErrorDialog("Error", "There is a problem.", "Password is not strong enough.");
-                    return new Pair<>("err"+newUname, newPwd);
+                    return new Pair<>("err"+newUname, newPwd);//NON-NLS
                 } else {
                     return new Pair<>(newUname, newPwd);
                 }
@@ -314,7 +314,7 @@ public class MainAppController {
             String uname = result.getKey();
             String plain = result.getValue();
 
-            if (uname.startsWith("err")){
+            if (uname.startsWith("err")){//NON-NLS
                 restartLoginForm(uname.substring(3), plain);
                 return;
             }

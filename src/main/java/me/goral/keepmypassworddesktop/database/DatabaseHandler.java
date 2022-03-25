@@ -15,7 +15,7 @@ public class DatabaseHandler {
      */
     private static Connection connect(){
         Connection conn = null;
-        String url = "jdbc:sqlite:"+ ConfUtil.getWorkingDirectory() +"database.db";
+        String url = "jdbc:sqlite:"+ ConfUtil.getWorkingDirectory() +"database.db";//NON-NLS
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
@@ -41,14 +41,13 @@ public class DatabaseHandler {
      * Create the main table if it doesn't exist
      */
     public static void createMainTable(){
-        String sql = """
-                CREATE TABLE IF NOT EXISTS main (
-                  id integer PRIMARY KEY,
-                  desc varchar(255) NOT NULL,
-                  login varchar(255) NOT NULL,
-                  pwd varchar(1000) NOT NULL,
-                  iv varchar(1000) NOT NULL);
-                """;
+        String sql = "CREATE TABLE IF NOT EXISTS main (\n" +//NON-NLS
+                     "  id integer PRIMARY KEY,\n" +//NON-NLS
+                     "  desc varchar(255) NOT NULL,\n" +//NON-NLS
+                     "  login varchar(255) NOT NULL,\n" +//NON-NLS
+                     "  pwd varchar(1000) NOT NULL,\n" +//NON-NLS
+                     "  iv varchar(1000) NOT NULL);\n";//NON-NLS
+
 
         try (Connection conn = connect();
             Statement stmt = conn.createStatement()) {
@@ -68,7 +67,7 @@ public class DatabaseHandler {
      * @return Returns boolean value.
      */
     public static boolean insertPassword(String desc, String login, String pwd, String iv){
-        String sql = "INSERT INTO main (desc, login, pwd, iv) VALUES (?,?,?,?);";
+        String sql = "INSERT INTO main (desc, login, pwd, iv) VALUES (?,?,?,?);";//NON-NLS
         try (Connection conn = connect();
             PreparedStatement preparedStatement = conn.prepareStatement(sql)){
             preparedStatement.setString(1, desc);
@@ -87,7 +86,7 @@ public class DatabaseHandler {
      * `truncateData()`: Deletes all rows from the `main` table
      */
     public static void truncateData() {
-        String sql = "DELETE FROM main;";
+        String sql = "DELETE FROM main;";//NON-NLS
         try (Connection conn = connect();
              Statement stmt = conn.createStatement()){
             stmt.execute(sql);
@@ -102,7 +101,7 @@ public class DatabaseHandler {
      * @return A list of lists. Each list contains the id, description, login, password, and iv.
      */
     public static List<List<String>> selectPasswords(){
-        String sql = "SELECT id, desc, login, pwd, iv FROM main";
+        String sql = "SELECT id, desc, login, pwd, iv FROM main";//NON-NLS
         List<List<String>> results = new ArrayList<>();
         try (Connection conn = connect();
         Statement stmt = conn.createStatement();
@@ -112,10 +111,10 @@ public class DatabaseHandler {
                 List<String> single = new ArrayList<>();
                 int id = rs.getInt("id");
                 single.add(String.valueOf(id));
-                single.add(rs.getString("desc"));
-                single.add(rs.getString("login"));
-                single.add(rs.getString("pwd"));
-                single.add(rs.getString("iv"));
+                single.add(rs.getString("desc"));//NON-NLS
+                single.add(rs.getString("login"));//NON-NLS
+                single.add(rs.getString("pwd"));//NON-NLS
+                single.add(rs.getString("iv"));//NON-NLS
                 results.add(single);
             }
 
@@ -138,7 +137,7 @@ public class DatabaseHandler {
     public static boolean updatePassword(String desc, String login, String pwd, String iv, int id) {
         String sql = "UPDATE main SET " +
                 "desc = ?, login = ?, pwd = ?, iv = ? " +
-                "WHERE id = ?;";
+                "WHERE id = ?;";//NON-NLS
         try (Connection conn = connect()){
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, desc);
@@ -162,7 +161,7 @@ public class DatabaseHandler {
      * @return Returns boolean value.
      */
     public static boolean deletePassword(String id) throws SQLException {
-        String sql = "DELETE FROM main WHERE id = ?";
+        String sql = "DELETE FROM main WHERE id = ?";//NON-NLS
         try (Connection conn = connect()){
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, id);

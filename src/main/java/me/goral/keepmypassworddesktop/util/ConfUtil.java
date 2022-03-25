@@ -24,9 +24,9 @@ public class ConfUtil {
     public static int setWorkingDirectory(){
         int os = detectOS();
         switch (os) {
-            case 1 -> workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";
-            case 2 -> workingDirectory = System.getProperty("user.home") + "/Library/KeepMyPassword/";
-            case 3 -> workingDirectory = System.getProperty("user.home") + "/KeepMyPassword/";
+            case 1 -> workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";//NON-NLS
+            case 2 -> workingDirectory = System.getProperty("user.home") + "/Library/KeepMyPassword/";//NON-NLS
+            case 3 -> workingDirectory = System.getProperty("user.home") + "/KeepMyPassword/";//NON-NLS
             default -> {
             }
         }
@@ -145,9 +145,9 @@ public class ConfUtil {
      */
     public static int detectOS() {
         String os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
-        if (os.contains("win")) return 1;
-        else if (os.contains("osx")) return 2;
-        else if (os.contains("nix") || os.contains("aix") || os.contains("nux")) return 3;
+        if (os.contains("win")) return 1;//NON-NLS
+        else if (os.contains("osx")) return 2;//NON-NLS
+        else if (os.contains("nix") || os.contains("aix") || os.contains("nux")) return 3;//NON-NLS
         return 0;
     }
 }
