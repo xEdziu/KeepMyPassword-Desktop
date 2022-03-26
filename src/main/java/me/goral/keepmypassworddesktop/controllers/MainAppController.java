@@ -1,6 +1,7 @@
 package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -20,7 +21,6 @@ import me.goral.keepmypassworddesktop.util.*;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
-import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -76,6 +76,10 @@ public class MainAppController {
         grid.setVgap(10);
         grid.setPadding(new Insets(20,150,10,10));
 
+        ObservableList<String> options = ConfUtil.readLanguages();
+        final ComboBox<String> languageBox = new ComboBox<>(options);
+        languageBox.getSelectionModel().selectFirst();
+
         TextField username = new TextField();
         username.setPromptText("Username");
         TextField tf = new TextField();
@@ -111,6 +115,8 @@ public class MainAppController {
         grid.add(checkBox,2,1);
         if (!login) {
             grid.add(pwdCheck, 1, 2);
+            grid.add(new Label("Choose your language"), 0, 3);
+            grid.add(languageBox,  1, 3);
         }
 
         username.textProperty().addListener(((observableValue, oldV, newV) -> regBtn.setDisable(newV.trim().isEmpty())));
@@ -243,6 +249,10 @@ public class MainAppController {
         grid.setVgap(10);
         grid.setPadding(new Insets(20,150,10,10));
 
+        ObservableList<String> options = ConfUtil.readLanguages();
+        final ComboBox<String> languageBox = new ComboBox<>(options);
+        languageBox.getSelectionModel().selectFirst();
+
         TextField username = new TextField();
         username.setText(unameString);
         TextField tf = new TextField();
@@ -278,6 +288,8 @@ public class MainAppController {
         grid.add(checkBox,2,1);
         if (!login) {
             grid.add(pwdCheck, 1, 2);
+            grid.add(new Label("Choose your language"), 0, 3);
+            grid.add(languageBox,  1, 3);
         }
 
 

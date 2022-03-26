@@ -11,6 +11,9 @@ import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
 import me.goral.keepmypassworddesktop.util.ConfUtil;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class MainApp extends Application {
 
     private static Stage guiStage;
@@ -18,6 +21,9 @@ public class MainApp extends Application {
     public static Stage getStage() {
         return guiStage;
     }
+
+//    private static ResourceBundle lang = ResourceBundle.getBundle("language", //NON-NLS
+//            Locale.forLanguageTag("pl-PL")); //NON-NLS
 
     @Override
     public void start(Stage stage) {
@@ -27,6 +33,7 @@ public class MainApp extends Application {
             guiStage = stage;
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            System.out.println(ConfUtil.readLanguages());
 
             if (ConfUtil.setWorkingDirectory() == 0) throw new Exception("Error while reading os directory");
 

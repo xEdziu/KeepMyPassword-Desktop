@@ -1,11 +1,16 @@
 package me.goral.keepmypassworddesktop.util;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 
 public class ConfUtil {
@@ -150,4 +155,44 @@ public class ConfUtil {
         else if (os.contains("nix") || os.contains("aix") || os.contains("nux")) return 3;//NON-NLS
         return 0;
     }
+
+    /**
+     * It reads all the files in the language folder and returns a list of the names of the files
+     *
+     * @return A list of all the languages that are available.
+     */
+    public static ObservableList<String> readLanguages() {
+        String path = MainApp.class.getProtectionDomain().getCodeSource().getLocation().getPath()
+                + "me/goral/keepmypassworddesktop/language/";//NON-NLS
+        Set<String> files = listFiles(path);//NON-NLS
+        ObservableList<String> options = FXCollections.observableArrayList();
+
+        if (files != null) {
+
+            for (String file : files){
+                String[] tmp = file.split("\\.");
+                String actual = tmp[0].split("_")[1];
+                options.add(actual);
+            }
+        }
+        return options;
+    }
+
+    /**
+     * Given a directory, return a set of all the files in that directory
+     *
+     * @param dir The directory to list files from.
+     * @return A set of strings.
+     */
+    private static Set<String> listFiles(String dir){
+        Set<String> listed = new HashSet<>();
+        File directory = new File(dir);
+        if (!directory.isDirectory()) return null;
+        File[] fileList = directory.listFiles();
+        for (File f : fileList){
+            listed.add(f.getName());
+        }
+        return listed;
+    }
+
 }
