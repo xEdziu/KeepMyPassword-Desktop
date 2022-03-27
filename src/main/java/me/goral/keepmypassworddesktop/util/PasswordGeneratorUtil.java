@@ -2,6 +2,7 @@ package me.goral.keepmypassworddesktop.util;
 
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
+import me.goral.keepmypassworddesktop.MainApp;
 import org.passay.CharacterData;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
@@ -27,28 +28,28 @@ public class PasswordGeneratorUtil {
     public static String generatePassword(int length, int lowerNum, int upperNum, int digitNum, int specialNum){
 
         if ((lowerNum + upperNum + digitNum + specialNum) > length){
-            AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Sum of all arguments is greater than general length");
+            AlertsUtil.showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("invalid.input.data"),
+                    MainApp.lang.getString("sum-greater-err"));
             return null;
         } else if (length < 5) {
-            AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Length must be at least 5");
+            AlertsUtil.showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("invalid.input.data"),
+                    MainApp.lang.getString("invalid-len-err"));
             return null;
         } else if (lowerNum < 1) {
-            AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Lower case number must not be lower than 1");
+            AlertsUtil.showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("invalid.input.data"),
+                    MainApp.lang.getString("lower-input-err"));
             return null;
         } else if (upperNum < 1) {
-            AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Upper case number must not be lower than 1");
+            AlertsUtil.showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("invalid.input.data"),
+                    MainApp.lang.getString("upper-len-err"));
             return null;
         } else if (digitNum < 1) {
-            AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Digit number must not be lower than 1");
+            AlertsUtil.showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("invalid.input.data"),
+                    MainApp.lang.getString("digit-len-err"));
             return null;
         } else if (specialNum < 1) {
-            AlertsUtil.showErrorDialog("Error Dialog", "Invalid input data",
-                    "Special character number must not be lower than 1");
+            AlertsUtil.showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("invalid.input.data"),
+                    MainApp.lang.getString("special-len-err"));
             return null;
         } else {
 
@@ -104,16 +105,16 @@ public class PasswordGeneratorUtil {
         Pattern mediumPattern = Pattern.compile("((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))");
 
         if (strongPattern.matcher(pwd).find()) {
-            return new Pair<>("Strong password",
+            return new Pair<>(MainApp.lang.getString("strong.password"),
                     Color.web("#008a15"));//NON-NLS
         }
         else if (mediumPattern.matcher(pwd).find()) {
-            return new Pair<>("Medium password",
+            return new Pair<>(MainApp.lang.getString("medium.password"),
                     Color.web("#947100"));//NON-NLS
         }
-        else if (pwd.isEmpty()) return new Pair<>("No password",
+        else if (pwd.isEmpty()) return new Pair<>(MainApp.lang.getString("no-password-info"),
                 Color.web("#b3b3b3"));//NON-NLS
-        else return new Pair<>("Weak password",
+        else return new Pair<>(MainApp.lang.getString("weak.password"),
                     Color.web("#940005"));//NON-NLS
     }
 }

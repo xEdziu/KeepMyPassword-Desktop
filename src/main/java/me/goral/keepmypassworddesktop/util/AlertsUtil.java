@@ -72,17 +72,17 @@ public class AlertsUtil {
      */
     public static void showDeleteDataDialog(TableView<LoggedController.PasswordRow> tv, boolean s) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Deleting all data");
-        alert.setHeaderText("You are about to wipe out all your data");
-        alert.setContentText("Are you sure?");
+        alert.setTitle(MainApp.lang.getString("deleting.all.data"));
+        alert.setHeaderText(MainApp.lang.getString("wiping-data-header"));
+        alert.setContentText(MainApp.lang.getString("confirmation-question"));
         alert.getButtonTypes().clear();
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
         alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/warning-64.png").toString()));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
-        ButtonType confirm = new ButtonType("Wipe data", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType confirm = new ButtonType(MainApp.lang.getString("wipe.data.button"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancel = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(confirm, cancel);
 
@@ -98,8 +98,8 @@ public class AlertsUtil {
             DatabaseHandler.truncateData();
             LoggedController lc = new LoggedController();
             lc.refreshContentTable(tv, s);
-            showInformationDialog("Information Dialog", "Data cleared", "All your passwords have been deleted.\n" +
-                    "Have a great day!");
+            showInformationDialog(MainApp.lang.getString("information.dialog"), MainApp.lang.getString("data.cleared"),
+                    MainApp.lang.getString("deleted-passwords-greeting"));
         }
     }
 
@@ -108,17 +108,17 @@ public class AlertsUtil {
      */
     public static void showLogoutDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Logging out");
-        alert.setHeaderText("You are about to log out");
-        alert.setContentText("Are you sure?");
+        alert.setTitle(MainApp.lang.getString("logging.out"));
+        alert.setHeaderText(MainApp.lang.getString("you.are.about.to.log.out"));
+        alert.setContentText(MainApp.lang.getString("confirmation-question"));
         alert.getButtonTypes().clear();
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
         alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/logout-64.png").toString()));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
-        ButtonType confirm = new ButtonType("Log out", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType confirm = new ButtonType(MainApp.lang.getString("log.out"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancel = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(confirm, cancel);
 
@@ -181,14 +181,14 @@ public class AlertsUtil {
      */
     public static void showSettingsDialog(TableView<LoggedController.PasswordRow> tv, boolean s) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Settings");
-        alert.setHeaderText("Select desired option");
+        alert.setTitle(MainApp.lang.getString("settings"));
+        alert.setHeaderText(MainApp.lang.getString("select.desired.option"));
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
         alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-64.png").toString()));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
-        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType cancel = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(cancel);
 
@@ -198,11 +198,11 @@ public class AlertsUtil {
 
         GridPane grid = new GridPane();
 
-        Button delAcc = new Button("Delete account");
+        Button delAcc = new Button(MainApp.lang.getString("delete.account"));
         delAcc.getStyleClass().addAll("btn","optionsButton");//NON-NLS
-        Button delData = new Button("Delete data");
+        Button delData = new Button(MainApp.lang.getString("delete.data"));
         delData.getStyleClass().addAll("btn","optionsButton");//NON-NLS
-        Button logout = new Button("Logout");
+        Button logout = new Button(MainApp.lang.getString("logout"));
         logout.getStyleClass().addAll("btn","optionsButton");//NON-NLS
 
         delAcc.setOnMouseClicked(mouseEvent -> {
@@ -241,17 +241,17 @@ public class AlertsUtil {
      */
     public static void showDeleteAccountDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Deleting account");
-        alert.setHeaderText("You are about to delete your whole account");
-        alert.setContentText("Are you sure?");
+        alert.setTitle(MainApp.lang.getString("deleting.account"));
+        alert.setHeaderText(MainApp.lang.getString("deleting-account-confirmation"));
+        alert.setContentText(MainApp.lang.getString("confirmation-question"));
         alert.getButtonTypes().clear();
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
         alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/warning-64.png").toString()));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
-        ButtonType confirm = new ButtonType("Delete account", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType confirm = new ButtonType(MainApp.lang.getString("delete.account"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancel = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(confirm, cancel);
 
@@ -292,10 +292,9 @@ public class AlertsUtil {
      */
     public static void showExceptionStackTraceDialog(Exception e){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Exception Dialog");
-        alert.setHeaderText("Oh no! Error!");
-        alert.setContentText("Please report that error to github, so that developer can repair it as soon as possible:\n" +
-                "https://github.com/xEdziu/KeepMyPassword-Desktop/issues/new/choose");
+        alert.setTitle(MainApp.lang.getString("exception.dialog.title"));
+        alert.setHeaderText(MainApp.lang.getString("oh.no.error"));
+        alert.setContentText(MainApp.lang.getString("info-send-issue-to-gh"));
         alert.getButtonTypes().clear();
         alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/error-64.png").toString()));
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
@@ -313,7 +312,7 @@ public class AlertsUtil {
         e.printStackTrace(pw);
         String exceptionText = sw.toString();
 
-        Label label = new Label("Exception stacktrace: ");
+        Label label = new Label(MainApp.lang.getString("exception.stacktrace"));
 
         TextArea textArea = new TextArea(exceptionText);
         textArea.setEditable(false);
@@ -338,8 +337,8 @@ public class AlertsUtil {
      */
     public static void showGeneratePasswordDialog(){
         Dialog<List<String>> dialog = new Dialog<>();
-        dialog.setTitle("Generating new password");
-        dialog.setHeaderText("Provide needed parameters:");
+        dialog.setTitle(MainApp.lang.getString("generating.new.password"));
+        dialog.setHeaderText(MainApp.lang.getString("provide.needed.parameters"));
         dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/add-key-64.png").toString()));
         dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
         dialog.getDialogPane().getButtonTypes().clear();
@@ -347,8 +346,8 @@ public class AlertsUtil {
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
-        ButtonType generateButtonType = new ButtonType("Generate", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType generateButtonType = new ButtonType(MainApp.lang.getString("generate"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
         dialog.getDialogPane().getButtonTypes().setAll(generateButtonType, cancelButtonType);
         Node addBtn = dialog.getDialogPane().lookupButton(generateButtonType);
@@ -372,15 +371,15 @@ public class AlertsUtil {
         TextField specialNum = new TextField();
         specialNum.setText("1");
 
-        grid.add(new Label("Length"), 0, 0);
+        grid.add(new Label(MainApp.lang.getString("length")), 0, 0);
         grid.add(length, 1, 0);
-        grid.add(new Label("Number of lower case characters"),0, 1);
+        grid.add(new Label(MainApp.lang.getString("lower.case.num")),0, 1);
         grid.add(lowerNum, 1,1);
-        grid.add(new Label("Number of upper case characters"), 0, 2);
+        grid.add(new Label(MainApp.lang.getString("upper.case.num")), 0, 2);
         grid.add(upperNum, 1, 2);
-        grid.add(new Label("Number of digits"),0, 3);
+        grid.add(new Label(MainApp.lang.getString("digits.case.num")),0, 3);
         grid.add(digitNum, 1, 3);
-        grid.add(new Label("Number of special characters"), 0, 4);
+        grid.add(new Label(MainApp.lang.getString("special.chars.num")), 0, 4);
         grid.add(specialNum, 1, 4);
 
         dialog.getDialogPane().setContent(grid);
@@ -402,31 +401,37 @@ public class AlertsUtil {
         res.ifPresent(result -> {
             String len = result.get(0);
             if (len.length() == 0) {
-                showErrorDialog("Error", "Invalid input", "Length parameter can't be empty!");
+                showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("invalid.input"),
+                        MainApp.lang.getString("len-err-empty"));
                 return;
             }
             if (len.length() >= 6) {
-                showErrorDialog("Error", "You can't generate that long password.", "Why would you need 6-digits long password anyway?");
+                showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("too-long-pwd"),
+                        MainApp.lang.getString("too-long-password-error-desc"));
                 return;
             }
             String lower = result.get(1);
             if (lower.length() == 0) {
-                showErrorDialog("Error", "Invalid input", "Lowe case number parameter can't be empty!");
+                showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("invalid.input"),
+                        MainApp.lang.getString("lower-case-empty-err"));
                 return;
             }
             String upper = result.get(2);
             if (upper.length() == 0) {
-                showErrorDialog("Error", "Invalid input", "Upper case number parameter can't be empty!");
+                showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("invalid.input"),
+                        MainApp.lang.getString("upper-case-empty-err"));
                 return;
             }
             String digit = result.get(3);
             if (digit.length() == 0) {
-                showErrorDialog("Error", "Invalid input", "Number of digits parameter can't be empty!");
+                showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("invalid.input"),
+                        MainApp.lang.getString("digits-number-empty-err"));
                 return;
             }
             String special = result.get(4);
             if (special.length() == 0) {
-                showErrorDialog("Error", "Invalid input", "Special chars parameter can't be empty!");
+                showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("invalid.input"),
+                        MainApp.lang.getString("special-chars-empty-err"));
                 return;
             }
 
@@ -434,32 +439,37 @@ public class AlertsUtil {
 
             if (isInteger(len)) intLen = Integer.parseInt(len);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Length parameter is not an integer!");
+                showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("whoops"),
+                        MainApp.lang.getString("length-not-int-err"));
                 return;
             }
 
             if (isInteger(lower)) intLower = Integer.parseInt(lower);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Lower characters parameter is not an integer!");
+                showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("whoops"),
+                        MainApp.lang.getString("lower-case-not-int-err"));
                 return;
             }
 
             if (isInteger(upper)) intUpper = Integer.parseInt(upper);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Upper parameter is not an integer!");
+                showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("whoops"),
+                        MainApp.lang.getString("upper-case-not-int-err"));
                 return;
             }
 
             if (isInteger(digit)) intDigit = Integer.parseInt(digit);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Digits parameter is not an integer!");
+                showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("whoops"),
+                        MainApp.lang.getString("digits-not-int-err"));
                 return;
             }
 
 
             if (isInteger(special)) intSpecial = Integer.parseInt(special);
             else {
-                showErrorDialog("Error Dialog", "Whoops!", "Special chars parameter is not an integer!");
+                showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("whoops"),
+                        MainApp.lang.getString("special-chars-not-int-err"));
                 return;
             }
             String pwd = PasswordGeneratorUtil.generatePassword(intLen, intLower, intUpper, intDigit, intSpecial);
@@ -475,8 +485,8 @@ public class AlertsUtil {
      */
     public static void showGeneratedPasswordDialog(String pwd){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("New Password Dialog");
-        alert.setHeaderText("Here is your new password!");
+        alert.setTitle(MainApp.lang.getString("new.password.dialog"));
+        alert.setHeaderText(MainApp.lang.getString("here.is.your.new.password"));
         alert.getButtonTypes().clear();
         alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
         alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/information-64.png").toString()));
@@ -485,7 +495,7 @@ public class AlertsUtil {
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
         ButtonType btnConfirm = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
-        ButtonType btnCopy = new ButtonType("Copy");
+        ButtonType btnCopy = new ButtonType(MainApp.lang.getString("copy"));
         alert.getDialogPane().getButtonTypes().addAll(btnCopy, btnConfirm);
 
         Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
@@ -504,7 +514,7 @@ public class AlertsUtil {
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
         expContent.setMaxHeight(Double.MAX_VALUE);
-        expContent.add(new Label("Your new password:"), 0, 0);
+        expContent.add(new Label(MainApp.lang.getString("your.new.password.info")), 0, 0);
         expContent.add(textArea, 0, 1);
 
         alert.getDialogPane().setExpanded(true);
@@ -533,8 +543,8 @@ public class AlertsUtil {
      */
     public static void showAddPasswordDialog(SecretKey key) {
         Dialog<List<String>> dialog = new Dialog<>();
-        dialog.setTitle("Adding new password");
-        dialog.setHeaderText("Fulfill form to add password to your database:");
+        dialog.setTitle(MainApp.lang.getString("adding.new.password"));
+        dialog.setHeaderText(MainApp.lang.getString("fulfill-form-info"));
         dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/add-key-64.png").toString()));
         dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
         dialog.getDialogPane().getButtonTypes().clear();
@@ -542,8 +552,8 @@ public class AlertsUtil {
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
-        ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType addButtonType = new ButtonType(MainApp.lang.getString("add"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().setAll(addButtonType, cancelButtonType);
         Node addBtn = dialog.getDialogPane().lookupButton(addButtonType);
         Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
@@ -556,12 +566,12 @@ public class AlertsUtil {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField description = new TextField();
-        description.setPromptText("Description");
+        description.setPromptText(MainApp.lang.getString("description"));
         TextField username = new TextField();
-        username.setPromptText("Username");
+        username.setPromptText(MainApp.lang.getString("username"));
         TextField password = new TextField();
-        password.setPromptText("Password");
-        Label pwdCheck = new Label("No password");
+        password.setPromptText(MainApp.lang.getString("password"));
+        Label pwdCheck = new Label(MainApp.lang.getString("no-password-info"));
         pwdCheck.setTextFill(Color.web("#b3b3b3"));//NON-NLS
 
         password.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -570,11 +580,11 @@ public class AlertsUtil {
             pwdCheck.setTextFill(res.getValue());
         });
 
-        grid.add(new Label("Description"), 0, 0);
+        grid.add(new Label(MainApp.lang.getString("description")), 0, 0);
         grid.add(description, 1, 0);
-        grid.add(new Label("Username"),0, 1);
+        grid.add(new Label(MainApp.lang.getString("username")),0, 1);
         grid.add(username, 1,1);
-        grid.add(new Label("Password"), 0, 2);
+        grid.add(new Label(MainApp.lang.getString("password")), 0, 2);
         grid.add(password, 1, 2);
         grid.add(pwdCheck, 1, 3);
 
@@ -610,11 +620,11 @@ public class AlertsUtil {
                 String ivString = Base64.getEncoder().encodeToString(iv.getIV());
 
                 if (DatabaseHandler.insertPassword(descEnc, unameEnc, passEnc, ivString)) {
-                    showInformationDialog("Confirmation Dialog", "Password added",
-                            "Your password has been added to database");
+                    showInformationDialog(MainApp.lang.getString("confirmation.dialog"), MainApp.lang.getString("password.added.info"),
+                            MainApp.lang.getString("password-added-body"));
                 } else {
-                    showErrorDialog("Error dialog", "Something wrong happened",
-                            "Please report that error to github, so that developer can repair it as soon as possible");
+                    showErrorDialog(MainApp.lang.getString("error.dialog"), MainApp.lang.getString("unknown-error"),
+                            MainApp.lang.getString("info-send-issue-to-gh"));
                 }
             } catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException e) {
                 showExceptionStackTraceDialog(e);
@@ -634,8 +644,8 @@ public class AlertsUtil {
      */
     public static void showUpdatePasswordDialog(int id, String desc, String login, String pwd, SecretKey key, String iv) {
         Dialog<List<String>> dialog = new Dialog<>();
-        dialog.setTitle("Updating password");
-        dialog.setHeaderText("Fulfill form to update password in your database:");
+        dialog.setTitle(MainApp.lang.getString("updating.password"));
+        dialog.setHeaderText(MainApp.lang.getString("update-alert-header"));
         dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/add-key-64.png").toString()));
         dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
         dialog.getDialogPane().getButtonTypes().clear();
@@ -643,8 +653,8 @@ public class AlertsUtil {
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
-        ButtonType addButtonType = new ButtonType("Update", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType addButtonType = new ButtonType(MainApp.lang.getString("update-button"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().setAll(addButtonType, cancelButtonType);
         Node addBtn = dialog.getDialogPane().lookupButton(addButtonType);
         Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
@@ -670,11 +680,11 @@ public class AlertsUtil {
             pwdCheck.setTextFill(res.getValue());
         });
 
-        grid.add(new Label("Description"), 0, 0);
+        grid.add(new Label(MainApp.lang.getString("description")), 0, 0);
         grid.add(description, 1, 0);
-        grid.add(new Label("Username"),0, 1);
+        grid.add(new Label(MainApp.lang.getString("username")),0, 1);
         grid.add(username, 1,1);
-        grid.add(new Label("Password"), 0, 2);
+        grid.add(new Label(MainApp.lang.getString("password")), 0, 2);
         grid.add(password, 1, 2);
         grid.add(pwdCheck, 1, 3);
 
@@ -709,11 +719,11 @@ public class AlertsUtil {
                 String newIv = Base64.getEncoder().encodeToString(ivSpec.getIV());
 
                 if (DatabaseHandler.updatePassword(descEnc, unameEnc, passEnc, newIv, id)) {
-                    showInformationDialog("Confirmation Dialog", "Data updated",
-                            "Your credentials has been updated");
+                    showInformationDialog(MainApp.lang.getString("confirmation.dialog"), MainApp.lang.getString("data.updated"),
+                            MainApp.lang.getString("updated-credentials-dialog"));
                 } else {
-                    showErrorDialog("Error dialog", "Something wrong happened",
-                            "Please report that error to github, so that developer can repair it as soon as possible");
+                    showErrorDialog(MainApp.lang.getString("error.dialog"), MainApp.lang.getString("unknown-error"),
+                            MainApp.lang.getString("info-send-issue-to-gh"));
                 }
             } catch (InvalidAlgorithmParameterException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException e) {
                 showExceptionStackTraceDialog(e);

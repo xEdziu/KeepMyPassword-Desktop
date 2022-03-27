@@ -82,7 +82,8 @@ public class ConfUtil {
                 DatabaseHandler.createDatabase();
                 DatabaseHandler.createMainTable();
             } else {
-                AlertsUtil.showErrorDialog("Error Dialog", "Whoops!", "Configuration file already exists");
+                AlertsUtil.showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("whoops"),
+                        MainApp.lang.getString("conf-file-exists-err"));
             }
         } catch (IOException e) {
             AlertsUtil.showExceptionStackTraceDialog(e);
@@ -114,7 +115,8 @@ public class ConfUtil {
             String confString = Files.readString(Paths.get(workingDirectory + confFileName));
             if (confString.isEmpty() ){
                 deleteConfFiles();
-                AlertsUtil.showErrorDialog("Error", "Configuration file is empty.", "Deleting account. Please restart program.");
+                AlertsUtil.showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("conf-file-empty-err"),
+                        MainApp.lang.getString("del-acc-restart-program"));
             } else {
                 return confString;
             }

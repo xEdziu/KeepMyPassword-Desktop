@@ -45,6 +45,7 @@ public class MainAppController {
     private void initialize(){
         LocalDate l = LocalDate.now();
         dateLabel.setText(String.valueOf(l.getYear()));
+        btnLogin.setText(MainApp.lang.getString("login-button"));
     }
 
     /**

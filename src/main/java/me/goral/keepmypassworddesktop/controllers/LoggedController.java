@@ -21,9 +21,9 @@ public class LoggedController {
 
     @FXML private TableView<PasswordRow> contentTable;
     @FXML private TableColumn<PasswordRow, String> idColumn = new TableColumn<>("id");//NON-NLS
-    @FXML private TableColumn<PasswordRow, String> descColumn = new TableColumn<>("Description");
-    @FXML private TableColumn<PasswordRow, String> loginColumn = new TableColumn<>("Login");
-    @FXML private TableColumn<PasswordRow, String> pwdColumn = new TableColumn<>("Password");
+    @FXML private TableColumn<PasswordRow, String> descColumn = new TableColumn<>(MainApp.lang.getString("description-table-desc"));
+    @FXML private TableColumn<PasswordRow, String> loginColumn = new TableColumn<>(MainApp.lang.getString("login-table-desc"));
+    @FXML private TableColumn<PasswordRow, String> pwdColumn = new TableColumn<>(MainApp.lang.getString("password-table-desc"));
     @FXML private TableColumn<PasswordRow, String> ivColumn = new TableColumn<>("IV");//NON-NLS
     @FXML private Label unameLabel;
     @FXML private Button showBtn;
@@ -40,6 +40,10 @@ public class LoggedController {
      */
     @FXML
     private void initialize() {
+
+        descColumn.setText(MainApp.lang.getString("description-table-desc"));
+        loginColumn.setText(MainApp.lang.getString("login-table-desc"));
+        pwdColumn.setText(MainApp.lang.getString("password-table-desc"));
 
         showBtn.getStyleClass().add("show"); //NON-NLS
         addButton.setWrapText(true);
@@ -193,18 +197,17 @@ public class LoggedController {
                 if (DatabaseHandler.deletePassword(id)){
                     refreshContentTable();
                 } else {
-                    AlertsUtil.showErrorDialog("Error Alert",
-                            "Sorry. Something went wrong while deleting your password",
-                            "Please report that error to github, so that developer can repair it as soon as possible:\n" +
-                                    "https://github.com/xEdziu/KeepMyPassword-Desktop/issues/new/choose");
+                    AlertsUtil.showErrorDialog(MainApp.lang.getString("error.alert"),
+                            MainApp.lang.getString("error-deleting-pwd"),
+                            MainApp.lang.getString("info-send-issue-to-gh"));
                 }
 
             } catch (SQLException e) {
                 AlertsUtil.showExceptionStackTraceDialog(e);
             }
         } else {
-            AlertsUtil.showInformationDialog("No item selected", "Wait a minute..",
-                    "You haven't selected any item to remove!");
+            AlertsUtil.showInformationDialog(MainApp.lang.getString("no.item.selected"), MainApp.lang.getString("wait.a.minute.err"),
+                    MainApp.lang.getString("no-select-error"));
         }
     }
 
