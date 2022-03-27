@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static me.goral.keepmypassworddesktop.MainApp.loc;
 import static me.goral.keepmypassworddesktop.util.PasswordGeneratorUtil.checkPasswordComplexity;
 
 public class AlertsUtil {
@@ -248,6 +249,9 @@ public class AlertsUtil {
         alert.showAndWait();
     }
 
+    /**
+     * This function shows a dialog that allows the user to change the language of the application
+     */
     public static void showChangeLanguageDialog(){
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle(MainApp.lang.getString("change.language"));
@@ -255,7 +259,7 @@ public class AlertsUtil {
         dialog.setContentText("");
         dialog.getDialogPane().getButtonTypes().clear();
         dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
-        dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/warning-64.png").toString()));
+        dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/information-64.png").toString()));
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
 
@@ -284,7 +288,6 @@ public class AlertsUtil {
         grid.add(label, 0, 0);
         grid.add(languageBox, 1, 0);
 
-        grid.getChildren().addAll(label, languageBox);
         dialog.getDialogPane().setContent(grid);
 
         dialog.setResultConverter(dialogButton -> {
@@ -297,7 +300,9 @@ public class AlertsUtil {
         Optional<String> res = dialog.showAndWait();
 
         res.ifPresent(result -> {
-            ConfUtil.changeLanguage(result);
+
+            loc = MainApp.setLocale();
+            MainApp.lang = MainApp.setLanguageBundle(loc);
             showInformationDialog(MainApp.lang.getString("success"), MainApp.lang.getString("changed-lang-success"),
                     MainApp.lang.getString("have-a-great-day"));
         });

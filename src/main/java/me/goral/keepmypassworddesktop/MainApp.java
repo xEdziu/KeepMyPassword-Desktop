@@ -22,9 +22,28 @@ public class MainApp extends Application {
         return guiStage;
     }
 
-    public static Locale loc = new Locale(ConfUtil.getConfigLanguage());
-    public static ResourceBundle lang = ResourceBundle
-            .getBundle("/me/goral/keepmypassworddesktop/language.language", loc);//NON-NLS
+    public static Locale loc = setLocale();
+    public static ResourceBundle lang = setLanguageBundle(loc);
+
+    /**
+     * The function returns a Locale object that is set to the language specified in the configuration file
+     *
+     * @return The locale object.
+     */
+    public static Locale setLocale(){
+        return new Locale(ConfUtil.getConfigLanguage());
+    }
+
+    /**
+     * This function returns a ResourceBundle object that contains the localized strings for the given locale
+     *
+     * @param loc The locale of the language you want to use.
+     * @return The ResourceBundle object.
+     */
+    public static ResourceBundle setLanguageBundle(Locale loc){
+        return ResourceBundle
+                .getBundle("/me/goral/keepmypassworddesktop/language.language", loc); //NON-NLS
+    }
 
     @Override
     public void start(Stage stage) {
