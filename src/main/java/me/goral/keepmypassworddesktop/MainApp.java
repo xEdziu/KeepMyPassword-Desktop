@@ -22,8 +22,9 @@ public class MainApp extends Application {
         return guiStage;
     }
 
-//    private static ResourceBundle lang = ResourceBundle.getBundle("language", //NON-NLS
-//            Locale.forLanguageTag("pl-PL")); //NON-NLS
+    public static Locale loc = new Locale(ConfUtil.getConfigLanguage());
+    public static ResourceBundle lang = ResourceBundle
+            .getBundle("/me/goral/keepmypassworddesktop/language.language", loc);//NON-NLS
 
     @Override
     public void start(Stage stage) {
@@ -33,7 +34,6 @@ public class MainApp extends Application {
             guiStage = stage;
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            System.out.println(ConfUtil.readLanguages());
 
             if (ConfUtil.setWorkingDirectory() == 0) throw new Exception("Error while reading os directory");
 
@@ -41,7 +41,7 @@ public class MainApp extends Application {
             MainAppController mainController = loader.getController();
             scene.getStylesheets().add(css);
             guiStage.initStyle(StageStyle.DECORATED);
-            guiStage.setTitle("Keep My Password");
+            guiStage.setTitle(lang.getString("appName"));
             guiStage.setResizable(false);
             guiStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
             guiStage.setWidth(750);

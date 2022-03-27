@@ -21,6 +21,7 @@ import me.goral.keepmypassworddesktop.util.*;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -52,15 +53,15 @@ public class MainAppController {
      */
     @FXML
     protected void onLoginButtonClick() {
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        String dialogType = login ? "Login" :  "Register";
-        dialog.setTitle(dialogType + " Dialog");
-        dialog.setHeaderText(login ? "Log in to your account" : "Set up your account");
+        Dialog<List<String>> dialog = new Dialog<>();
+        String dialogType = login ? MainApp.lang.getString("login") : MainApp.lang.getString("register");
+        dialog.setTitle(MessageFormat.format(MainApp.lang.getString("dialog"), dialogType));
+        dialog.setHeaderText(login ? MainApp.lang.getString("loginPrompt") : MainApp.lang.getString("registerPrompt"));
         dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/login-64.png").toString()));
         dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
 
         ButtonType registerButtonType = new ButtonType(dialogType, ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType cancelButtonType = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().setAll(registerButtonType, cancelButtonType);
         Node regBtn = dialog.getDialogPane().lookupButton(registerButtonType);
         Node canBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
@@ -81,14 +82,14 @@ public class MainAppController {
         languageBox.getSelectionModel().selectFirst();
 
         TextField username = new TextField();
-        username.setPromptText("Username");
+        username.setPromptText(MainApp.lang.getString("username"));
         TextField tf = new TextField();
         tf.setManaged(false);
         tf.setVisible(false);
         PasswordField password = new PasswordField();
-        password.setPromptText("Password");
+        password.setPromptText(MainApp.lang.getString("password"));
 
-        CheckBox checkBox = new CheckBox("Show/Hide password");
+        CheckBox checkBox = new CheckBox(MainApp.lang.getString("show-hide-pwd"));
 
         tf.managedProperty().bind(checkBox.selectedProperty());
         tf.visibleProperty().bind(checkBox.selectedProperty());
@@ -98,7 +99,7 @@ public class MainAppController {
 
         tf.textProperty().bindBidirectional(password.textProperty());
 
-        Label pwdCheck = new Label("No password");
+        Label pwdCheck = new Label(MainApp.lang.getString("no-password-info"));
         pwdCheck.setTextFill(Color.web("#b3b3b3"));//NON-NLS
 
         password.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -107,15 +108,15 @@ public class MainAppController {
             pwdCheck.setTextFill(res.getValue());
         });
 
-        grid.add(new Label("Username"), 0, 0);
+        grid.add(new Label(MainApp.lang.getString("username")), 0, 0);
         grid.add(username, 1, 0);
-        grid.add(new Label("Password"), 0, 1);
+        grid.add(new Label(MainApp.lang.getString("password")), 0, 1);
         grid.add(password, 1, 1);
         grid.add(tf, 1,1);
         grid.add(checkBox,2,1);
         if (!login) {
             grid.add(pwdCheck, 1, 2);
-            grid.add(new Label("Choose your language"), 0, 3);
+            grid.add(new Label(MainApp.lang.getString("choose-your-language-prompt")), 0, 3);
             grid.add(languageBox,  1, 3);
         }
 
@@ -131,25 +132,35 @@ public class MainAppController {
                 String newPwd = password.getText();
 
                 Pair<String, Color> checker = checkPasswordComplexity(newPwd);
+                List<String> res = new ArrayList<>();
 
                 if (password.getText().isEmpty() && !login){
-                    AlertsUtil.showErrorDialog("Error", "There is a problem.", "You can't register with empty password.");
-                    return new Pair<>("err"+newUname, newPwd);//NON-NLS
-                } else if ((!checker.getKey().equals("Strong password") && !checker.getKey().equals("Medium password")) && !login){
-                    AlertsUtil.showErrorDialog("Error", "There is a problem.", "Password is not strong enough.");
-                    return new Pair<>("err"+newUname, newPwd);//NON-NLS
+                    AlertsUtil.showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("there-is-a-problem"), MainApp.lang.getString("you.can.t.register.with.empty.password"));
+                    res.add("err"+newUname);//NON-NLS
+                    res.add(newPwd);
+                    if(!login) res.add(languageBox.getValue());
+                    return res;
+                } else if ((!checker.getKey().equals(MainApp.lang.getString("strong.password")) && !checker.getKey().equals(MainApp.lang.getString("medium.password"))) && !login){
+                    AlertsUtil.showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("there-is-a-problem"), MainApp.lang.getString("password.is.not.strong.enough"));
+                    res.add("err"+newUname);//NON-NLS
+                    res.add(newPwd);
+                    if(!login) res.add(languageBox.getValue());
+                    return res;
                 } else {
-                    return new Pair<>(newUname, newPwd);
+                    res.add(newUname);
+                    res.add(newPwd);
+                    if(!login) res.add(languageBox.getValue());
+                    return res;
                 }
             }
             return null;
         });
 
-        Optional<Pair<String, String>> res = dialog.showAndWait();
+        Optional<List<String>> res = dialog.showAndWait();
         res.ifPresent(result -> {
 
-            String uname = result.getKey();
-            String plain = result.getValue();
+            String uname = result.get(0);
+            String plain = result.get(1);
 
             if (uname.startsWith("err")){//NON-NLS
                 restartLoginForm(uname.substring(3), plain);
@@ -172,8 +183,8 @@ public class MainAppController {
                     if (SHAUtil.hashSHA(uname).equals(unameFromString)){
                         boolean authorized = AuthUtil.authorize(encryptedInitial, ivString, key);
                         if (!authorized){
-                            showErrorDialog("Error", "Invalid username or password",
-                                    "Please provide correct credentials.");
+                            showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("invalid.username.or.password"),
+                                    MainApp.lang.getString("please.provide.correct.credentials"));
                             onLoginButtonClick();
                         } else {
                             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/logged.fxml"));
@@ -189,8 +200,8 @@ public class MainAppController {
                             MainApp.getStage().setScene(sc);
                         }
                     } else {
-                        showErrorDialog("Error", "Invalid username or password",
-                                "Please provide correct credentials.");
+                        showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("invalid.username.or.password"),
+                                MainApp.lang.getString("please.provide.correct.credentials"));
                         onLoginButtonClick();
                     }
                 } catch (Exception e) {
@@ -205,8 +216,9 @@ public class MainAppController {
                     String argon = ArgonUtil.encrypt(plain, salt);
                     SecretKey key = AESUtil.generateKey(argon);
                     String init = AuthUtil.encryptInitial(key, iv);
+                    String lang = result.get(2);
 
-                    String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt;
+                    String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt + ":" + lang;
                     createConfFiles(output);
                     login = true;
                     handleAppRun();
@@ -225,15 +237,15 @@ public class MainAppController {
 
     @FXML
     protected void onLoginButtonClick(String unameString, String passwordString) {
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        String dialogType = login ? "Login" :  "Register";
-        dialog.setTitle(dialogType + " Dialog");
-        dialog.setHeaderText(login ? "Log in to your account" : "Set up your account");
+        Dialog<List<String>> dialog = new Dialog<>();
+        String dialogType = login ? MainApp.lang.getString("login") : MainApp.lang.getString("register");
+        dialog.setTitle(MessageFormat.format(MainApp.lang.getString("dialog"), dialogType));
+        dialog.setHeaderText(login ? MainApp.lang.getString("loginPrompt") : MainApp.lang.getString("registerPrompt"));
         dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/login-64.png").toString()));
         dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
 
         ButtonType registerButtonType = new ButtonType(dialogType, ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);//NON-NLS
+        ButtonType cancelButtonType = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().setAll(registerButtonType, cancelButtonType);
         Node regBtn = dialog.getDialogPane().lookupButton(registerButtonType);
         Node canBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
@@ -261,7 +273,7 @@ public class MainAppController {
         PasswordField password = new PasswordField();
         password.setText(passwordString);
 
-        CheckBox checkBox = new CheckBox("Show/Hide password");
+        CheckBox checkBox = new CheckBox(MainApp.lang.getString("show-hide-pwd"));
 
         tf.managedProperty().bind(checkBox.selectedProperty());
         tf.visibleProperty().bind(checkBox.selectedProperty());
@@ -271,7 +283,7 @@ public class MainAppController {
 
         tf.textProperty().bindBidirectional(password.textProperty());
 
-        Label pwdCheck = new Label("No password");
+        Label pwdCheck = new Label(MainApp.lang.getString("no-password-info"));
         pwdCheck.setTextFill(Color.web("#b3b3b3"));//NON-NLS
 
         password.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -280,15 +292,15 @@ public class MainAppController {
             pwdCheck.setTextFill(res.getValue());
         });
 
-        grid.add(new Label("Username"), 0, 0);
+        grid.add(new Label(MainApp.lang.getString("username")), 0, 0);
         grid.add(username, 1, 0);
-        grid.add(new Label("Password"), 0, 1);
+        grid.add(new Label(MainApp.lang.getString("password")), 0, 1);
         grid.add(password, 1, 1);
         grid.add(tf, 1,1);
         grid.add(checkBox,2,1);
         if (!login) {
             grid.add(pwdCheck, 1, 2);
-            grid.add(new Label("Choose your language"), 0, 3);
+            grid.add(new Label(MainApp.lang.getString("choose-your-language-prompt")), 0, 3);
             grid.add(languageBox,  1, 3);
         }
 
@@ -306,25 +318,38 @@ public class MainAppController {
                 String newPwd = password.getText();
 
                 Pair<String, Color> checker = checkPasswordComplexity(newPwd);
+                List<String> res = new ArrayList<>();
 
                 if (password.getText().isEmpty() && !login){
-                    AlertsUtil.showErrorDialog("Error", "There is a problem.", "You can't register with empty password.");
-                    return new Pair<>("err"+newUname, newPwd);//NON-NLS
-                } else if ((!checker.getKey().equals("Strong password") && !checker.getKey().equals("Medium password")) && !login){
-                    AlertsUtil.showErrorDialog("Error", "There is a problem.", "Password is not strong enough.");
-                    return new Pair<>("err"+newUname, newPwd);//NON-NLS
+                    AlertsUtil.showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("there-is-a-problem"),
+                            MainApp.lang.getString("you.can.t.register.with.empty.password"));
+                    res.add("err"+newUname);//NON-NLS
+                    res.add(newPwd);
+                    if(!login) res.add(languageBox.getValue());
+                    return res;
+                } else if ((!checker.getKey().equals(MainApp.lang.getString("strong.password"))
+                        && !checker.getKey().equals(MainApp.lang.getString("medium.password"))) && !login){
+                    AlertsUtil.showErrorDialog(MainApp.lang.getString("error"),
+                            MainApp.lang.getString("there-is-a-problem"), MainApp.lang.getString("password.is.not.strong.enough"));
+                    res.add("err"+newUname);//NON-NLS
+                    res.add(newPwd);
+                    if(!login) res.add(languageBox.getValue());
+                    return res;
                 } else {
-                    return new Pair<>(newUname, newPwd);
+                    res.add(newUname);
+                    res.add(newPwd);
+                    if(!login) res.add(languageBox.getValue());
+                    return res;
                 }
             }
             return null;
         });
 
-        Optional<Pair<String, String>> res = dialog.showAndWait();
+        Optional<List<String>> res = dialog.showAndWait();
         res.ifPresent(result -> {
 
-            String uname = result.getKey();
-            String plain = result.getValue();
+            String uname = result.get(0);
+            String plain = result.get(1);
 
             if (uname.startsWith("err")){//NON-NLS
                 restartLoginForm(uname.substring(3), plain);
@@ -347,8 +372,8 @@ public class MainAppController {
                     if (SHAUtil.hashSHA(uname).equals(unameFromString)){
                         boolean authorized = AuthUtil.authorize(encryptedInitial, ivString, key);
                         if (!authorized){
-                            showErrorDialog("Error", "Invalid username or password",
-                                    "Please provide correct credentials.");
+                            showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("invalid.username.or.password"),
+                                    MainApp.lang.getString("please.provide.correct.credentials"));
                             onLoginButtonClick();
                         } else {
                             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/logged.fxml"));
@@ -364,8 +389,8 @@ public class MainAppController {
                             MainApp.getStage().setScene(sc);
                         }
                     } else {
-                        showErrorDialog("Error", "Invalid username or password",
-                                "Please provide correct credentials.");
+                        showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("invalid.username.or.password"),
+                                MainApp.lang.getString("please.provide.correct.credentials"));
                         onLoginButtonClick();
                     }
                 } catch (Exception e) {
@@ -402,16 +427,16 @@ public class MainAppController {
     public void handleAppRun() {
         try {
             if (!ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()) {
-                btnLogin.setText("Register");
+                btnLogin.setText(MainApp.lang.getString("register"));
             } else if (ConfUtil.checkIfDatabaseExists() && !ConfUtil.checkIfConfigExists()) {
                 ConfUtil.deleteConfFiles();
-                btnLogin.setText("Register");
+                btnLogin.setText(MainApp.lang.getString("register"));
             } else if (ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()){
                 DatabaseHandler.createDatabase();
-                btnLogin.setText("Log in");
+                btnLogin.setText(MainApp.lang.getString("log.in"));
                 login = true;
             } else {
-                btnLogin.setText("Log in");
+                btnLogin.setText(MainApp.lang.getString("log.in"));
                 login = true;
             }
         } catch (Exception e){

@@ -125,6 +125,25 @@ public class ConfUtil {
     }
 
     /**
+     * If the config file exists, read the config file and return the language. If the config file doesn't exist, return
+     * the default language
+     *
+     * @return The last part of the config file, which is the language.
+     */
+    public static String getConfigLanguage() {
+        if(!checkIfConfigExists()){
+            return "en-US";//NON-NLS
+        } else {
+            try {
+                return readConfigFile().split(":")[readConfigFile().split(":").length - 1];
+            } catch (Exception e){
+                AlertsUtil.showExceptionStackTraceDialog(e);
+            }
+        }
+        return "en-US";//NON-NLS
+    }
+
+    /**
      * Delete the conf file and the database file
      */
     public static void deleteConfFiles() {
