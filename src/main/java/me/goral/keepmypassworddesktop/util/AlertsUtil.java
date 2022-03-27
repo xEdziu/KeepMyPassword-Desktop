@@ -1,6 +1,7 @@
 package me.goral.keepmypassworddesktop.util;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -204,6 +205,8 @@ public class AlertsUtil {
         delData.getStyleClass().addAll("btn","optionsButton");//NON-NLS
         Button logout = new Button(MainApp.lang.getString("logout"));
         logout.getStyleClass().addAll("btn","optionsButton");//NON-NLS
+        Button changeLang = new Button(MainApp.lang.getString("change.language"));
+        changeLang.getStyleClass().addAll("btn","optionsButton");//NON-NLS
 
         delAcc.setOnMouseClicked(mouseEvent -> {
             showDeleteAccountDialog();
@@ -219,6 +222,11 @@ public class AlertsUtil {
             alert.close();
         });
 
+        changeLang.setOnMouseClicked(mouseEvent -> {
+            showChangeLanguageDialog();
+            alert.close();
+        });
+
         GridPane.setColumnIndex(delAcc, 0);
         GridPane.setRowIndex(delAcc, 0);
         grid.getChildren().add(delAcc);
@@ -231,9 +239,69 @@ public class AlertsUtil {
         GridPane.setRowIndex(logout, 2);
         grid.getChildren().add(logout);
 
+        GridPane.setColumnIndex(changeLang, 1);
+        GridPane.setRowIndex(changeLang, 0);
+        grid.getChildren().add(changeLang);
+
         alert.getDialogPane().setContent(grid);
 
         alert.showAndWait();
+    }
+
+    public static void showChangeLanguageDialog(){
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle(MainApp.lang.getString("change.language"));
+        dialog.setHeaderText(MainApp.lang.getString("change.language.of.application"));
+        dialog.setContentText("");
+        dialog.getDialogPane().getButtonTypes().clear();
+        dialog.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        dialog.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/warning-64.png").toString()));
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        ButtonType save = new ButtonType(MainApp.lang.getString("save"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancel = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        dialog.getDialogPane().getButtonTypes().setAll(save, cancel);
+
+        Node btnSave = dialog.getDialogPane().lookupButton(save);
+        Node btnCancel = dialog.getDialogPane().lookupButton(cancel);
+
+        btnSave.getStyleClass().add("btn");//NON-NLS
+        btnCancel.getStyleClass().add("btn");//NON-NLS
+
+        Label label = new Label(MainApp.lang.getString("choose-your-language-prompt"));
+
+        ObservableList<String> options = ConfUtil.readLanguages();
+        final ComboBox<String> languageBox = new ComboBox<>(options);
+        languageBox.getSelectionModel().selectFirst();
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        grid.add(label, 0, 0);
+        grid.add(languageBox, 1, 0);
+
+        grid.getChildren().addAll(label, languageBox);
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == save){
+                return languageBox.getValue();
+            }
+            return null;
+        });
+
+        Optional<String> res = dialog.showAndWait();
+
+        res.ifPresent(result -> {
+            ConfUtil.changeLanguage(result);
+            showInformationDialog(MainApp.lang.getString("success"), MainApp.lang.getString("changed-lang-success"),
+                    MainApp.lang.getString("have-a-great-day"));
+        });
+
     }
 
     /**
@@ -640,9 +708,8 @@ public class AlertsUtil {
      * @param login the username of the account
      * @param pwd the password to be updated
      * @param key The key used to encrypt the data.
-     * @param iv the initialization vector used to encrypt the data.
      */
-    public static void showUpdatePasswordDialog(int id, String desc, String login, String pwd, SecretKey key, String iv) {
+    public static void showUpdatePasswordDialog(int id, String desc, String login, String pwd, SecretKey key) {
         Dialog<List<String>> dialog = new Dialog<>();
         dialog.setTitle(MainApp.lang.getString("updating.password"));
         dialog.setHeaderText(MainApp.lang.getString("update-alert-header"));

@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -143,6 +144,21 @@ public class ConfUtil {
             }
         }
         return "en-US";//NON-NLS
+    }
+
+    /**
+     * This function changes the language of the application
+     *
+     * @param lang The language you want to change to.
+     */
+    public static void changeLanguage(String lang) {
+        if(checkIfConfigExists()){
+            String[] conf = readConfigFile().split(":");
+            int confLength = conf.length;
+            conf[confLength - 1] = lang;
+            String newConfig = String.join(":", conf);
+            writeConfFile(newConfig);
+        }
     }
 
     /**

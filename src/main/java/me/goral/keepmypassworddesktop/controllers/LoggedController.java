@@ -157,7 +157,7 @@ public class LoggedController {
                     PasswordRow rowData = row.getItem();
                     int id = Integer.parseInt(rowData.getId());
                     AlertsUtil.showUpdatePasswordDialog(id, rowData.getDesc(),rowData.getLogin(),
-                            rowData.getPwd(), key, rowData.getIv());
+                            rowData.getPwd(), key);
                     refreshContentTable();
                 }
             });
