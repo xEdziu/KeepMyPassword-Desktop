@@ -405,8 +405,9 @@ public class MainAppController {
                     String argon = ArgonUtil.encrypt(plain, salt);
                     SecretKey key = AESUtil.generateKey(argon);
                     String init = AuthUtil.encryptInitial(key, iv);
+                    String lang = result.get(2);
 
-                    String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt;
+                    String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt + ":" + lang;
                     createConfFiles(output);
                     login = true;
                     handleAppRun();
