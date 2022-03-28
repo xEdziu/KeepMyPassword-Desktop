@@ -9,7 +9,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -138,6 +137,7 @@ public class ConfUtil {
             return "en-US";//NON-NLS
         } else {
             try {
+                System.out.println("W funkcji: " + readConfigFile().split(":")[readConfigFile().split(":").length - 1]);
                 return readConfigFile().split(":")[readConfigFile().split(":").length - 1];
             } catch (Exception e){
                 AlertsUtil.showExceptionStackTraceDialog(e);

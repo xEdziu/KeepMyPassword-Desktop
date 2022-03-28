@@ -23,7 +23,7 @@ public class MainApp extends Application {
     }
 
     public static Locale loc = setLocale();
-    public static ResourceBundle lang = setLanguageBundle(loc);
+    public static ResourceBundle lang = setLanguageBundle(setLocale());
 
     /**
      * The function returns a Locale object that is set to the language specified in the configuration file
@@ -47,6 +47,10 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) {
+
+        System.out.println(ConfUtil.getConfigLanguage());
+        System.out.println();
+        System.out.println(lang.getLocale());
 
         try {
             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
