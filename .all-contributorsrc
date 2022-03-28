@@ -39,6 +39,17 @@
         "bug",
         "translation"
       ]
+    },
+    {
+      "login": "Nehomex",
+      "name": "Pyka ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60048445?v=4",
+      "profile": "https://github.com/Nehomex",
+      "contributions": [
+        "test",
+        "bug",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
