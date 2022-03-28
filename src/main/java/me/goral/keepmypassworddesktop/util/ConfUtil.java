@@ -1,11 +1,21 @@
 package me.goral.keepmypassworddesktop.util;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.CodeSource;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
 public class ConfUtil {
@@ -24,9 +34,9 @@ public class ConfUtil {
     public static int setWorkingDirectory(){
         int os = detectOS();
         switch (os) {
-            case 1 -> workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";
-            case 2 -> workingDirectory = System.getProperty("user.home") + "/Library/KeepMyPassword/";
-            case 3 -> workingDirectory = System.getProperty("user.home") + "/KeepMyPassword/";
+            case 1 -> workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";//NON-NLS
+            case 2 -> workingDirectory = System.getProperty("user.home") + "/Library/KeepMyPassword/";//NON-NLS
+            case 3 -> workingDirectory = System.getProperty("user.home") + "/KeepMyPassword/";//NON-NLS
             default -> {
             }
         }
@@ -77,7 +87,8 @@ public class ConfUtil {
                 DatabaseHandler.createDatabase();
                 DatabaseHandler.createMainTable();
             } else {
-                AlertsUtil.showErrorDialog("Error Dialog", "Whoops!", "Configuration file already exists");
+                AlertsUtil.showErrorDialog(MainApp.lang.getString("error.dialog.title"), MainApp.lang.getString("whoops"),
+                        MainApp.lang.getString("conf-file-exists-err"));
             }
         } catch (IOException e) {
             AlertsUtil.showExceptionStackTraceDialog(e);
@@ -109,7 +120,8 @@ public class ConfUtil {
             String confString = Files.readString(Paths.get(workingDirectory + confFileName));
             if (confString.isEmpty() ){
                 deleteConfFiles();
-                AlertsUtil.showErrorDialog("Error", "Configuration file is empty.", "Deleting account. Please restart program.");
+                AlertsUtil.showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("conf-file-empty-err"),
+                        MainApp.lang.getString("del-acc-restart-program"));
             } else {
                 return confString;
             }
@@ -117,6 +129,40 @@ public class ConfUtil {
             AlertsUtil.showExceptionStackTraceDialog(e);
         }
         return null;
+    }
+
+    /**
+     * If the config file exists, read the config file and return the language. If the config file doesn't exist, return
+     * the default language
+     *
+     * @return The last part of the config file, which is the language.
+     */
+    public static String getConfigLanguage() {
+        if(!checkIfConfigExists()){
+            return "en-US";//NON-NLS
+        } else {
+            try {
+                return readConfigFile().split(":")[readConfigFile().split(":").length - 1];
+            } catch (Exception e){
+                AlertsUtil.showExceptionStackTraceDialog(e);
+            }
+        }
+        return "en-US";//NON-NLS
+    }
+
+    /**
+     * This function changes the language of the application
+     *
+     * @param lang The language you want to change to.
+     */
+    public static void changeLanguage(String lang) {
+        if(checkIfConfigExists()){
+            String[] conf = readConfigFile().split(":");
+            int confLength = conf.length;
+            conf[confLength - 1] = lang;
+            String newConfig = String.join(":", conf);
+            writeConfFile(newConfig);
+        }
     }
 
     /**
@@ -145,9 +191,76 @@ public class ConfUtil {
      */
     public static int detectOS() {
         String os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
-        if (os.contains("win")) return 1;
-        else if (os.contains("osx")) return 2;
-        else if (os.contains("nix") || os.contains("aix") || os.contains("nux")) return 3;
+        if (os.contains("win")) return 1;//NON-NLS
+        else if (os.contains("osx")) return 2;//NON-NLS
+        else if (os.contains("nix") || os.contains("aix") || os.contains("nux")) return 3;//NON-NLS
         return 0;
     }
+
+
+    /**
+     * Given a directory, return a set of all the files in that directory
+     *
+     * @param dir The directory to list files from.
+     * @return A set of strings.
+     */
+    private static Set<String> listFiles(String dir){
+        Set<String> listed = new HashSet<>();
+        File directory = new File(dir);
+        if (!directory.isDirectory()) return null;
+        File[] fileList = directory.listFiles();
+        for (File f : fileList){
+            listed.add(f.getName());
+        }
+        return listed;
+    }
+
+    /**
+     * Reads the languages from the jar file / ide scope project
+     *
+     * @return An ObservableList of languages names.
+     */
+    public static ObservableList<String> readLanguages(){
+        try {
+            CodeSource src = MainApp.class.getProtectionDomain().getCodeSource();
+
+            URI uri = MainApp.class.getResource("").toURI();
+            URL jar = src.getLocation();
+            if (uri.getScheme().equals("jar")){//NON-NLS
+                ZipInputStream zip = new ZipInputStream(jar.openStream());
+                ObservableList<String> options = FXCollections.observableArrayList();
+                while (true){
+                    ZipEntry e = zip.getNextEntry();
+                    if (e == null) break;
+                    String name = e.getName();
+                    if (name.startsWith("language_")){//NON-NLS
+                        String[] tmp = name.split("\\.");
+                        String actual = tmp[0].split("_")[1];
+                        options.add(actual);
+                    }
+                }
+                return options;
+            } else {
+                String path = MainApp.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/";//NON-NLS
+                Set<String> files = listFiles(path);//NON-NLS
+                ObservableList<String> options = FXCollections.observableArrayList();
+
+                if (files != null) {
+                    for (String file : files){
+                        if (file.startsWith("language")){//NON-NLS
+                            String[] tmp = file.split("\\.");
+                            String actual = tmp[0].split("_")[1];
+                            options.add(actual);
+                        }
+                    }
+                }
+                return options;
+            }
+        } catch (Exception e){
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
+
+        return null;
+    }
+
 }

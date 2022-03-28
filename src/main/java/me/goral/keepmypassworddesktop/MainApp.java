@@ -11,12 +11,39 @@ import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
 import me.goral.keepmypassworddesktop.util.ConfUtil;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class MainApp extends Application {
 
     private static Stage guiStage;
 
     public static Stage getStage() {
         return guiStage;
+    }
+
+    public static Locale loc = setLocale();
+    public static ResourceBundle lang = setLanguageBundle(loc);
+
+    /**
+     * The function returns a Locale object that is set to the language specified in the configuration file
+     *
+     * @return The locale object.
+     */
+    public static Locale setLocale(){
+        String lang = ConfUtil.getConfigLanguage();
+        return new Locale(lang);
+    }
+
+    /**
+     * This function returns a ResourceBundle object that contains the localized strings for the given locale
+     *
+     * @param loc The locale of the language you want to use.
+     * @return The ResourceBundle object.
+     */
+    public static ResourceBundle setLanguageBundle(Locale loc){
+        return ResourceBundle
+                .getBundle("language", loc); //NON-NLS
     }
 
     @Override
@@ -34,7 +61,7 @@ public class MainApp extends Application {
             MainAppController mainController = loader.getController();
             scene.getStylesheets().add(css);
             guiStage.initStyle(StageStyle.DECORATED);
-            guiStage.setTitle("Keep My Password");
+            guiStage.setTitle(lang.getString("appName"));
             guiStage.setResizable(false);
             guiStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
             guiStage.setWidth(750);
