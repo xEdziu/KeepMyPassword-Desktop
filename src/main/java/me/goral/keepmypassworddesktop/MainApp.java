@@ -43,7 +43,7 @@ public class MainApp extends Application {
      */
     public static ResourceBundle setLanguageBundle(Locale loc){
         return ResourceBundle
-                .getBundle("/me/goral/keepmypassworddesktop/language.language", loc); //NON-NLS
+                .getBundle("language", loc); //NON-NLS
     }
 
     @Override
