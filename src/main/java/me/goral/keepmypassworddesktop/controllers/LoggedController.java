@@ -19,6 +19,7 @@ import java.util.List;
 
 public class LoggedController {
 
+    @FXML private Label loggedAsLabel;
     @FXML private TableView<PasswordRow> contentTable;
     @FXML private TableColumn<PasswordRow, String> idColumn = new TableColumn<>("id");//NON-NLS
     @FXML private TableColumn<PasswordRow, String> descColumn = new TableColumn<>(MainApp.lang.getString("description-table-desc"));
@@ -44,6 +45,13 @@ public class LoggedController {
         descColumn.setText(MainApp.lang.getString("description-table-desc"));
         loginColumn.setText(MainApp.lang.getString("login-table-desc"));
         pwdColumn.setText(MainApp.lang.getString("password-table-desc"));
+
+        addButton.setText(MainApp.lang.getString("add"));
+        genPwd.setText(MainApp.lang.getString("generate"));
+        removeButton.setText(MainApp.lang.getString("remove"));
+
+        contentTable.setPlaceholder(new Label(MainApp.lang.getString("no.content.in.table")));
+        loggedAsLabel.setText(MainApp.lang.getString("logged.as"));
 
         showBtn.getStyleClass().add("show"); //NON-NLS
         addButton.setWrapText(true);

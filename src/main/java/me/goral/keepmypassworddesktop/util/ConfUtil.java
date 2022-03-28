@@ -137,7 +137,6 @@ public class ConfUtil {
             return "en-US";//NON-NLS
         } else {
             try {
-                System.out.println("W funkcji: " + readConfigFile().split(":")[readConfigFile().split(":").length - 1]);
                 return readConfigFile().split(":")[readConfigFile().split(":").length - 1];
             } catch (Exception e){
                 AlertsUtil.showExceptionStackTraceDialog(e);

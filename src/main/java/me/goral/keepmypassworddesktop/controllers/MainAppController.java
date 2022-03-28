@@ -222,6 +222,8 @@ public class MainAppController {
                     String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt + ":" + lang;
                     createConfFiles(output);
                     login = true;
+                    MainApp.loc = MainApp.setLocale();
+                    MainApp.lang = MainApp.setLanguageBundle(MainApp.loc);
                     handleAppRun();
                     onLoginButtonClick();
 
@@ -411,6 +413,8 @@ public class MainAppController {
                     String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt + ":" + lang;
                     createConfFiles(output);
                     login = true;
+                    MainApp.loc = MainApp.setLocale();
+                    MainApp.lang = MainApp.setLanguageBundle(MainApp.loc);
                     handleAppRun();
                     onLoginButtonClick();
 

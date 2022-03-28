@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 import static me.goral.keepmypassworddesktop.MainApp.loc;
 import static me.goral.keepmypassworddesktop.util.PasswordGeneratorUtil.checkPasswordComplexity;
@@ -300,11 +299,27 @@ public class AlertsUtil {
         Optional<String> res = dialog.showAndWait();
 
         res.ifPresent(result -> {
-
+            ConfUtil.changeLanguage(result);
             loc = MainApp.setLocale();
             MainApp.lang = MainApp.setLanguageBundle(loc);
+
             showInformationDialog(MainApp.lang.getString("success"), MainApp.lang.getString("changed-lang-success"),
                     MainApp.lang.getString("have-a-great-day"));
+
+            try {
+                FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
+                Parent root = loader.load();
+
+                Scene sc = new Scene(root);
+                String css = MainApp.class.getResource("styles/main.css").toExternalForm();
+                sc.getStylesheets().add(css);
+                MainApp.getStage().setScene(sc);
+                MainAppController controller = loader.getController();
+                controller.handleAppRun();
+
+            } catch (Exception e){
+                showExceptionStackTraceDialog(e);
+            }
         });
 
     }
@@ -599,9 +614,6 @@ public class AlertsUtil {
                 final ClipboardContent clipboardContent = new ClipboardContent();
                 clipboardContent.putString(pwd);
                 clipboard.setContent(clipboardContent);
-                if (clipboard.hasString()){
-                    System.out.println(clipboard.getString());
-                }
             }
             return null;
         });
