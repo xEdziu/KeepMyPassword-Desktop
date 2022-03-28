@@ -1,0 +1,27 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "xEdziu",
+      "name": "Adrian Goral",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50357817?v=4",
+      "profile": "https://github.com/xEdziu",
+      "contributions": [
+        "code",
+        "design",
+        "security",
+        "projectManagement"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "KeepMyPassword-Desktop",
+  "projectOwner": "xEdziu",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
