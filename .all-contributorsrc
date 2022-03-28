@@ -16,6 +16,17 @@
         "security",
         "projectManagement"
       ]
+    },
+    {
+      "login": "kamiloox",
+      "name": "kamiloox",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45523480?v=4",
+      "profile": "http://troczewski.dev",
+      "contributions": [
+        "test",
+        "ideas",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
