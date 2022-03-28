@@ -1,7 +1,5 @@
 <h1 align="center">Welcome to KeepMyPassword for Desktop!👋</h1>
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 <p align="center">
 <img alt="GitHub License" src="https://img.shields.io/badge/license-MIT-yellowgreen"> <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/xEdziu/KeepMyPassword-Desktop/total"> <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/xEdziu/KeepMyPassword-Desktop"> <img alt="GitHub issues" src="https://img.shields.io/github/issues/xEdziu/KeepMyPassword-Desktop"> <img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/xEdziu/KeepMyPassword-Desktop"> <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/xEdziu/KeepMyPassword-Desktop"> <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/xEdziu/KeepMyPassword-Desktop"></p>
 
