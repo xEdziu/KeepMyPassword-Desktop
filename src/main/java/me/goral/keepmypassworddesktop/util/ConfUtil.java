@@ -6,11 +6,16 @@ import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.CodeSource;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
 public class ConfUtil {
@@ -192,27 +197,6 @@ public class ConfUtil {
         return 0;
     }
 
-    /**
-     * It reads all the files in the language folder and returns a list of the names of the files
-     *
-     * @return A list of all the languages that are available.
-     */
-    public static ObservableList<String> readLanguages() {
-        String path = MainApp.class.getProtectionDomain().getCodeSource().getLocation().getPath()
-                + "me/goral/keepmypassworddesktop/language/";//NON-NLS
-        Set<String> files = listFiles(path);//NON-NLS
-        ObservableList<String> options = FXCollections.observableArrayList();
-
-        if (files != null) {
-
-            for (String file : files){
-                String[] tmp = file.split("\\.");
-                String actual = tmp[0].split("_")[1];
-                options.add(actual);
-            }
-        }
-        return options;
-    }
 
     /**
      * Given a directory, return a set of all the files in that directory
@@ -229,6 +213,54 @@ public class ConfUtil {
             listed.add(f.getName());
         }
         return listed;
+    }
+
+    /**
+     * Reads the languages from the jar file / ide scope project
+     *
+     * @return An ObservableList of languages names.
+     */
+    public static ObservableList<String> readLanguages(){
+        try {
+            CodeSource src = MainApp.class.getProtectionDomain().getCodeSource();
+
+            URI uri = MainApp.class.getResource("").toURI();
+            URL jar = src.getLocation();
+            if (uri.getScheme().equals("jar")){//NON-NLS
+                ZipInputStream zip = new ZipInputStream(jar.openStream());
+                ObservableList<String> options = FXCollections.observableArrayList();
+                while (true){
+                    ZipEntry e = zip.getNextEntry();
+                    if (e == null) break;
+                    String name = e.getName();
+                    if (name.startsWith("language_")){//NON-NLS
+                        String[] tmp = name.split("\\.");
+                        String actual = tmp[0].split("_")[1];
+                        options.add(actual);
+                    }
+                }
+                return options;
+            } else {
+                String path = MainApp.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "/";//NON-NLS
+                Set<String> files = listFiles(path);//NON-NLS
+                ObservableList<String> options = FXCollections.observableArrayList();
+
+                if (files != null) {
+                    for (String file : files){
+                        if (file.startsWith("language")){//NON-NLS
+                            String[] tmp = file.split("\\.");
+                            String actual = tmp[0].split("_")[1];
+                            options.add(actual);
+                        }
+                    }
+                }
+                return options;
+            }
+        } catch (Exception e){
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
+
+        return null;
     }
 
 }
