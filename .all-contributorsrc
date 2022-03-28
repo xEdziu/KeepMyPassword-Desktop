@@ -27,6 +27,18 @@
         "ideas",
         "doc"
       ]
+    },
+    {
+      "login": "Kubis10",
+      "name": "Kuba Przybysz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50967586?v=4",
+      "profile": "https://jakubprzybysz.netlify.app/",
+      "contributions": [
+        "test",
+        "ideas",
+        "bug",
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
