@@ -29,7 +29,7 @@ KeepMyPassword is an open-source project under MIT license. Its aim is to provid
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/xEdziu/KeepMyPassword-Desktop/issues).
+Contributions, translations, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/xEdziu/KeepMyPassword-Desktop/issues).
 
 ## Show your support
 
