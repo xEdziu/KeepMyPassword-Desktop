@@ -142,7 +142,7 @@ public class ConfUtil {
             return "en-US";//NON-NLS
         } else {
             try {
-                return readConfigFile().split(":")[readConfigFile().split(":").length - 1];
+                return readConfigFile().split(":")[readConfigFile().split(":").length - 1].trim();
             } catch (Exception e){
                 AlertsUtil.showExceptionStackTraceDialog(e);
             }
