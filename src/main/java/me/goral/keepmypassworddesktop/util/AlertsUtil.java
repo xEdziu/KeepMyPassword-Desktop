@@ -695,6 +695,13 @@ public class AlertsUtil {
             String passPlain = result.get(2);
             String alg = "AES/CBC/PKCS5Padding";//NON-NLS
 
+            if (descPlain.isEmpty() && unamePlain.isEmpty() && passPlain.isEmpty()){
+                showErrorDialog(MainApp.lang.getString("error.dialog"), MainApp.lang.getString("wait.a.minute.err"),
+                        MainApp.lang.getString("all.inputs.are.empty"));
+                return;
+            }
+
+
             IvParameterSpec iv = AESUtil.generateIv();
 
             try {
