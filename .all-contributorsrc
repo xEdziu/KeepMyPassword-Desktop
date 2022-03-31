@@ -1,0 +1,79 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "xEdziu",
+      "name": "Adrian Goral",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50357817?v=4",
+      "profile": "https://github.com/xEdziu",
+      "contributions": [
+        "code",
+        "design",
+        "security",
+        "projectManagement"
+      ]
+    },
+    {
+      "login": "kamiloox",
+      "name": "kamiloox",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45523480?v=4",
+      "profile": "http://troczewski.dev",
+      "contributions": [
+        "test",
+        "ideas",
+        "doc"
+      ]
+    },
+    {
+      "login": "Kubis10",
+      "name": "Kuba Przybysz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50967586?v=4",
+      "profile": "https://jakubprzybysz.netlify.app/",
+      "contributions": [
+        "test",
+        "ideas",
+        "bug",
+        "translation"
+      ]
+    },
+    {
+      "login": "Nehomex",
+      "name": "Pyka ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60048445?v=4",
+      "profile": "https://github.com/Nehomex",
+      "contributions": [
+        "test",
+        "bug",
+        "ideas"
+      ]
+    },
+    {
+      "login": "alozone",
+      "name": "alozone",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46488264?v=4",
+      "profile": "https://github.com/alozone",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "TheSuspect9702",
+      "name": "TheSuspect9702",
+      "avatar_url": "https://avatars.githubusercontent.com/u/92857768?v=4",
+      "profile": "https://github.com/TheSuspect9702",
+      "contributions": [
+        "translation"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "KeepMyPassword-Desktop",
+  "projectOwner": "xEdziu",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
