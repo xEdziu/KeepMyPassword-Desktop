@@ -56,6 +56,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Nehomex"><img src="https://avatars.githubusercontent.com/u/60048445?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pyka </b></sub></a><br /><a href="https://github.com/xEdziu/KeepMyPassword-Desktop/commits?author=Nehomex" title="Tests">⚠️</a> <a href="https://github.com/xEdziu/KeepMyPassword-Desktop/issues?q=author%3ANehomex" title="Bug reports">🐛</a> <a href="#ideas-Nehomex" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/alozone"><img src="https://avatars.githubusercontent.com/u/46488264?v=4?s=100" width="100px;" alt=""/><br /><sub><b>alozone</b></sub></a><br /><a href="https://github.com/xEdziu/KeepMyPassword-Desktop/issues?q=author%3Aalozone" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/TheSuspect9702"><img src="https://avatars.githubusercontent.com/u/92857768?v=4?s=100" width="100px;" alt=""/><br /><sub><b>TheSuspect9702</b></sub></a><br /><a href="#translation-TheSuspect9702" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/b5i"><img src="https://avatars.githubusercontent.com/u/44288655?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Antoine Bollengier</b></sub></a><br /><a href="#translation-b5i" title="Translation">🌍</a></td>
   </tr>
 </table>
 
