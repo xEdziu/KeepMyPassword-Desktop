@@ -36,7 +36,7 @@ public class ConfUtil {
         switch (os) {
             case 1 -> workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";//NON-NLS
             case 2 -> workingDirectory = System.getProperty("user.home") + "/Library/KeepMyPassword/";//NON-NLS
-            case 3 -> workingDirectory = System.getProperty("user.home") + "/KeepMyPassword/";//NON-NLS
+            case 3 -> workingDirectory = System.getProperty("user.home") + "/.config/KeepMyPassword/";//NON-NLS
             default -> {
             }
         }
