@@ -58,6 +58,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/TheSuspect9702"><img src="https://avatars.githubusercontent.com/u/92857768?v=4?s=100" width="100px;" alt=""/><br /><sub><b>TheSuspect9702</b></sub></a><br /><a href="#translation-TheSuspect9702" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/b5i"><img src="https://avatars.githubusercontent.com/u/44288655?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Antoine Bollengier</b></sub></a><br /><a href="#translation-b5i" title="Translation">🌍</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/zaxonspox"><img src="https://avatars.githubusercontent.com/u/47053155?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zaxonspox</b></sub></a><br /><a href="#design-zaxonspox" title="Design">🎨</a> <a href="#example-zaxonspox" title="Examples">💡</a> <a href="#ideas-zaxonspox" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
