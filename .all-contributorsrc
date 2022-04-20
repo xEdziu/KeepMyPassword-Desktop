@@ -88,6 +88,15 @@
         "example",
         "ideas"
       ]
+    },
+    {
+      "login": "jds1g14",
+      "name": "Jesse da Silva",
+      "avatar_url": "https://avatars.githubusercontent.com/u/51838115?v=4",
+      "profile": "https://github.com/jds1g14",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
