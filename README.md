@@ -61,6 +61,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/zaxonspox"><img src="https://avatars.githubusercontent.com/u/47053155?v=4?s=100" width="100px;" alt=""/><br /><sub><b>zaxonspox</b></sub></a><br /><a href="#design-zaxonspox" title="Design">🎨</a> <a href="#example-zaxonspox" title="Examples">💡</a> <a href="#ideas-zaxonspox" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/jds1g14"><img src="https://avatars.githubusercontent.com/u/51838115?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jesse da Silva</b></sub></a><br /><a href="#translation-jds1g14" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/neeoll"><img src="https://avatars.githubusercontent.com/u/75849910?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Noel Arias</b></sub></a><br /><a href="#translation-neeoll" title="Translation">🌍</a></td>
   </tr>
 </table>
 
