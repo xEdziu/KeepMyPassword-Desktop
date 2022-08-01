@@ -64,6 +64,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/neeoll"><img src="https://avatars.githubusercontent.com/u/75849910?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Noel Arias</b></sub></a><br /><a href="#translation-neeoll" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/aestallon"><img src="https://avatars.githubusercontent.com/u/95976712?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Papp Szabolcs Bazil</b></sub></a><br /><a href="#translation-aestallon" title="Translation">🌍</a></td>
     <td align="center"><a href="https://sierra41.github.io/"><img src="https://avatars.githubusercontent.com/u/107892163?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sierra</b></sub></a><br /><a href="#translation-sierra41" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/VytenisKaj"><img src="https://avatars.githubusercontent.com/u/79807005?v=4?s=100" width="100px;" alt=""/><br /><sub><b>VytenisKaj</b></sub></a><br /><a href="#translation-VytenisKaj" title="Translation">🌍</a></td>
   </tr>
 </table>
 
