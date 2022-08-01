@@ -126,6 +126,15 @@
       ]
     },
     {
+      "login": "sierra41",
+      "name": "Sierra",
+      "avatar_url": "https://avatars.githubusercontent.com/u/107892163?v=4",
+      "profile": "https://sierra41.github.io/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
       "login": "realZachi",
       "name": "realZachi",
       "avatar_url": "https://avatars.githubusercontent.com/u/109552121?v=4",
@@ -133,7 +142,16 @@
       "contributions": [
         "translation"
       ]
-    }
+    },
+    {
+      "login": "VytenisKaj",
+      "name": "VytenisKaj",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79807005?v=4",
+      "profile": "https://github.com/VytenisKaj",
+      "contributions": [
+        "translation"
+      ]
+    },
   ],
   "contributorsPerLine": 7,
   "projectName": "KeepMyPassword-Desktop",
