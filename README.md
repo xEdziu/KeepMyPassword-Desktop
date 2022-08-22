@@ -43,6 +43,8 @@ This project is [MIT](https://github.com/xEdziu/KeepMyPassword-Desktop/blob/mast
 
 ## Contributors ✨
 
+Great shoutout to @anjannair for making linux installation a piece of cake!❤️
+
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
