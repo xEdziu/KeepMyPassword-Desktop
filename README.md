@@ -67,6 +67,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/VytenisKaj"><img src="https://avatars.githubusercontent.com/u/79807005?v=4?s=100" width="100px;" alt=""/><br /><sub><b>VytenisKaj</b></sub></a><br /><a href="#translation-VytenisKaj" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/realZachi"><img src="https://avatars.githubusercontent.com/u/109552121?v=4?s=100" width="100px;" alt=""/><br /><sub><b>realZachi</b></sub></a><br /><a href="#translation-realZachi" title="Translation">🌍</a></td>
   </tr>
+      <td align="center"><a href="https://github.com/anjannair"><img src="https://avatars.githubusercontent.com/u/22571613?v=4" width="100px;" alt=""/><br /><sub><b>anjannair</b></sub></a><br /><a href="#translation-anjannair" title="Translation">🌍</a><a href="https://github.com/xEdziu/KeepMyPassword-Desktop/commits?author=anjannair" title="Code">💻</a><a href="#example-anjannair" title="Examples">💡</a></td>
 </table>
 
 <!-- markdownlint-restore -->
