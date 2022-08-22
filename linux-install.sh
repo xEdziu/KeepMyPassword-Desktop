@@ -24,7 +24,7 @@ fi
 
 if [[ "$_java" ]]; then
     version=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
-    if [[ "$version" > "17.0.2" ]]; then
+    if [[ "$version" > "17.0.1" ]]; then
         printf "$TICK Congratulations! You have a compatible version of Java installed.\n"
     else
         printf "$CROSS Your version of Java is not compatible. Please install Java version 17.0.2 or higher and try again.\nLink: https://www.oracle.com/java/technologies/downloads/#java18 \n"
