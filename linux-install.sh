@@ -36,7 +36,7 @@ printf "${TICK} All checks passed. Proceeding with installation.\n"
 
 printf "${INFO} Installing the latest version of Keep My Password Desktop\nThis would require root privileges.\n"
 # Change this every time you update Keep My Password Desktop
-latestVersion="3.0.0"
+latestVersion="3.1.0"
 # Download the latest version of Keep My Password Desktop using the GitHub releases links
 # There could be a better way to do this using regex but since recent releases did not have a Linux version
 # I decided to use the GitHub releases links to download the latest version of the desktop application
