@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Shoutout to the author of this script: https://github.com/anjannair
+
 # Set these values so the installer can still run in color
 COL_NC='\e[0m' # No Color
 COL_LIGHT_GREEN='\e[1;32m'
