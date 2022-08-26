@@ -6,9 +6,10 @@
 COL_NC='\e[0m' # No Color
 COL_LIGHT_GREEN='\e[1;32m'
 COL_LIGHT_RED='\e[1;31m'
+COL_LIGHT_BLUE='\e[1;36m'
 TICK="[${COL_LIGHT_GREEN}✓${COL_NC}]"
 CROSS="[${COL_LIGHT_RED}✗${COL_NC}]"
-INFO="[i]"
+INFO="[${COL_LIGHT_BLUE}i${COL_NC}]"
 
 # Note - This script is just for installation and not tweaked for updating the application
 
