@@ -152,6 +152,17 @@
         "translation"
       ]
     },
+    {
+      "login": "anjannair",
+      "name": "Anjan Nair",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22571613?v=4",
+      "profile": "https://github.com/anjannair",
+      "contributions": [
+        "translation",
+        "code",
+        "example"
+      ]
+    }
   ],
   "contributorsPerLine": 7,
   "projectName": "KeepMyPassword-Desktop",
