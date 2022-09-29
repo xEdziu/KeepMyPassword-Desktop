@@ -79,6 +79,7 @@ public class MainAppController {
         grid.setPadding(new Insets(20,150,10,10));
 
         ObservableList<String> options = ConfUtil.readLanguages();
+        //TODO: options are locale-codes, there is a need to convert them to language
         final ComboBox<String> languageBox = new ComboBox<>(options);
         languageBox.getSelectionModel().selectFirst();
 
@@ -218,7 +219,7 @@ public class MainAppController {
                     SecretKey key = AESUtil.generateKey(argon);
                     String init = AuthUtil.encryptInitial(key, iv);
                     String lang = result.get(2);
-
+                    //TODO: lang will be an actual language, need to convert it to locale-code
                     String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt + ":" + lang;
                     createConfFiles(output);
                     login = true;

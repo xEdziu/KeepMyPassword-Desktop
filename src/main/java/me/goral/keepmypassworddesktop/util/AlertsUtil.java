@@ -276,6 +276,7 @@ public class AlertsUtil {
         Label label = new Label(MainApp.lang.getString("choose-your-language-prompt"));
 
         ObservableList<String> options = ConfUtil.readLanguages();
+        //TODO: options are locale-codes, there is a need to convert them to language
         final ComboBox<String> languageBox = new ComboBox<>(options);
         languageBox.getSelectionModel().selectFirst();
 
@@ -299,6 +300,7 @@ public class AlertsUtil {
         Optional<String> res = dialog.showAndWait();
 
         res.ifPresent(result -> {
+            //TODO: change language to locale-code
             ConfUtil.changeLanguage(result);
             loc = MainApp.setLocale();
             MainApp.lang = MainApp.setLanguageBundle(loc);
