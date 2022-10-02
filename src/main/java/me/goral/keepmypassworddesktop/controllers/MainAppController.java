@@ -295,8 +295,10 @@ public class MainAppController {
 
         tf.textProperty().bindBidirectional(password.textProperty());
 
-        Label pwdCheck = new Label(MainApp.lang.getString("no-password-info"));
-        pwdCheck.setTextFill(Color.web("#b3b3b3"));//NON-NLS
+        Label pwdCheck = new Label();
+        Pair<String, Color> initComplexity = checkPasswordComplexity(passwordString);
+        pwdCheck.setText(initComplexity.getKey());
+        pwdCheck.setTextFill(initComplexity.getValue());
 
         password.textProperty().addListener((observable, oldValue, newValue) -> {
             Pair<String, Color> res = checkPasswordComplexity(newValue);
