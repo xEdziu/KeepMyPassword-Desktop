@@ -1,6 +1,7 @@
 package me.goral.keepmypassworddesktop.util;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -42,6 +43,8 @@ import static me.goral.keepmypassworddesktop.MainApp.loc;
 import static me.goral.keepmypassworddesktop.util.PasswordGeneratorUtil.checkPasswordComplexity;
 
 public class AlertsUtil {
+
+    static LanguageConverter langProcess = new LanguageConverter();
 
     /**
      * Show an error dialog with a title, header, and body
@@ -277,7 +280,11 @@ public class AlertsUtil {
 
         ObservableList<String> options = ConfUtil.readLanguages();
         //TODO: options are locale-codes, there is a need to convert them to language
-        final ComboBox<String> languageBox = new ComboBox<>(options);
+        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();
+        for (String locale : options){
+            optionsLanguage.add(langProcess.convertToLanguage(locale));
+        }
+        final ComboBox<String> languageBox = new ComboBox<>(optionsLanguage);
         languageBox.getSelectionModel().selectFirst();
 
         GridPane grid = new GridPane();
@@ -301,7 +308,8 @@ public class AlertsUtil {
 
         res.ifPresent(result -> {
             //TODO: change language to locale-code
-            ConfUtil.changeLanguage(result);
+            String locale = langProcess.convertToLocale(result);
+            ConfUtil.changeLanguage(locale);
             loc = MainApp.setLocale();
             MainApp.lang = MainApp.setLanguageBundle(loc);
 
