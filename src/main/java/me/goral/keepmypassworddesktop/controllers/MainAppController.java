@@ -1,6 +1,7 @@
 package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +38,8 @@ public class MainAppController {
     Button btnLogin;
     @FXML
     Label dateLabel;
+
+    LanguageConverter langProcess = new LanguageConverter();
 
     /**
      * The function sets the text of the dateLabel to the current year
@@ -79,7 +82,12 @@ public class MainAppController {
         grid.setPadding(new Insets(20,150,10,10));
 
         ObservableList<String> options = ConfUtil.readLanguages();
-        final ComboBox<String> languageBox = new ComboBox<>(options);
+        //TODO: options are locale-codes, there is a need to convert them to language
+        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();;
+        for (String locale : options){
+            optionsLanguage.add(langProcess.convertToLanguage(locale));
+        }
+        final ComboBox<String> languageBox = new ComboBox<>(optionsLanguage);
         languageBox.getSelectionModel().selectFirst();
 
         TextField username = new TextField();
@@ -218,8 +226,9 @@ public class MainAppController {
                     SecretKey key = AESUtil.generateKey(argon);
                     String init = AuthUtil.encryptInitial(key, iv);
                     String lang = result.get(2);
-
-                    String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt + ":" + lang;
+                    //TODO: lang will be an actual language, need to convert it to locale-code
+                    String locale = langProcess.convertToLocale(lang);
+                    String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt + ":" + locale;
                     createConfFiles(output);
                     login = true;
                     MainApp.loc = MainApp.setLocale();
