@@ -26,3 +26,106 @@
     -fx-background-color: #AAA;
     -fx-text-fill: #303033;
 }
+
+TextField{
+	-fx-background-color: white;
+	-fx-border-color: #AAA;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+}
+
+PasswordField{
+	-fx-background-color: white;
+	-fx-border-color: #AAA;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+}
+
+CheckBox .box{
+	-fx-background-color: white;
+	-fx-border-color: #AAA;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+}
+
+CheckBox:selected .mark {
+    -fx-background-color: black;
+}
+
+CheckBox:selected .box {
+    -fx-background-color: #AAA;
+}
+
+ComboBox{
+	-fx-background-color: white;
+	-fx-border-color: #AAA;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+}
+
+.combo-box-popup .list-view {
+	-fx-background-color: white;
+	-fx-border-color: #AAA;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover,
+.combo-box-popup .list-view .list-cell:filled:selected{
+	-fx-background-color: #AAA;
+    -fx-text-fill: #303033;
+}
+
+.scroll-bar:horizontal,
+.scroll-bar:vertical {
+	-fx-background-color: transparent;
+	-fx-border-width: 0;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+	-fx-background-color :transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color :transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius : 0px;
+    -fx-border-radius: 0px;
+}
+
+
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0px;
+    -fx-padding: 0px;
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0px;
+    -fx-padding: 0px 5px;
+}
+
+ .scroll-bar .increment-arrow,
+ .scroll-bar .decrement-arrow{
+    -fx-shape: " ";
+    -fx-padding: 0px;
+}
+
+ .scroll-bar:vertical .increment-arrow,
+ .scroll-bar:vertical .decrement-arrow{
+    -fx-shape: " ";    
+    -fx-padding: 0px;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #AAA;
+    -fx-background-insets: 0px;
+    -fx-background-radius: 0px;
+}
