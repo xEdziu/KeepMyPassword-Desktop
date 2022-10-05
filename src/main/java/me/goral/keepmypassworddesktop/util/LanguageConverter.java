@@ -116,6 +116,8 @@ public class LanguageConverter {
         this.langs.put("es-us","USA Spanish");
         this.langs.put("es-uy","Uruguay");
         this.langs.put("es-ve","Venezuela");
+        this.langs.put("es-te","Telugu");
+        this.langs.put("es-ta","Tamil");
         this.langs.put("sv-se","Sweden");
         this.langs.put("th-th","Thailand");
         this.langs.put("tr-tr","Turkey");
@@ -126,6 +128,9 @@ public class LanguageConverter {
         this.langs.put("gu-in","Gujarati English");
         this.langs.put("bn-bn","Bengali");
         this.langs.put("ma-in","Marathi");
+        this.langs.put("sr-latn-ba", "Bosnian Latin");
+        this.langs.put("np-np","Nepal");
+        this.langs.put("mr-in","Marathi");
     }
 
     public String convertToLanguage(String locale){
