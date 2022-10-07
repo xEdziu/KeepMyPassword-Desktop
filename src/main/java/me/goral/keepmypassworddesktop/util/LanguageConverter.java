@@ -116,8 +116,8 @@ public class LanguageConverter {
         this.langs.put("es-us","USA Spanish");
         this.langs.put("es-uy","Uruguay");
         this.langs.put("es-ve","Venezuela");
-        this.langs.put("es-te","Telugu");
-        this.langs.put("es-ta","Tamil");
+        this.langs.put("te-in","Telugu");
+        this.langs.put("ta-in","Tamil");
         this.langs.put("sv-se","Sweden");
         this.langs.put("th-th","Thailand");
         this.langs.put("tr-tr","Turkey");
