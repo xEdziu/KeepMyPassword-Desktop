@@ -131,6 +131,7 @@ public class LanguageConverter {
         this.langs.put("sr-latn-ba", "Bosnian Latin");
         this.langs.put("np-np","Nepal");
         this.langs.put("mr-in","Marathi");
+        this.langs.put("ur","Urdu");
     }
 
     public String convertToLanguage(String locale){
