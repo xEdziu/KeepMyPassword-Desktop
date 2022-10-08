@@ -6,7 +6,7 @@
 
     <groupId>me.goral</groupId>
     <artifactId>KeepMyPassword-Desktop</artifactId>
-    <version>3.3.0</version>
+    <version>3.3.1</version>
     <name>KeepMyPassword Desktop</name>
     <packaging>jar</packaging>
 
