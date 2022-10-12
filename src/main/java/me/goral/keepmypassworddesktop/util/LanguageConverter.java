@@ -132,7 +132,7 @@ public class LanguageConverter {
         this.langs.put("np-np","Nepal");
         this.langs.put("mr-in","Marathi");
         this.langs.put("ur-pk","Urdu");
-        this.langs.put("ga-ie","Irish");
+        this.langs.put("kn-in","Kannada India");
     }
 
     public String convertToLanguage(String locale){
