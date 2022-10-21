@@ -1,4 +1,4 @@
-<p align="center"><img src="https://media.discordapp.net/attachments/494559020422791204/949703164452556830/Github_Repo_Card_-_Keep_My_Password_Desktop.png" alt="Github Repo Card" />
+<p align="center"><img src="https://cdn.discordapp.com/attachments/241261764786782208/1033021354175369307/repoCard.png" alt="Github Repo Card" />
 
 <h1 align="center">Welcome to KeepMyPassword for Desktop!👋</h1>
 
