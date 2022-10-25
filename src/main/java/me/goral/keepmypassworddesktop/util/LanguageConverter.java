@@ -133,6 +133,9 @@ public class LanguageConverter {
         this.langs.put("mr-in","Marathi");
         this.langs.put("ur-pk","Urdu");
         this.langs.put("kn-in","Kannada India");
+        this.langs.put("mail-in", "Malayalam");
+        this.langs.put("ko-in","Konkani");
+        this.langs.put("bh-in", "Bihari");
     }
 
     public String convertToLanguage(String locale){
