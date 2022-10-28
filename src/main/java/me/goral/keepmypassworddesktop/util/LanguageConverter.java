@@ -136,6 +136,7 @@ public class LanguageConverter {
         this.langs.put("mail-in", "Malayalam");
         this.langs.put("ko-in","Konkani");
         this.langs.put("bh-in", "Bihari");
+        this.langs.put("pu-in", "Punjab India");
     }
 
     public String convertToLanguage(String locale){
