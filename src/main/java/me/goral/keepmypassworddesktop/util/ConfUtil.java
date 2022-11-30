@@ -40,8 +40,6 @@ public class ConfUtil {
             default -> {
             }
         }
-        File workingDir = new File(workingDirectory);
-        workingDir.mkdir();
         return os;
     }
 
@@ -192,7 +190,7 @@ public class ConfUtil {
     public static int detectOS() {
         String os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
         if (os.contains("win")) return 1;//NON-NLS
-        else if (os.contains("osx")) return 2;//NON-NLS
+        else if (os.contains("os x") || os.contains("osx")) return 2;//NON-NLS
         else if (os.contains("nix") || os.contains("aix") || os.contains("nux")) return 3;//NON-NLS
         return 0;
     }
