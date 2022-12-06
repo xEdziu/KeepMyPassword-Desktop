@@ -44,5 +44,6 @@ This project is [MIT](https://github.com/xEdziu/KeepMyPassword-Desktop/blob/mast
 ## Contributors ✨
 
 Great shoutout to [@anjannair](https://github.com/anjannair) for making Linux installation a piece of cake!❤️
+Special shoutout to [@realZachi](https://github.com/realZachi) for making MacOs version possible! ❤️
 
 For all contributions, please check the wiki page [here](https://github.com/xEdziu/KeepMyPassword-Desktop/wiki/Contributors).
