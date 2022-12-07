@@ -41,6 +41,8 @@ public class ConfUtil {
             default -> {
             }
         }
+        File workingDir = new File(workingDirectory);
+        workingDir.mkdir();
         return os;
     }
 
