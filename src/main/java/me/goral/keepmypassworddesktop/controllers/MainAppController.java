@@ -82,8 +82,7 @@ public class MainAppController {
         grid.setPadding(new Insets(20,150,10,10));
 
         ObservableList<String> options = ConfUtil.readLanguages();
-        //TODO: options are locale-codes, there is a need to convert them to language
-        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();;
+        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();
         for (String locale : options){
             optionsLanguage.add(langProcess.convertToLanguage(locale));
         }
@@ -226,7 +225,6 @@ public class MainAppController {
                     SecretKey key = AESUtil.generateKey(argon);
                     String init = AuthUtil.encryptInitial(key, iv);
                     String lang = result.get(2);
-                    //TODO: lang will be an actual language, need to convert it to locale-code
                     String locale = langProcess.convertToLocale(lang);
                     String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt + ":" + locale;
                     createConfFiles(output);

@@ -279,7 +279,6 @@ public class AlertsUtil {
         Label label = new Label(MainApp.lang.getString("choose-your-language-prompt"));
 
         ObservableList<String> options = ConfUtil.readLanguages();
-        //TODO: options are locale-codes, there is a need to convert them to language
         ObservableList<String> optionsLanguage = FXCollections.observableArrayList();
         for (String locale : options){
             optionsLanguage.add(langProcess.convertToLanguage(locale));
@@ -307,7 +306,6 @@ public class AlertsUtil {
         Optional<String> res = dialog.showAndWait();
 
         res.ifPresent(result -> {
-            //TODO: change language to locale-code
             String locale = langProcess.convertToLocale(result);
             ConfUtil.changeLanguage(locale);
             loc = MainApp.setLocale();
