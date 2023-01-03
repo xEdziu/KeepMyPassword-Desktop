@@ -34,13 +34,33 @@ public class ConfUtil {
     public static int setWorkingDirectory(){
         int os = detectOS();
         switch (os) {
-            case 1 -> workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";//NON-NLS
+            case 1 -> {
+                workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";//NON-NLS
+                if (!checkIfWorkingDirExists()) {
+                    File f = new File(workingDirectory);
+                    if (f.mkdir()) {
+                        System.out.println("Directory has been created successfully");
+                    } else {
+                        System.out.println("Directory cannot be created");
+                    }
+                }
+            }
             case 2 -> workingDirectory = System.getProperty("user.home") + "/Library/KeepMyPassword/";//NON-NLS
             case 3 -> workingDirectory = System.getProperty("user.home") + "/.config/KeepMyPassword/";//NON-NLS
             default -> {
             }
         }
         return os;
+    }
+
+    /**
+     * Check if the working directory exists
+     *
+     * @return The method returns a boolean value.
+     */
+    public static boolean checkIfWorkingDirExists(){
+        File tmp = new File(workingDirectory);
+        return tmp.exists();
     }
 
     /**
