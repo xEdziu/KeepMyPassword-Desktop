@@ -36,14 +36,8 @@ public class ConfUtil {
         switch (os) {
             case 1 -> {
                 workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";//NON-NLS
-                if (!checkIfWorkingDirExists()) {
-                    File f = new File(workingDirectory);
-                    if (f.mkdir()) {
-                        System.out.println("Directory has been created successfully");
-                    } else {
-                        System.out.println("Directory cannot be created");
-                    }
-                }
+                if (!checkIfWorkingDirExists())
+                    createWorkingDir(workingDirectory);
             }
             case 2 -> workingDirectory = System.getProperty("user.home") + "/Library/KeepMyPassword/";//NON-NLS
             case 3 -> workingDirectory = System.getProperty("user.home") + "/.config/KeepMyPassword/";//NON-NLS
@@ -61,6 +55,18 @@ public class ConfUtil {
     public static boolean checkIfWorkingDirExists(){
         File tmp = new File(workingDirectory);
         return tmp.exists();
+    }
+
+    /**
+     * Creates a new working directory if it doesn't exist, otherwise prints an error
+     *
+     * @param workDir The working directory.
+     */
+    public static void createWorkingDir(String workDir) {
+        File f = new File(workingDirectory);
+        if (!f.mkdir()) {
+            System.out.println("Directory cannot be created");
+        }
     }
 
     /**
