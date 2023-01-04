@@ -1,13 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.goral.keepmypassworddesktop.controllers.MainAppController">
-   <children>
-      <Label layoutY="375.0" prefHeight="17.0" prefWidth="375.0" text="Adrian Goral" />
-      <Label fx:id="titleLabel" layoutY="61.0" prefHeight="17.0" prefWidth="750.0" text="Keep My Password" />
-      <Label fx:id="dateLabel" layoutX="375.0" layoutY="375.0" prefHeight="17.0" prefWidth="375.0" />
-      <Button fx:id="btnLogin" layoutX="310.0" layoutY="210.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="40.0" prefWidth="130.0" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.goral.keepmypassworddesktop.controllers.MainAppController">
+   <HBox layoutX="209.0" layoutY="127.0" prefHeight="500.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane prefWidth="370.0">
+         <BorderPane prefHeight="500.0" prefWidth="370.0">
+            <center>
+               <VBox fx:id="titleLabel" prefHeight="356.0" prefWidth="370.0" BorderPane.alignment="CENTER">
+                  <children>
+                     <Pane prefHeight="131.0" prefWidth="370.0">
+                        <children>
+                           <ImageView fitHeight="82.0" fitWidth="99.0" layoutX="144.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@../images/main-icon.png" />
+                              </image>
+                           </ImageView>
+                        </children>
+                     </Pane>
+                     <Pane prefHeight="85.0" prefWidth="370.0">
+                        <children>
+                           <Label fx:id="appTitleLabel" layoutX="61.0" text="Keep My Password">
+                              <font>
+                                 <Font name="Elephant" size="28.0" />
+                              </font>
+                              <textFill>
+                                 <LinearGradient endX="1.0" endY="1.0">
+                                    <stops>
+                                       <Stop>
+                                          <color>
+                                             <Color red="0.3815789520740509" green="0.22517868876457214" blue="0.08832845836877823" />
+                                          </color>
+                                       </Stop>
+                                       <Stop offset="1.0">
+                                          <color>
+                                             <Color red="0.21308480203151703" green="0.40679824352264404" blue="0.6973684430122375" />
+                                          </color>
+                                       </Stop>
+                                    </stops>
+                                 </LinearGradient>
+                              </textFill>
+                           </Label>
+                           <Label layoutX="61.0" layoutY="34.0" text="Adrian Goral">
+                              <font>
+                                 <Font name="Candara Italic" size="10.0" />
+                              </font></Label>
+                        </children>
+                     </Pane>
+                     <Pane prefHeight="168.0" prefWidth="370.0">
+                        <children>
+                           <GridPane alignment="CENTER" hgap="12.0" layoutX="84.0" layoutY="74.0" prefHeight="35.0" prefWidth="202.0">
+                              <columnConstraints>
+                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              </columnConstraints>
+                              <rowConstraints>
+                                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              </rowConstraints>
+                              <children>
+                                 <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="40.0" prefWidth="87.0" text="Button" />
+                                 <Button fx:id="btnQuit" mnemonicParsing="false" onAction="#confirmExit" prefHeight="40.0" prefWidth="52.0" text="Quit" GridPane.columnIndex="1" />
+                              </children>
+                           </GridPane>
+                        </children>
+                     </Pane>
+                     <Pane prefHeight="200.0" prefWidth="200.0">
+                        <children>
+                           <Label fx:id="dateLabel" alignment="CENTER" layoutX="71.0" layoutY="149.0" prefHeight="32.0" prefWidth="229.0" text="Label" textAlignment="CENTER">
+                              <effect>
+                                 <Bloom />
+                              </effect>
+                           </Label>
+                        </children>
+                     </Pane>
+                  </children>
+               </VBox>
+            </center>
+         </BorderPane>
+      </Pane>
+      <Pane prefWidth="380.0">
+         <ImageView fitHeight="500.0" fitWidth="380.0" pickOnBounds="true">
+            <Image url="@../images/background.jpg" />
+         </ImageView>
+      </Pane>
+   </HBox>
 </AnchorPane>
