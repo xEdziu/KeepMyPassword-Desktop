@@ -1,16 +1,3 @@
-/**
-.root {
-    -fx-background-color: #27282c;
-}
-
-.label {
-    -fx-font-family: "Ubuntu";
-    -fx-text-fill: white;
-    -fx-font-size: 20;
-    -fx-alignment: center;
-}
-**/
-
 #settingsButton  {
     -fx-cursor: hand;
     -fx-border-color: transparent;
