@@ -38,31 +38,6 @@
     -fx-background-image: url("../images/hide-80.png");
 }
 
-.button {
-    -fx-cursor: hand;
-    -fx-font-size: 15;
-    -fx-wrap-text: true;
-}
-
-#btnLogin {
-    -fx-background-color: #0275d8;
-    -fx-text-fill: #fff;
-}
-
-#btnLogin:hover {
-    -fx-background-color: #4083be;
-}
-
-#btnQuit {
-    -fx-background-color: #DC3545;
-    -fx-text-fill: #fff;
-}
-
-#btnQuit:hover {
-    -fx-background-color: #d9534f;
-}
-
-
 .table-view {
     -fx-background-color: transparent;
 }
@@ -147,4 +122,43 @@
 
 .table-row-cell:selected .txt {
     -fx-fill: #303033;
+}
+
+
+.button {
+    -fx-cursor: hand;
+    -fx-font-size: 15;
+    -fx-wrap-text: true;
+}
+
+#btnLogin, .btnLogin {
+    -fx-background-color: #0275d8;
+    -fx-text-fill: #fff;
+}
+
+#btnLogin:hover, .btnLogin:hover {
+    -fx-background-color: #4083be;
+}
+
+#btnQuit, .btnQuit {
+    -fx-background-color: #DC3545;
+    -fx-text-fill: #fff;
+}
+
+#btnQuit:hover, .btnQuit:hover {
+    -fx-background-color: #d9534f;
+}
+
+.quit-dialog {
+    -fx-background-color: #edddd3;
+    /** -fx-background-color: #c5d5f0; **/
+}
+
+.quit-dialog:header *.header-panel{
+    -fx-background-color: #1c2026;
+}
+
+.quit-dialog:header *.header-panel *.label{
+    -fx-font-size: 20px;
+    -fx-text-fill: #f0f6fa;
 }
