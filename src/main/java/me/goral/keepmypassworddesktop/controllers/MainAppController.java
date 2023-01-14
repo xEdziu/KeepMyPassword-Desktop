@@ -291,27 +291,6 @@ public class MainAppController {
         login = true;
     }
 
-
-    public void handleAppRun() {
-        try {
-            if (!ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()) {
-                btnLogin.setText(lang.getString("register"));
-            } else if (ConfUtil.checkIfDatabaseExists() && !ConfUtil.checkIfConfigExists()) {
-                ConfUtil.deleteConfFiles();
-                btnLogin.setText(lang.getString("register"));
-            } else if (ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()){
-                DatabaseHandler.createDatabase();
-                btnLogin.setText(lang.getString("log.in"));
-                login = true;
-            } else {
-                btnLogin.setText(lang.getString("log.in"));
-                login = true;
-            }
-        } catch (Exception e){
-            AlertsUtil.showExceptionStackTraceDialog(e);
-        }
-    }
-}
     public void handleAppRun() {
         try {
             if (!ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()) {
