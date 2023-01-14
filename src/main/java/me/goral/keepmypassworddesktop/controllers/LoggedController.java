@@ -3,7 +3,6 @@ package me.goral.keepmypassworddesktop.controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import me.goral.keepmypassworddesktop.MainApp;
 import me.goral.keepmypassworddesktop.database.DatabaseHandler;
@@ -31,7 +30,12 @@ public class LoggedController {
     @FXML private Button addButton;
     @FXML private Button removeButton;
     @FXML private Button genPwd;
-    @FXML private Button settingsButton;
+//    @FXML private Button settingsButton;
+    @FXML private Button tool1;
+    @FXML private Button tool2;
+    @FXML private Button tool3;
+    @FXML private Button tool4;
+
     private SecretKey key;
     private boolean showed = false;
 
@@ -42,28 +46,50 @@ public class LoggedController {
     @FXML
     private void initialize() {
 
+        tool1.setText(MainApp.lang.getString("change.language"));
+        tool1.getStyleClass().add("toolbarBtn");
+        tool1.setOnMouseClicked(mouseEvent -> {
+            AlertsUtil.showChangeLanguageDialog();
+        });
+
+        tool2.setText(MainApp.lang.getString("logout"));
+        tool2.getStyleClass().add("toolbarBtn");
+        tool2.setOnMouseClicked(mouseEvent -> {
+            AlertsUtil.showLogoutDialog();
+        });
+
+        tool3.setText(MainApp.lang.getString("delete.data"));
+        tool3.getStyleClass().add("toolbarBtn");
+        tool3.setOnMouseClicked(mouseEvent -> {
+            AlertsUtil.showDeleteDataDialog(contentTable, showed);
+        });
+
+        tool4.setText(MainApp.lang.getString("delete.account"));
+        tool4.getStyleClass().add("toolbarBtn");
+        tool4.setOnMouseClicked(mouseEvent -> {
+            AlertsUtil.showDeleteAccountDialog();
+        });
+
         descColumn.setText(MainApp.lang.getString("description-table-desc"));
         loginColumn.setText(MainApp.lang.getString("login-table-desc"));
         pwdColumn.setText(MainApp.lang.getString("password-table-desc"));
 
         addButton.setText(MainApp.lang.getString("add"));
+        addButton.getStyleClass().add("btnLogin");
+        addButton.setWrapText(true);
+
         genPwd.setText(MainApp.lang.getString("generate"));
+        genPwd.getStyleClass().add("btnLogin");
+        genPwd.setWrapText(true);
+
         removeButton.setText(MainApp.lang.getString("remove"));
+        removeButton.getStyleClass().add("btnQuit");
+        removeButton.setWrapText(true);
 
         contentTable.setPlaceholder(new Label(MainApp.lang.getString("no.content.in.table")));
         loggedAsLabel.setText(MainApp.lang.getString("logged.as"));
-
         showBtn.getStyleClass().add("show"); //NON-NLS
-        addButton.setWrapText(true);
-        removeButton.setWrapText(true);
-        genPwd.setWrapText(true);
-        ImageView imageView = new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-128.png").toExternalForm());
-        settingsButton.setGraphic(imageView);
-        settingsButton.setContentDisplay(ContentDisplay.TOP);
-        imageView.fitWidthProperty().bind(settingsButton.widthProperty().divide(2));
-        imageView.setPreserveRatio(true);
 
-        settingsButton.setMaxWidth(Double.MAX_VALUE);
 
         idColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getId())
@@ -311,18 +337,6 @@ public class LoggedController {
         }
 
         return list;
-    }
-
-    /**
-     * This function is called when the user clicks the settings button
-     */
-    public void onSettingsButtonClick() {
-        try {
-            AlertsUtil.showSettingsDialog(contentTable, showed);
-        } catch (Exception e){
-            AlertsUtil.showExceptionStackTraceDialog(e);
-        }
-
     }
 
     /**

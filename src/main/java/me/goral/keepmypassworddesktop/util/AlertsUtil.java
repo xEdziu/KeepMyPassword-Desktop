@@ -15,7 +15,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import me.goral.keepmypassworddesktop.MainApp;
@@ -64,7 +63,7 @@ public class AlertsUtil {
         alert.getDialogPane().getButtonTypes().add(btnConfirm);
 
         Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
-        confirm.getStyleClass().add("btn");//NON-NLS
+        confirm.getStyleClass().add("btnConfirm");//NON-NLS
         alert.showAndWait();
     }
 
@@ -90,8 +89,8 @@ public class AlertsUtil {
         Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
         Node btnCancel = alert.getDialogPane().lookupButton(cancel);
 
-        btnConfirm.getStyleClass().add("btn");//NON-NLS
-        btnCancel.getStyleClass().add("btn");//NON-NLS
+        btnConfirm.getStyleClass().add("btnConfirm");//NON-NLS
+        btnCancel.getStyleClass().add("btnCancel");//NON-NLS
 
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -126,8 +125,8 @@ public class AlertsUtil {
         Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
         Node btnCancel = alert.getDialogPane().lookupButton(cancel);
 
-        btnConfirm.getStyleClass().add("btn");//NON-NLS
-        btnCancel.getStyleClass().add("btn");//NON-NLS
+        btnConfirm.getStyleClass().add("btnConfirm");//NON-NLS
+        btnCancel.getStyleClass().add("btnCancel");//NON-NLS
 
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -172,78 +171,7 @@ public class AlertsUtil {
         alert.getDialogPane().getButtonTypes().add(btnConfirm);
 
         Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
-        confirm.getStyleClass().add("btn");//NON-NLS
-
-        alert.showAndWait();
-    }
-
-    /**
-     * Show a dialog with the settings options
-     */
-    public static void showSettingsDialog(TableView<LoggedController.PasswordRow> tv, boolean s) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(MainApp.lang.getString("settings"));
-        alert.setHeaderText(MainApp.lang.getString("select.desired.option"));
-        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
-        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-64.png").toString()));
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
-
-        ButtonType cancel = new ButtonType(MainApp.lang.getString("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(cancel);
-
-        Node cancelNode = alert.getDialogPane().lookupButton(cancel);
-
-        cancelNode.getStyleClass().add("btn");//NON-NLS
-
-        GridPane grid = new GridPane();
-
-        Button delAcc = new Button(MainApp.lang.getString("delete.account"));
-        delAcc.getStyleClass().addAll("btn","optionsButton");//NON-NLS
-        Button delData = new Button(MainApp.lang.getString("delete.data"));
-        delData.getStyleClass().addAll("btn","optionsButton");//NON-NLS
-        Button logout = new Button(MainApp.lang.getString("logout"));
-        logout.getStyleClass().addAll("btn","optionsButton");//NON-NLS
-        Button changeLang = new Button(MainApp.lang.getString("change.language"));
-        changeLang.getStyleClass().addAll("btn","optionsButton");//NON-NLS
-
-        delAcc.setOnMouseClicked(mouseEvent -> {
-            showDeleteAccountDialog();
-            alert.close();
-        });
-        delData.setOnMouseClicked(mouseEvent -> {
-            showDeleteDataDialog(tv, s);
-            alert.close();
-        });
-
-        logout.setOnMouseClicked(mouseEvent -> {
-            showLogoutDialog();
-            alert.close();
-        });
-
-        changeLang.setOnMouseClicked(mouseEvent -> {
-            showChangeLanguageDialog();
-            alert.close();
-        });
-
-        GridPane.setColumnIndex(delAcc, 0);
-        GridPane.setRowIndex(delAcc, 0);
-        grid.getChildren().add(delAcc);
-
-        GridPane.setColumnIndex(delData, 0);
-        GridPane.setRowIndex(delData, 1);
-        grid.getChildren().add(delData);
-
-        GridPane.setColumnIndex(logout, 0);
-        GridPane.setRowIndex(logout, 2);
-        grid.getChildren().add(logout);
-
-        GridPane.setColumnIndex(changeLang, 1);
-        GridPane.setRowIndex(changeLang, 0);
-        grid.getChildren().add(changeLang);
-
-        alert.getDialogPane().setContent(grid);
+        confirm.getStyleClass().add("btnConfirm");//NON-NLS
 
         alert.showAndWait();
     }
@@ -270,8 +198,8 @@ public class AlertsUtil {
         Node btnSave = dialog.getDialogPane().lookupButton(save);
         Node btnCancel = dialog.getDialogPane().lookupButton(cancel);
 
-        btnSave.getStyleClass().add("btn");//NON-NLS
-        btnCancel.getStyleClass().add("btn");//NON-NLS
+        btnSave.getStyleClass().add("btnConfirm");//NON-NLS
+        btnCancel.getStyleClass().add("btnCancel");//NON-NLS
 
         Label label = new Label(MainApp.lang.getString("choose-your-language-prompt"));
 
@@ -346,8 +274,8 @@ public class AlertsUtil {
         Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
         Node btnCancel = alert.getDialogPane().lookupButton(cancel);
 
-        btnConfirm.getStyleClass().add("btn");//NON-NLS
-        btnCancel.getStyleClass().add("btn");//NON-NLS
+        btnConfirm.getStyleClass().add("btnConfirm");//NON-NLS
+        btnCancel.getStyleClass().add("btnCancel");//NON-NLS
 
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -390,7 +318,7 @@ public class AlertsUtil {
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getDialogPane().getButtonTypes().add(okButtonType);
         Node okBtn = alert.getDialogPane().lookupButton(okButtonType);
-        okBtn.getStyleClass().add("btn");//NON-NLS
+        okBtn.getStyleClass().add("btnConfirm");//NON-NLS
 
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
@@ -440,35 +368,40 @@ public class AlertsUtil {
         dialog.getDialogPane().getButtonTypes().setAll(generateButtonType, cancelButtonType);
         Node addBtn = dialog.getDialogPane().lookupButton(generateButtonType);
         Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
-        addBtn.getStyleClass().add("btn");//NON-NLS
-        cancelBtn.getStyleClass().add("btn");//NON-NLS
+        addBtn.getStyleClass().add("btnConfirm");//NON-NLS
+        cancelBtn.getStyleClass().add("btnCancel");//NON-NLS
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+        grid.setPadding(new Insets(20,150,30,25));
 
         TextField length = new TextField();
         length.setText("5");
+        length.setPrefSize(350.0, 42.0);
         TextField lowerNum = new TextField();
         lowerNum.setText("1");
+        lowerNum.setPrefSize(175.0, 42.0);
         TextField upperNum = new TextField();
         upperNum.setText("1");
+        upperNum.setPrefSize(175.0, 42.0);
         TextField digitNum = new TextField();
         digitNum.setText("1");
+        digitNum.setPrefSize(350.0, 42.0);
         TextField specialNum = new TextField();
         specialNum.setText("1");
+        specialNum.setPrefSize(350.0, 42.0);
 
-        grid.add(new Label(MainApp.lang.getString("length")), 0, 0);
-        grid.add(length, 1, 0);
-        grid.add(new Label(MainApp.lang.getString("lower.case.num")),0, 1);
-        grid.add(lowerNum, 1,1);
-        grid.add(new Label(MainApp.lang.getString("upper.case.num")), 0, 2);
-        grid.add(upperNum, 1, 2);
-        grid.add(new Label(MainApp.lang.getString("digits.case.num")),0, 3);
-        grid.add(digitNum, 1, 3);
-        grid.add(new Label(MainApp.lang.getString("special.chars.num")), 0, 4);
-        grid.add(specialNum, 1, 4);
+        grid.add(new Label(MainApp.lang.getString("length")), 0, 0, 2, 1);
+        grid.add(length, 0, 1, 2, 1);
+        grid.add(new Label(MainApp.lang.getString("lower.case.num")),0, 2);
+        grid.add(lowerNum, 0,3);
+        grid.add(new Label(MainApp.lang.getString("upper.case.num")), 1, 2);
+        grid.add(upperNum, 1, 3);
+        grid.add(new Label(MainApp.lang.getString("digits.case.num")),0, 4, 2, 1);
+        grid.add(digitNum, 0, 5, 2, 1);
+        grid.add(new Label(MainApp.lang.getString("special.chars.num")), 0, 6, 2, 1);
+        grid.add(specialNum, 0, 7, 2, 1);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -588,8 +521,8 @@ public class AlertsUtil {
 
         Node confirm = alert.getDialogPane().lookupButton(btnConfirm);
         Node copy = alert.getDialogPane().lookupButton(btnCopy);
-        confirm.getStyleClass().add("btn");//NON-NLS
-        copy.getStyleClass().add("btn");//NON-NLS
+        confirm.getStyleClass().add("btnConfirm");//NON-NLS
+        copy.getStyleClass().add("btnAction");//NON-NLS
 
         TextArea textArea = new TextArea(pwd);
         textArea.setEditable(false);
@@ -642,20 +575,23 @@ public class AlertsUtil {
         dialog.getDialogPane().getButtonTypes().setAll(addButtonType, cancelButtonType);
         Node addBtn = dialog.getDialogPane().lookupButton(addButtonType);
         Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
-        addBtn.getStyleClass().add("btn");//NON-NLS
-        cancelBtn.getStyleClass().add("btn");//NON-NLS
+        addBtn.getStyleClass().add("btnConfirm");//NON-NLS
+        cancelBtn.getStyleClass().add("btnCancel");//NON-NLS
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+        grid.setPadding(new Insets(20, 50, 10, 50));
 
         TextField description = new TextField();
         description.setPromptText(MainApp.lang.getString("description"));
+        description.setPrefSize(300.0, 42.0);
         TextField username = new TextField();
         username.setPromptText(MainApp.lang.getString("username"));
+        username.setPrefSize(300.0, 42.0);
         TextField password = new TextField();
         password.setPromptText(MainApp.lang.getString("password"));
+        password.setPrefSize(300.0, 42.0);
         Label pwdCheck = new Label(MainApp.lang.getString("no-password-info"));
         pwdCheck.setTextFill(Color.web("#b3b3b3"));//NON-NLS
 
@@ -666,12 +602,12 @@ public class AlertsUtil {
         });
 
         grid.add(new Label(MainApp.lang.getString("description")), 0, 0);
-        grid.add(description, 1, 0);
-        grid.add(new Label(MainApp.lang.getString("username")),0, 1);
-        grid.add(username, 1,1);
-        grid.add(new Label(MainApp.lang.getString("password")), 0, 2);
-        grid.add(password, 1, 2);
-        grid.add(pwdCheck, 1, 3);
+        grid.add(description, 0, 1);
+        grid.add(new Label(MainApp.lang.getString("username")),0, 2);
+        grid.add(username, 0,3);
+        grid.add(new Label(MainApp.lang.getString("password")), 0, 4);
+        grid.add(password, 0, 5);
+        grid.add(pwdCheck, 0, 6);
 
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(description::requestFocus);
@@ -749,20 +685,23 @@ public class AlertsUtil {
         dialog.getDialogPane().getButtonTypes().setAll(addButtonType, cancelButtonType);
         Node addBtn = dialog.getDialogPane().lookupButton(addButtonType);
         Node cancelBtn = dialog.getDialogPane().lookupButton(cancelButtonType);
-        addBtn.getStyleClass().add("btn");//NON-NLS
-        cancelBtn.getStyleClass().add("btn");//NON-NLS
+        addBtn.getStyleClass().add("btnConfirm");//NON-NLS
+        cancelBtn.getStyleClass().add("btnCancel");//NON-NLS
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+        grid.setPadding(new Insets(20, 50, 10, 50));
 
         TextField description = new TextField();
         description.setText(desc);
+        description.setPrefSize(300.0, 42.0);
         TextField username = new TextField();
         username.setText(login);
+        username.setPrefSize(300.0, 42.0);
         TextField password = new TextField();
         password.setText(pwd);
+        password.setPrefSize(300.0, 42.0);
         Label pwdCheck = new Label();
 
         password.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -772,12 +711,12 @@ public class AlertsUtil {
         });
 
         grid.add(new Label(MainApp.lang.getString("description")), 0, 0);
-        grid.add(description, 1, 0);
-        grid.add(new Label(MainApp.lang.getString("username")),0, 1);
-        grid.add(username, 1,1);
-        grid.add(new Label(MainApp.lang.getString("password")), 0, 2);
-        grid.add(password, 1, 2);
-        grid.add(pwdCheck, 1, 3);
+        grid.add(description, 0, 1);
+        grid.add(new Label(MainApp.lang.getString("username")),0, 2);
+        grid.add(username, 0,3);
+        grid.add(new Label(MainApp.lang.getString("password")), 0, 4);
+        grid.add(password, 0, 5);
+        grid.add(pwdCheck, 0, 6);
 
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(description::requestFocus);

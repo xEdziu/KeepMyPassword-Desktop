@@ -3,26 +3,41 @@
     -fx-text-fill: white;
 }
 
-.btn {
-    -fx-padding: 10 25;
-    -fx-border-color: #AAA;
-    -fx-border-width: 2;
-    -fx-border-style: solid;
-    -fx-background-color: transparent;
+.btnConfirm {
     -fx-cursor: hand;
-    -fx-text-fill: #AAA;
+    -fx-font-size: 15;
+    -fx-wrap-text: true;
+    -fx-background-color: #0275d8;
+    -fx-text-fill: #fff;
 }
 
-.optionsButton {
-    -fx-pref-height: 20;
-    -fx-pref-width: 150;
-    -fx-text-fill: #303033;
-    -fx-border-color: #303033;
-    -fx-border-insets: 5px;
-    -fx-background-insets: 5px;
+.btnConfirm:hover {
+    -fx-background-color: #4083be;
+    -fx-text-fill: #fff;
 }
 
-.btn:hover {
-    -fx-background-color: #AAA;
-    -fx-text-fill: #303033;
+.btnCancel {
+    -fx-cursor: hand;
+    -fx-font-size: 15;
+    -fx-wrap-text: true;
+    -fx-background-color: #DC3545;
+    -fx-text-fill: #fff;
+}
+
+.btnCancel:hover {
+    -fx-text-fill: #fff;
+    -fx-background-color: #d9534f;
+}
+
+.btnAction {
+    -fx-cursor: hand;
+    -fx-font-size: 15;
+    -fx-wrap-text: true;
+    -fx-background-color: #f0ad4e;
+    -fx-text-fill: #fff;
+}
+
+.btnAction:hover {
+    -fx-text-fill: #fff;
+    -fx-background-color: #fab633;
 }

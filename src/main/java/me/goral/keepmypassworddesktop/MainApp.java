@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
 import me.goral.keepmypassworddesktop.util.ConfUtil;
@@ -22,6 +21,10 @@ public class MainApp extends Application {
 
     public static Stage getStage() {
         return guiStage;
+    }
+
+    public static void setStage(Stage stage) {
+        guiStage = stage;
     }
 
     public static Locale loc = setLocale();
@@ -62,7 +65,7 @@ public class MainApp extends Application {
             String css = MainApp.class.getResource("styles/main.css").toExternalForm();
             MainAppController mainController = loader.getController();
             scene.getStylesheets().add(css);
-            guiStage.initStyle(StageStyle.UNDECORATED);
+//            guiStage.initStyle(StageStyle.TRANSPARENT);
             guiStage.setResizable(false);
             guiStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
             guiStage.setWidth(750);

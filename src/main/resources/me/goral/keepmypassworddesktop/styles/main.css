@@ -12,8 +12,6 @@
     -fx-border-width: 0;
     -fx-border-style: none;
     -fx-fill: #AAA !important;
-    -fx-max-height: 16;
-    -fx-max-width: 16;
 }
 
 #showBtn:hover {
@@ -28,14 +26,18 @@
 
 .hide {
     -fx-fill: #AAA;
-    -fx-background-size: cover;
+    -fx-background-size: contain;
     -fx-background-image: url("../images/show-80.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }
 
 .show {
     -fx-fill: #AAA;
-    -fx-background-size: cover;
+    -fx-background-size: contain;
     -fx-background-image: url("../images/hide-80.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }
 
 .table-view {
@@ -161,4 +163,15 @@
 .quit-dialog:header *.header-panel *.label{
     -fx-font-size: 20px;
     -fx-text-fill: #f0f6fa;
+}
+
+.toolbarBtn {
+    -fx-border-color: #0275d8;
+    -fx-border-radius: 3px;
+}
+
+.toolbarBtn:hover {
+    -fx-background-color: #0275d8;
+    -fx-text-fill: #fff;
+    -fx-border-radius: 3px;
 }

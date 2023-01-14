@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.goral.keepmypassworddesktop.controllers.LoggedController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.goral.keepmypassworddesktop.controllers.LoggedController">
    <children>
-      <TableView fx:id="contentTable" layoutX="14.0" layoutY="156.0" prefHeight="287.0" prefWidth="465.0">
+      <TableView fx:id="contentTable" layoutX="14.0" layoutY="132.0" prefHeight="287.0" prefWidth="465.0">
         <columns>
             <TableColumn fx:id="idColumn" prefWidth="0" text="id" />
             <TableColumn fx:id="descColumn" prefWidth="155.0" />
@@ -14,14 +17,59 @@
             <TableColumn fx:id="ivColumn" prefWidth="0" text="iv" />
         </columns>
       </TableView>
-      <Button fx:id="addButton" layoutX="509.0" layoutY="225.0" mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="195" wrapText="true" />
-      <Button fx:id="removeButton" layoutX="509.0" layoutY="275.0" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="195.0" wrapText="true" />
-      <Label fx:id="titleLabel" layoutY="20.0" prefHeight="17.0" prefWidth="750.0" text="Keep My Password" />
-      <Label fx:id="loggedAsLabel" layoutX="479.0" layoutY="365.0" prefHeight="17.0" prefWidth="272.0" />
-      <Label fx:id="unameLabel" layoutX="479.0" layoutY="408.0" prefHeight="17.0" prefWidth="272.0" />
-      <Button fx:id="genPwd" layoutX="509.0" layoutY="175.0" mnemonicParsing="false" onAction="#onGenPwdClick" prefHeight="25.0" prefWidth="195.0" wrapText="true" />
-      <Button fx:id="showBtn" layoutX="442.0" layoutY="109.0" maxWidth="16" mnemonicParsing="false" onAction="#onShowBtnClick" prefHeight="16" prefWidth="16" />
-      <Button fx:id="settingsButton" layoutX="625.0" layoutY="5.0" maxHeight="128" maxWidth="128" mnemonicParsing="false" onAction="#onSettingsButtonClick" prefHeight="64" prefWidth="64" />
-      <Label layoutY="75.0" prefHeight="17.0" prefWidth="750.0" text="v3.2.0" textAlignment="CENTER" />
+       <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" text="Keep My Password">
+           <font>
+               <Font name="Elephant" size="28.0" />
+           </font>
+           <textFill>
+               <LinearGradient endX="1.0" endY="1.0">
+                   <stops>
+                       <Stop>
+                           <color>
+                               <Color red="0.3815789520740509" green="0.22517868876457214" blue="0.08832845836877823" />
+                           </color>
+                       </Stop>
+                       <Stop offset="1.0">
+                           <color>
+                               <Color red="0.21308480203151703" green="0.40679824352264404" blue="0.6973684430122375" />
+                           </color>
+                       </Stop>
+                   </stops>
+               </LinearGradient>
+           </textFill>
+       </Label>
+<!--      <Label fx:id="titleLabel" layoutX="23.0" layoutY="26.0" prefHeight="17.0" prefWidth="231.0" text="Keep My Password" />-->
+      <Label fx:id="loggedAsLabel" layoutX="14.0" layoutY="427.0" text="Logged in as:" textFill="#1e1d1d">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="unameLabel" layoutX="109.0" layoutY="429.0" text="Logger name">
+         <font>
+            <Font name="Candara" size="14.0" />
+         </font></Label>
+      <Button fx:id="showBtn" layoutX="14.0" layoutY="93.0" mnemonicParsing="false" onAction="#onShowBtnClick" prefHeight="25.0" prefWidth="32.0" />
+      <Label layoutX="14.0" layoutY="43.0" prefHeight="17.0" prefWidth="52.0" text="v3.2.0" textAlignment="CENTER">
+         <font>
+            <Font name="Candara Italic" size="13.0" />
+         </font></Label>
+      <ToolBar layoutX="327.0" layoutY="13.0" prefHeight="40.0" prefWidth="410.0">
+        <items>
+          <Button fx:id="tool1" mnemonicParsing="false" prefHeight="28.0" text="Button" />
+            <Button fx:id="tool2" mnemonicParsing="false" prefHeight="28.0" text="Button" />
+            <Button fx:id="tool3" mnemonicParsing="false" prefHeight="28.0" text="Button" />
+            <Button fx:id="tool4" mnemonicParsing="false" prefHeight="28.0" text="Button" />
+        </items>
+         <effect>
+            <Blend />
+         </effect>
+      </ToolBar>
+      <Separator layoutX="497.0" layoutY="128.0" orientation="VERTICAL" prefHeight="293.0" prefWidth="0.0" />
+      <VBox alignment="TOP_CENTER" layoutX="503.0" layoutY="132.0" prefHeight="200.0" prefWidth="225.0" spacing="12.0">
+         <children>
+            <Button fx:id="genPwd" mnemonicParsing="false" onAction="#onGenPwdClick" prefHeight="25.0" prefWidth="195.0" wrapText="true" />
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddClick" prefHeight="25.0" prefWidth="195" wrapText="true" />
+            <Button fx:id="removeButton" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="25.0" prefWidth="195.0" wrapText="true" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
