@@ -1,7 +1,6 @@
 package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,8 +48,6 @@ public class MainAppController {
     Label dateLabel;
     @FXML
     Label appTitleLabel;
-
-    LanguageConverter langProcess = new LanguageConverter();
 
     /**
      * This function sets the text of the dateLabel to the current year
@@ -115,12 +112,7 @@ public class MainAppController {
 
         // Initialize language box
         ObservableList<String> options = ConfUtil.readLanguages();
-        //TODO: options are locale-codes, there is a need to convert them to language
-        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();;
-        for (String locale : options){
-            optionsLanguage.add(langProcess.convertToLanguage(locale));
-        }
-        final ComboBox<String> languageBox = new ComboBox<>(optionsLanguage);
+        final ComboBox<String> languageBox = new ComboBox<>(options);
         languageBox.getSelectionModel().selectFirst();
 
         TextField username = new TextField();
@@ -313,6 +305,26 @@ public class MainAppController {
                 login = true;
             } else {
                 btnLogin.setText(lang.getString("log.in"));
+                login = true;
+            }
+        } catch (Exception e){
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
+    }
+}
+    public void handleAppRun() {
+        try {
+            if (!ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()) {
+                btnLogin.setText(MainApp.lang.getString("register"));
+            } else if (ConfUtil.checkIfDatabaseExists() && !ConfUtil.checkIfConfigExists()) {
+                ConfUtil.deleteConfFiles();
+                btnLogin.setText(MainApp.lang.getString("register"));
+            } else if (ConfUtil.checkIfConfigExists() && !ConfUtil.checkIfDatabaseExists()){
+                DatabaseHandler.createDatabase();
+                btnLogin.setText(MainApp.lang.getString("log.in"));
+                login = true;
+            } else {
+                btnLogin.setText(MainApp.lang.getString("log.in"));
                 login = true;
             }
         } catch (Exception e){
