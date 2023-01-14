@@ -1,6 +1,7 @@
 package me.goral.keepmypassworddesktop.controllers;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,6 +49,8 @@ public class MainAppController {
     Label dateLabel;
     @FXML
     Label appTitleLabel;
+
+    LanguageConverter langProcess = new LanguageConverter();
 
     /**
      * This function sets the text of the dateLabel to the current year
@@ -112,7 +115,12 @@ public class MainAppController {
 
         // Initialize language box
         ObservableList<String> options = ConfUtil.readLanguages();
-        final ComboBox<String> languageBox = new ComboBox<>(options);
+        //TODO: options are locale-codes, there is a need to convert them to language
+        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();;
+        for (String locale : options){
+            optionsLanguage.add(langProcess.convertToLanguage(locale));
+        }
+        final ComboBox<String> languageBox = new ComboBox<>(optionsLanguage);
         languageBox.getSelectionModel().selectFirst();
 
         TextField username = new TextField();

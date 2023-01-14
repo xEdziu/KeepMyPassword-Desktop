@@ -34,15 +34,39 @@ public class ConfUtil {
     public static int setWorkingDirectory(){
         int os = detectOS();
         switch (os) {
-            case 1 -> workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";//NON-NLS
+            case 1 -> {
+                workingDirectory = System.getenv("AppData") + "\\KeepMyPassword\\";//NON-NLS
+                if (!checkIfWorkingDirExists())
+                    createWorkingDir(workingDirectory);
+            }
             case 2 -> workingDirectory = System.getProperty("user.home") + "/Library/KeepMyPassword/";//NON-NLS
             case 3 -> workingDirectory = System.getProperty("user.home") + "/.config/KeepMyPassword/";//NON-NLS
             default -> {
             }
         }
-        File workingDir = new File(workingDirectory);
-        workingDir.mkdir();
         return os;
+    }
+
+    /**
+     * Check if the working directory exists
+     *
+     * @return The method returns a boolean value.
+     */
+    public static boolean checkIfWorkingDirExists(){
+        File tmp = new File(workingDirectory);
+        return tmp.exists();
+    }
+
+    /**
+     * Creates a new working directory if it doesn't exist, otherwise prints an error
+     *
+     * @param workDir The working directory.
+     */
+    public static void createWorkingDir(String workDir) {
+        File f = new File(workingDirectory);
+        if (!f.mkdir()) {
+            System.out.println("Directory cannot be created");
+        }
     }
 
     /**
@@ -192,7 +216,7 @@ public class ConfUtil {
     public static int detectOS() {
         String os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
         if (os.contains("win")) return 1;//NON-NLS
-        else if (os.contains("osx")) return 2;//NON-NLS
+        else if (os.contains("os x") || os.contains("osx")) return 2;//NON-NLS
         else if (os.contains("nix") || os.contains("aix") || os.contains("nux")) return 3;//NON-NLS
         return 0;
     }
