@@ -207,7 +207,6 @@ public class AlertsUtil {
         Label label = new Label(MainApp.lang.getString("choose-your-language-prompt"));
 
         ObservableList<String> options = ConfUtil.readLanguages();
-        //TODO: options are locale-codes, there is a need to convert them to language
         ObservableList<String> optionsLanguage = FXCollections.observableArrayList();
         for (String locale : options){
             optionsLanguage.add(langProcess.convertToLanguage(locale));
@@ -235,7 +234,6 @@ public class AlertsUtil {
         Optional<String> res = dialog.showAndWait();
 
         res.ifPresent(result -> {
-            //TODO: change language to locale-code
             String locale = langProcess.convertToLocale(result);
             ConfUtil.changeLanguage(locale);
             loc = MainApp.setLocale();
@@ -260,6 +258,37 @@ public class AlertsUtil {
             }
         });
 
+    }
+
+    public static void createBackupDialog(){
+        Alert.AlertType type;
+        String headerText;
+        String contextText;
+
+        if (BackupUtil.createBackup()){
+            type = Alert.AlertType.CONFIRMATION;
+            headerText = "Successfully created backup";
+            contextText = "Have a great day!";
+        } else {
+            type = Alert.AlertType.ERROR;
+            headerText = "Something went wrong while creating a backup";
+            contextText = "Please try again";
+        }
+        Alert alert = new Alert(type);
+        alert.setTitle("Creating a backup");
+        alert.setHeaderText(headerText);
+        alert.setContentText(contextText);
+        alert.getButtonTypes().clear();
+        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
+        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-64.png").toString()));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+
+        ButtonType confirm = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        alert.getButtonTypes().add(confirm);
+        Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
+        btnConfirm.getStyleClass().add("btn");//NON-NLS
+        alert.showAndWait();
     }
 
     /**
@@ -292,7 +321,6 @@ public class AlertsUtil {
         if (result.get() == confirm){
 
             try {
-
                 FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
                 Parent root = loader.load();
 

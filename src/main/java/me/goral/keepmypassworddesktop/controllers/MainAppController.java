@@ -112,7 +112,11 @@ public class MainAppController {
 
         // Initialize language box
         ObservableList<String> options = ConfUtil.readLanguages();
-        final ComboBox<String> languageBox = new ComboBox<>(options);
+        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();
+        for (String locale : options){
+            optionsLanguage.add(langProcess.convertToLanguage(locale));
+        }
+        final ComboBox<String> languageBox = new ComboBox<>(optionsLanguage);
         languageBox.getSelectionModel().selectFirst();
 
         TextField username = new TextField();
