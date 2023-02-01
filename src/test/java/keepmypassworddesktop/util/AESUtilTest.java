@@ -18,8 +18,8 @@ import me.goral.keepmypassworddesktop.util.AESUtil;
 import me.goral.keepmypassworddesktop.util.ArgonUtil;
 
 class AESUtilTest {
-
-	private final String ALGORITHM = "AES/CBC/PKCS5Padding";
+	 private static final String ALGORITHM_PADDING = "AES/CFB/PKCS5Padding";
+	
 	private final String PASSWORD = "KeepMyPassword";
 	private final String SALT = "SALT1234SALT";
 	private final String TEST_STRING = "EncryptMe";
@@ -37,8 +37,8 @@ class AESUtilTest {
 		SecretKey key = AESUtil.generateKey(argon);
 		IvParameterSpec iv = AESUtil.generateIv();
 
-		String encrypted = AESUtil.encrypt(ALGORITHM, TEST_STRING, key, iv);
-		String decrypted = AESUtil.decrypt(ALGORITHM, encrypted, key, iv);
+		String encrypted = AESUtil.encrypt(ALGORITHM_PADDING, TEST_STRING, key, iv);
+		String decrypted = AESUtil.decrypt(ALGORITHM_PADDING, encrypted, key, iv);
 		assertEquals(TEST_STRING, decrypted);
 	}
 

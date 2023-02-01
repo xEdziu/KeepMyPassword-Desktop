@@ -13,7 +13,7 @@ import static me.goral.keepmypassworddesktop.util.SHAUtil.hashSHA;
 
 public class AuthUtil {
     public static String initialValue = "initial";//NON-NLS
-
+    private static final String ALGORITHM_PADDING = "AES/CFB/PKCS5Padding";
     /**
      * Encrypt the initial value with AES/CBC/PKCS5Padding using the provided key and iv
      * 
@@ -23,7 +23,8 @@ public class AuthUtil {
      */
     public static String encryptInitial(SecretKey key, IvParameterSpec iv) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         String ivString = Base64.getEncoder().encodeToString(iv.getIV());
-        String encryptedInitial = hashSHA(AESUtil.encrypt("AES/CBC/PKCS5Padding", initialValue, key, iv));//NON-NLS
+        
+		String encryptedInitial = hashSHA(AESUtil.encrypt(ALGORITHM_PADDING, initialValue, key, iv));//NON-NLS
 
         return  encryptedInitial+":"+ivString;
     }
@@ -38,7 +39,7 @@ public class AuthUtil {
      */
     public static boolean authorize(String encryptedInitial, String ivString, SecretKey key) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         IvParameterSpec iv = new IvParameterSpec(Base64.getDecoder().decode(ivString));
-        String encTest = hashSHA(AESUtil.encrypt("AES/CBC/PKCS5Padding", initialValue, key, iv));//NON-NLS
+        String encTest = hashSHA(AESUtil.encrypt(ALGORITHM_PADDING, initialValue, key, iv));//NON-NLS
 
         return encTest.equals(encryptedInitial);
     }
