@@ -19,7 +19,8 @@ import java.util.List;
 
 public class LoggedController {
 
-    @FXML private Label loggedAsLabel;
+    private static final String AES_CFB_PKCS5_PADDING = "AES/CFB/PKCS5Padding";
+	@FXML private Label loggedAsLabel;
     @FXML private TableView<PasswordRow> contentTable;
     @FXML private TableColumn<PasswordRow, String> idColumn = new TableColumn<>("id");//NON-NLS
     @FXML private TableColumn<PasswordRow, String> descColumn = new TableColumn<>(MainApp.lang.getString("description-table-desc"));
@@ -295,9 +296,9 @@ public class LoggedController {
                     IvParameterSpec iv = new IvParameterSpec(Base64.getDecoder().decode(ivEnc));
 
                     //decrypt data from database
-                    String descDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(descEnc)), key, iv);//NON-NLS
-                    String loginDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(loginEnc)), key, iv);//NON-NLS
-                    String pwdDec = AESUtil.decrypt("AES/CBC/PKCS5Padding", new String(Base64.getDecoder().decode(pwdEnc)), key, iv);//NON-NLS
+                    String descDec = AESUtil.decrypt(AES_CFB_PKCS5_PADDING, new String(Base64.getDecoder().decode(descEnc)), key, iv);//NON-NLS
+                    String loginDec = AESUtil.decrypt(AES_CFB_PKCS5_PADDING, new String(Base64.getDecoder().decode(loginEnc)), key, iv);//NON-NLS
+                    String pwdDec = AESUtil.decrypt(AES_CFB_PKCS5_PADDING, new String(Base64.getDecoder().decode(pwdEnc)), key, iv);//NON-NLS
 
                     //add decrypted things to new PasswordRow
                     PasswordRow pr = new PasswordRow(id, descDec, loginDec, pwdDec, ivEnc, visible);

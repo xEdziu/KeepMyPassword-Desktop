@@ -8,7 +8,7 @@ import java.util.Base64;
 
 public class AESUtil {
 
-    //use "AES/CBC/PKCS5Padding" algorithm
+    //use "AES/CFB/PKCS5Padding" algorithm
 
     /**
      * Encrypts the input string using the specified algorithm, key, and initialization vector

@@ -44,7 +44,8 @@ import static me.goral.keepmypassworddesktop.util.PasswordGeneratorUtil.checkPas
 
 public class AlertsUtil {
 
-    static LanguageConverter langProcess = new LanguageConverter();
+    private static final String AES_CBC_PKCS5_PADDING = "AES/CFB/PKCS5Padding";
+	static LanguageConverter langProcess = new LanguageConverter();
 
     /**
      * Show an error dialog with a title, header, and body
@@ -703,7 +704,7 @@ public class AlertsUtil {
             String descPlain = result.get(0);
             String unamePlain = result.get(1);
             String passPlain = result.get(2);
-            String alg = "AES/CBC/PKCS5Padding";//NON-NLS
+            String alg = AES_CBC_PKCS5_PADDING;//NON-NLS
 
             if (descPlain.isEmpty() && unamePlain.isEmpty() && passPlain.isEmpty()){
                 showErrorDialog(MainApp.lang.getString("error.dialog"), MainApp.lang.getString("wait.a.minute.err"),
@@ -808,7 +809,7 @@ public class AlertsUtil {
             String descPlain = result.get(0);
             String unamePlain = result.get(1);
             String passPlain = result.get(2);
-            String alg = "AES/CBC/PKCS5Padding";//NON-NLS
+            String alg = AES_CBC_PKCS5_PADDING;//NON-NLS
 
             IvParameterSpec ivSpec = AESUtil.generateIv();
 
