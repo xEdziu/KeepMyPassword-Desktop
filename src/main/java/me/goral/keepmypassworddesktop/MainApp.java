@@ -1,5 +1,7 @@
 package me.goral.keepmypassworddesktop;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,67 +13,56 @@ import me.goral.keepmypassworddesktop.controllers.MainAppController;
 import me.goral.keepmypassworddesktop.util.AlertsUtil;
 import me.goral.keepmypassworddesktop.util.ConfUtil;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 public class MainApp extends Application {
 
-    private static Stage guiStage;
+    private Stage guiStage;
 
-    public static Stage getStage() {
-        return guiStage;
+    private static final int WINDOW_WIDTH = 750;
+    private static final int WINDOW_HEIGHT = 500;
+
+    @Override
+    public void start(Stage stage) {
+        try {
+            guiStage = stage;
+
+            if (ConfUtil.setWorkingDirectory() == 0) {
+                throw new Exception("Error while reading os directory");
+            }
+            Locale locale = loadLocale();
+            ResourceBundle resourceBundle = loadResourceBundle(locale);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("layouts/main-app-view.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            String css = getClass().getResource("styles/main.css").toExternalForm();
+            scene.getStylesheets().add(css);
+
+            guiStage.setTitle(resourceBundle.getString("appName"));
+            guiStage.getIcons().add(new Image(getClass().getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
+            guiStage.setResizable(false);
+            guiStage.initStyle(StageStyle.DECORATED);
+            guiStage.setScene(scene);
+            guiStage.setWidth(WINDOW_WIDTH);
+            guiStage.setHeight(WINDOW_HEIGHT);
+
+            MainAppController mainController = loader.getController();
+            mainController.setResourceBundle(resourceBundle);
+            mainController.handleAppRun();
+
+            guiStage.show();
+        } catch (Exception e) {
+            AlertsUtil.showExceptionStackTraceDialog(e);
+        }
     }
 
-    public static Locale loc = setLocale();
-    public static ResourceBundle lang = setLanguageBundle(loc);
-
-    /**
-     * The function returns a Locale object that is set to the language specified in the configuration file
-     *
-     * @return The locale object.
-     */
-    public static Locale setLocale(){
+    private Locale loadLocale() {
         String lang = ConfUtil.getConfigLanguage();
         return new Locale(lang);
     }
 
-    /**
-     * This function returns a ResourceBundle object that contains the localized strings for the given locale
-     *
-     * @param loc The locale of the language you want to use.
-     * @return The ResourceBundle object.
-     */
-    public static ResourceBundle setLanguageBundle(Locale loc){
-        return ResourceBundle
-                .getBundle("language", loc); //NON-NLS
-    }
-
-    @Override
-    public void start(Stage stage) {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
-            guiStage = stage;
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-
-            if (ConfUtil.setWorkingDirectory() == 0) throw new Exception("Error while reading os directory");
-
-            String css = MainApp.class.getResource("styles/main.css").toExternalForm();
-            MainAppController mainController = loader.getController();
-            scene.getStylesheets().add(css);
-            guiStage.initStyle(StageStyle.DECORATED);
-            guiStage.setTitle(lang.getString("appName"));
-            guiStage.setResizable(false);
-            guiStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
-            guiStage.setWidth(750);
-            guiStage.setHeight(500);
-            guiStage.setScene(scene);
-            guiStage.show();
-            mainController.handleAppRun();
-        } catch (Exception e){
-            AlertsUtil.showExceptionStackTraceDialog(e);
-        }
+    private ResourceBundle loadResourceBundle(Locale locale) {
+        return ResourceBundle.getBundle("language", locale, new UTF8Control());
     }
 
     public static void main(String[] args) {
