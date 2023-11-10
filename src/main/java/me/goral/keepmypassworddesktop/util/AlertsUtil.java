@@ -16,7 +16,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import me.goral.keepmypassworddesktop.MainApp;
@@ -211,6 +210,7 @@ public class AlertsUtil {
         Button changeLang = new Button(MainApp.lang.getString("change.language"));
         changeLang.getStyleClass().addAll("btn","optionsButton");//NON-NLS
 
+
         delAcc.setOnMouseClicked(mouseEvent -> {
             showDeleteAccountDialog();
             alert.close();
@@ -238,12 +238,12 @@ public class AlertsUtil {
         GridPane.setRowIndex(delData, 1);
         grid.getChildren().add(delData);
 
-        GridPane.setColumnIndex(logout, 0);
-        GridPane.setRowIndex(logout, 2);
+        GridPane.setColumnIndex(logout, 1);
+        GridPane.setRowIndex(logout, 0);
         grid.getChildren().add(logout);
 
         GridPane.setColumnIndex(changeLang, 1);
-        GridPane.setRowIndex(changeLang, 0);
+        GridPane.setRowIndex(changeLang, 1);
         grid.getChildren().add(changeLang);
 
         alert.getDialogPane().setContent(grid);
@@ -279,7 +279,6 @@ public class AlertsUtil {
         Label label = new Label(MainApp.lang.getString("choose-your-language-prompt"));
 
         ObservableList<String> options = ConfUtil.readLanguages();
-        //TODO: options are locale-codes, there is a need to convert them to language
         ObservableList<String> optionsLanguage = FXCollections.observableArrayList();
         for (String locale : options){
             optionsLanguage.add(langProcess.convertToLanguage(locale));
@@ -307,7 +306,6 @@ public class AlertsUtil {
         Optional<String> res = dialog.showAndWait();
 
         res.ifPresent(result -> {
-            //TODO: change language to locale-code
             String locale = langProcess.convertToLocale(result);
             ConfUtil.changeLanguage(locale);
             loc = MainApp.setLocale();
@@ -333,6 +331,7 @@ public class AlertsUtil {
         });
 
     }
+
 
     /**
      * Show a dialog to confirm the deletion of the account
@@ -364,7 +363,6 @@ public class AlertsUtil {
         if (result.get() == confirm){
 
             try {
-
                 FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("layouts/main-app-view.fxml"));
                 Parent root = loader.load();
 

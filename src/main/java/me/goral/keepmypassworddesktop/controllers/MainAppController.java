@@ -82,8 +82,7 @@ public class MainAppController {
         grid.setPadding(new Insets(20,150,10,10));
 
         ObservableList<String> options = ConfUtil.readLanguages();
-        //TODO: options are locale-codes, there is a need to convert them to language
-        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();;
+        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();
         for (String locale : options){
             optionsLanguage.add(langProcess.convertToLanguage(locale));
         }
@@ -145,13 +144,13 @@ public class MainAppController {
 
                 if (password.getText().isEmpty() && !login){
                     AlertsUtil.showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("there-is-a-problem"), MainApp.lang.getString("you.can.t.register.with.empty.password"));
-                    res.add("err"+newUname);//NON-NLS
+                    res.add("ERR-CODE|"+newUname);//NON-NLS
                     res.add(newPwd);
                     if(!login) res.add(languageBox.getValue());
                     return res;
                 } else if ((!checker.getKey().equals(MainApp.lang.getString("strong.password")) && !checker.getKey().equals(MainApp.lang.getString("medium.password"))) && !login){
                     AlertsUtil.showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("there-is-a-problem"), MainApp.lang.getString("password.is.not.strong.enough"));
-                    res.add("err"+newUname);//NON-NLS
+                    res.add("ERR-CODE|"+newUname);//NON-NLS
                     res.add(newPwd);
                     if(!login) res.add(languageBox.getValue());
                     return res;
@@ -171,8 +170,8 @@ public class MainAppController {
             String uname = result.get(0);
             String plain = result.get(1);
 
-            if (uname.startsWith("err")){//NON-NLS
-                restartLoginForm(uname.substring(3), plain);
+            if (uname.startsWith("ERR-CODE|")){//NON-NLS
+                restartLoginForm(uname.substring(9), plain);
                 return;
             }
 
@@ -226,7 +225,6 @@ public class MainAppController {
                     SecretKey key = AESUtil.generateKey(argon);
                     String init = AuthUtil.encryptInitial(key, iv);
                     String lang = result.get(2);
-                    //TODO: lang will be an actual language, need to convert it to locale-code
                     String locale = langProcess.convertToLocale(lang);
                     String output = SHAUtil.hashSHA(uname) + ":" + init + ":" + salt + ":" + locale;
                     createConfFiles(output);
@@ -274,7 +272,11 @@ public class MainAppController {
         grid.setPadding(new Insets(20,150,10,10));
 
         ObservableList<String> options = ConfUtil.readLanguages();
-        final ComboBox<String> languageBox = new ComboBox<>(options);
+        ObservableList<String> optionsLanguage = FXCollections.observableArrayList();
+        for (String locale : options){
+            optionsLanguage.add(langProcess.convertToLanguage(locale));
+        }
+        final ComboBox<String> languageBox = new ComboBox<>(optionsLanguage);
         languageBox.getSelectionModel().selectFirst();
 
         TextField username = new TextField();
@@ -337,7 +339,7 @@ public class MainAppController {
                 if (password.getText().isEmpty() && !login){
                     AlertsUtil.showErrorDialog(MainApp.lang.getString("error"), MainApp.lang.getString("there-is-a-problem"),
                             MainApp.lang.getString("you.can.t.register.with.empty.password"));
-                    res.add("err"+newUname);//NON-NLS
+                    res.add("ERR-CODE|"+newUname);//NON-NLS
                     res.add(newPwd);
                     if(!login) res.add(languageBox.getValue());
                     return res;
@@ -345,7 +347,7 @@ public class MainAppController {
                         && !checker.getKey().equals(MainApp.lang.getString("medium.password"))) && !login){
                     AlertsUtil.showErrorDialog(MainApp.lang.getString("error"),
                             MainApp.lang.getString("there-is-a-problem"), MainApp.lang.getString("password.is.not.strong.enough"));
-                    res.add("err"+newUname);//NON-NLS
+                    res.add("ERR-CODE|"+newUname);//NON-NLS
                     res.add(newPwd);
                     if(!login) res.add(languageBox.getValue());
                     return res;
@@ -365,8 +367,8 @@ public class MainAppController {
             String uname = result.get(0);
             String plain = result.get(1);
 
-            if (uname.startsWith("err")){//NON-NLS
-                restartLoginForm(uname.substring(3), plain);
+            if (uname.startsWith("ERR-CODE|")){//NON-NLS
+                restartLoginForm(uname.substring(9), plain);
                 return;
             }
 

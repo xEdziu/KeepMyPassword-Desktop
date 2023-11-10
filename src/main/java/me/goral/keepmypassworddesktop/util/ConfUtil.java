@@ -9,6 +9,7 @@ import java.io.*;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.CodeSource;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 
 public class ConfUtil {
@@ -24,6 +26,14 @@ public class ConfUtil {
     private static final String confFileName = "config.conf";
     private static final String databaseFileName = "database.db";
     private static String workingDirectory;
+
+    public static Path getConfFilePath() {
+        return Path.of(workingDirectory + confFileName);
+    }
+
+    public static Path getDatabaseFilePath(){
+        return Path.of(workingDirectory + databaseFileName);
+    }
 
     /**
      * The function will detect the operating system and set the working directory to the appropriate
@@ -44,6 +54,8 @@ public class ConfUtil {
             default -> {
             }
         }
+        File workingDir = new File(workingDirectory);
+        workingDir.mkdir();
         return os;
     }
 
@@ -197,10 +209,10 @@ public class ConfUtil {
             File f = new File(workingDirectory + confFileName);
             File db = new File(workingDirectory + databaseFileName);
             if (f.exists()){
-                if (!f.delete()) throw new Exception("Configuration file could not be deleted");
+                if (!f.delete()) AlertsUtil.showExceptionStackTraceDialog(new Exception("Configuration file could not be deleted"));
             }
             if (db.exists()){
-                if (!db.delete()) throw new Exception("Database could not be deleted");
+                if (!db.delete()) AlertsUtil.showExceptionStackTraceDialog(new Exception("Database could not be deleted"));
             }
 
         } catch (Exception e){
@@ -286,5 +298,47 @@ public class ConfUtil {
 
         return null;
     }
+
+//    public static void unpackZip(String zipFile, File destDir) throws IOException{
+//        byte[] buffer = new byte[1024];
+//        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
+//        ZipEntry zipEntry = zis.getNextEntry();
+//        while (zipEntry != null){
+//            File newFile = newFile(destDir, zipEntry);
+//            if (zipEntry.isDirectory()) {
+//                if (!newFile.isDirectory() && !newFile.mkdirs()) {
+//                    throw new IOException("Failed to create directory " + newFile);
+//                }
+//            } else {
+//                // fix for Windows-created archives
+//                File parent = newFile.getParentFile();
+//                if (!parent.isDirectory() && !parent.mkdirs()) {
+//                    throw new IOException("Failed to create directory " + parent);
+//                }
+//
+//                // write file content
+//                FileOutputStream fos = new FileOutputStream(newFile);
+//                int len;
+//                while ((len = zis.read(buffer)) > 0) {
+//                    fos.write(buffer, 0, len);
+//                }
+//                fos.close();
+//            }
+//            zipEntry = zis.getNextEntry();
+//        }
+//    }
+//
+//    public static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
+//        File destFile = new File(destinationDir, zipEntry.getName());
+//
+//        String destDirPath = destinationDir.getCanonicalPath();
+//        String destFilePath = destFile.getCanonicalPath();
+//
+//        if (!destFilePath.startsWith(destDirPath + File.separator)) {
+//            throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
+//        }
+//
+//        return destFile;
+//    }
 
 }
