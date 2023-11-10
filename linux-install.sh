@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Shoutout to the author of this script: https://github.com/anjannair
+# Acknowledgments to the author of this script: https://github.com/anjannair
 
 # Set these values so the installer can still run in color
 COL_NC='\e[0m' # No Color

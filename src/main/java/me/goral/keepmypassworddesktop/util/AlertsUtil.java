@@ -209,11 +209,6 @@ public class AlertsUtil {
         logout.getStyleClass().addAll("btn","optionsButton");//NON-NLS
         Button changeLang = new Button(MainApp.lang.getString("change.language"));
         changeLang.getStyleClass().addAll("btn","optionsButton");//NON-NLS
-        Button makeBackup = new Button("Create Backup");
-        makeBackup.getStyleClass().addAll("btn","optionsButton");
-        Button restoreBackup = new Button("Restore Backup");
-        restoreBackup.getStyleClass().addAll("btn","optionsButton");
-
 
 
         delAcc.setOnMouseClicked(mouseEvent -> {
@@ -235,16 +230,6 @@ public class AlertsUtil {
             alert.close();
         });
 
-        makeBackup.setOnMouseClicked(mouseEvent -> {
-            createBackupDialog();
-            alert.close();
-        });
-
-        restoreBackup.setOnMouseClicked(mouseEvent -> {
-            BackupUtil.restoreBackup(alert.getDialogPane());
-            alert.close();
-        });
-
         GridPane.setColumnIndex(delAcc, 0);
         GridPane.setRowIndex(delAcc, 0);
         grid.getChildren().add(delAcc);
@@ -253,21 +238,13 @@ public class AlertsUtil {
         GridPane.setRowIndex(delData, 1);
         grid.getChildren().add(delData);
 
-        GridPane.setColumnIndex(logout, 0);
-        GridPane.setRowIndex(logout, 2);
+        GridPane.setColumnIndex(logout, 1);
+        GridPane.setRowIndex(logout, 0);
         grid.getChildren().add(logout);
 
         GridPane.setColumnIndex(changeLang, 1);
-        GridPane.setRowIndex(changeLang, 0);
+        GridPane.setRowIndex(changeLang, 1);
         grid.getChildren().add(changeLang);
-
-        GridPane.setColumnIndex(makeBackup, 1);
-        GridPane.setRowIndex(makeBackup, 1);
-        grid.getChildren().add(makeBackup);
-
-        GridPane.setColumnIndex(restoreBackup, 1);
-        GridPane.setRowIndex(restoreBackup,2);
-        grid.getChildren().add(restoreBackup);
 
         alert.getDialogPane().setContent(grid);
 
@@ -355,36 +332,6 @@ public class AlertsUtil {
 
     }
 
-    public static void createBackupDialog(){
-        Alert.AlertType type;
-        String headerText;
-        String contextText;
-
-        if (BackupUtil.createBackup()){
-            type = Alert.AlertType.CONFIRMATION;
-            headerText = "Successfully created backup";
-            contextText = "Have a great day!";
-        } else {
-            type = Alert.AlertType.ERROR;
-            headerText = "Something went wrong while creating a backup";
-            contextText = "Please try again";
-        }
-        Alert alert = new Alert(type);
-        alert.setTitle("Creating a backup");
-        alert.setHeaderText(headerText);
-        alert.setContentText(contextText);
-        alert.getButtonTypes().clear();
-        alert.getDialogPane().getStylesheets().add(MainApp.class.getResource("styles/dialog.css").toExternalForm());
-        alert.setGraphic(new ImageView(MainApp.class.getResource("/me/goral/keepmypassworddesktop/images/settings-64.png").toString()));
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/me/goral/keepmypassworddesktop/images/access-32.png")));
-
-        ButtonType confirm = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        alert.getButtonTypes().add(confirm);
-        Node btnConfirm = alert.getDialogPane().lookupButton(confirm);
-        btnConfirm.getStyleClass().add("btn");//NON-NLS
-        alert.showAndWait();
-    }
 
     /**
      * Show a dialog to confirm the deletion of the account

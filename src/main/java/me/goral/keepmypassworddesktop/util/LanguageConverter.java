@@ -100,7 +100,6 @@ public class LanguageConverter {
         this.langs.put("es-bo","Bolivia");
         this.langs.put("es-cl","Chile");
         this.langs.put("es-co","Colombia");
-        this.langs.put("es-cr","Costa Rica");
         this.langs.put("es-do","Dominican Republic");
         this.langs.put("es-ec","Ecuador");
         this.langs.put("es-sv","El Salvador");
