@@ -1,5 +1,3 @@
-<p align="center"><img src="https://cdn.discordapp.com/attachments/241261764786782208/1033021354175369307/repoCard.png" alt="Github Repo Card" />
-
 <h1 align="center">Welcome to KeepMyPassword for Desktop!👋</h1>
 
 <p align="center">
